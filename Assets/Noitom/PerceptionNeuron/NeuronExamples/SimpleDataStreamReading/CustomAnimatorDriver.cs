@@ -83,7 +83,8 @@ public class CustomAnimatorDriver : MonoBehaviour
 			
 			// Update Hips
 			// Transform hips_t = animator.GetBoneTransform( HumanBodyBones.Hips );
-			// hips_t.position = actor.GetReceivedPosition( NeuronBones.Hips );
+			// hips_t.position = actor.
+			// ( NeuronBones.Hips );
 			// hips_t.root = actor.GetReceivedRotation( NeuronBones.Hips );
 			
 			// Update RightUpLeg
