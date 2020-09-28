@@ -42,5 +42,11 @@ namespace UniHumanoid
             Source = File.ReadAllText(Path, Encoding.UTF8);
             Bvh = Bvh.Parse(Source);
         }
+
+        public Bvh getBvh()
+        {
+            Parse();
+            return Bvh;
+        }
     }
 }
