@@ -70,6 +70,7 @@ namespace UniHumanoid
 
     public class BvhNode
     {
+
         public String Name
         {
             get;
@@ -209,6 +210,19 @@ namespace UniHumanoid
             public string Path;
             public string Property;
             public bool IsLocation;
+        }
+
+        public Vector3 GetReceivedPosition(String boneName)
+        {
+            switch (boneName)
+            {
+                case "Hips":
+                    //return Root.P
+
+                default:
+                    return new Vector3(0.0f, 0.0f, 0.0f);
+                    break;
+            }
         }
 
         public bool TryGetPathWithPropertyFromChannel(ChannelCurve channel, out PathWithProperty pathWithProp)

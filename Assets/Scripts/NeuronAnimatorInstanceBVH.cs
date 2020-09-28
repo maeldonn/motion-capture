@@ -15,12 +15,13 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing conditions and
  limitations under the License.
-************************************************************************************/
+************************************************************************************//*
 
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Neuron;
+using UniHumanoid;
 
 public class NeuronAnimatorInstanceBVH : NeuronInstance
 {
@@ -45,18 +46,12 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 	{
 	}
 	
-	public NeuronAnimatorInstanceBVH( string address, int port, int commandServerPort, NeuronConnection.SocketType socketType, int actorID )
-		:base( address, port, commandServerPort, socketType, actorID )
+	public NeuronAnimatorInstanceBVH( int actorID )
+		:base( actorID )
 	{
 	}
 	
-	public NeuronAnimatorInstanceBVH( Animator animator, string address, int port, int commandServerPort, NeuronConnection.SocketType socketType, int actorID )
-		:base( address, port, commandServerPort, socketType, actorID )
-	{
-		boundAnimator = animator;
-		UpdateOffset();
-	}
-	
+
 	public NeuronAnimatorInstanceBVH( Animator animator, NeuronActor actor )
 		:base( actor )
 	{
@@ -102,7 +97,7 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
         }
 	}
 	
-	void FixedUpdate()
+	*//*void FixedUpdate()
 	{
 		base.ToggleConnect();
 		
@@ -115,7 +110,7 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 		
 			ApplyMotionPhysically (physicalReference.GetReferenceAnimator (), boundAnimator);
 		}
-	}
+	}*//*
 	
 	bool ValidateVector3( Vector3 vec )
 	{
@@ -184,11 +179,11 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 	}
 	
 	// apply transforms extracted from actor mocap data to transforms of animator bones
-	public void ApplyMotion( NeuronActor actor, Animator animator, Vector3[] positionOffsets, Vector3[] rotationOffsets)
+	public void ApplyMotion( Bvh bvh, Animator animator, Vector3[] positionOffsets, Vector3[] rotationOffsets)
     {		
 		// apply Hips position
 		if (enableHipsMovement) {
-			SetPosition (animator, HumanBodyBones.Hips, actor.GetReceivedPosition (NeuronBones.Hips) + positionOffsets [(int)HumanBodyBones.Hips]);
+			SetPosition (animator, HumanBodyBones.Hips, bvh.GetReceivedPosition ("Hips") + positionOffsets [(int)HumanBodyBones.Hips]);
 			SetRotation (animator, HumanBodyBones.Hips, actor.GetReceivedRotation (NeuronBones.Hips));
 		}
 
@@ -574,4 +569,4 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 			}
 		}
 	}
-}
+}*/
