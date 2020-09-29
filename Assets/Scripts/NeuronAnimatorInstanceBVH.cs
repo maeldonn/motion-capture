@@ -78,9 +78,6 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 
 	new void Update()
 	{
-		//base.ToggleConnect();
-		//base.Update();
-
 		if (boundAnimator != null && motionUpdateMethod == UpdateMethod.Normal) // !physicalUpdate )
 		{
 			if (physicalReference.Initiated())
@@ -97,28 +94,10 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 
 	void Start()
 	{
-		Debug.Log("BVH bot started");
 		nbFrame = 0;
-		BvhImporter temp = new BvhImporter();
+		BvhImporter temp = gameObject.AddComponent<BvhImporter>();
 		bvh = temp.getBvh();
-		Debug.Log("BVH loaded");
 	}
-
-	/*void FixedUpdate()
-	{
-		base.ToggleConnect();
-
-		if (boundActor != null && boundAnimator != null && motionUpdateMethod != UpdateMethod.Normal) // && physicalUpdate )
-		{
-			if (!physicalReference.Initiated())
-			{
-				//physicalUpdate = InitPhysicalContext ();
-				InitPhysicalContext();
-			}
-
-			ApplyMotionPhysically(physicalReference.GetReferenceAnimator(), boundAnimator);
-		}
-	}*/
 
 	bool ValidateVector3(Vector3 vec)
 	{
@@ -440,9 +419,7 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 							Vector3 axis = Vector3.zero;
 							dAng.ToAngleAxis(out angle, out axis);
 
-							//float newMagic = Vector3.Distance (src_transform.position, dest_transform.position) * velocityMagic;
 							Vector3 velocityTarget = (src_transform.position - dest_transform.position) * velocityMagic * Time.fixedDeltaTime;
-							//Vector3 velocityTarget = (src_transform.position - dest_transform.position) * velocityMagic * Time.fixedDeltaTime;
 
 							Vector3 angularTarget = (Time.fixedDeltaTime * angle * axis) * angularVelocityMagic;
 
@@ -485,8 +462,6 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 		}
 	}
 
-
-	//bool InitPhysicalContext()
 	void InitPhysicalContext()
 	{
 		if (physicalReference.Init(boundAnimator, physicalReferenceOverride))
