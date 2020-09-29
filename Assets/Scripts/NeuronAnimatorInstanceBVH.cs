@@ -101,7 +101,7 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 	{
 		nbFrame = 0;
 		BvhImporter temp = gameObject.AddComponent<BvhImporter>();
-		bvh = temp.getBvh();
+		bvh = temp.GetBvh();
 	}
 
 	bool ValidateVector3(Vector3 vec)

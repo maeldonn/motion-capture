@@ -12,14 +12,16 @@ using UnityEditor;
 namespace UniHumanoid
 {    public class BvhImporter : MonoBehaviour
     {
+        public string m_path;
+        string Source; // WARNING: Do not set public !!!!
+        public Bvh Bvh;
 
         private void Start()
         {
             Parse();
         }
 
-        public String m_path;
-        public String Path
+        public string Path
         {
             get { return m_path; }
             set
@@ -28,12 +30,11 @@ namespace UniHumanoid
                 m_path = value;
             }
         }
-        /*public */String Source; // source
-        public Bvh Bvh;
 
         public void Parse()
         {
-            Parse(Application.dataPath+"/"+"BVH"+"/" + "DaiJumpAroundChar00.bvh");
+            // TODO: Import path in Unity
+            Parse(Application.dataPath+"/BVH/DaiJumpAroundChar00.bvh");
         }
 
         public void Parse(string path)
@@ -43,7 +44,7 @@ namespace UniHumanoid
             Bvh = Bvh.Parse(Source);
         }
 
-        public Bvh getBvh()
+        public Bvh GetBvh()
         {
             Parse();
             return Bvh;

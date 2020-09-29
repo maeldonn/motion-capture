@@ -257,17 +257,11 @@ namespace UniHumanoid
                 }
             }
             return temp;
-            //throw new BvhException("channel is not found");
         }
 
         public Vector3[] GetPositionOffset()
         {
             var bonePositionOffsets = new List<Vector3>();
-            foreach (var node in Root.Traverse())
-            {
-                //bonePositionOffsets.Add();
-                //bonePositionOffsets.Add(Vector3.zero);
-            }
             return bonePositionOffsets.ToArray();
         }
 
