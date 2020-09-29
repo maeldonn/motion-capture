@@ -78,8 +78,8 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 
 	new void Update()
 	{
-		base.ToggleConnect();
-		base.Update();
+		//base.ToggleConnect();
+		//base.Update();
 
 		if (boundAnimator != null && motionUpdateMethod == UpdateMethod.Normal) // !physicalUpdate )
 		{
@@ -87,8 +87,8 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 			{
 				ReleasePhysicalContext();
 			}
+			if (nbFrame < bvh.FrameCount-1) nbFrame++; else nbFrame = 0;
 			ApplyMotion(boundAnimator, bonePositionOffsets, boneRotationOffsets);
-			if (nbFrame < bvh.FrameCount) nbFrame++; else nbFrame = 0;
 		}
 	}
 
@@ -102,11 +102,9 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 		BvhImporter temp = new BvhImporter();
 		bvh = temp.getBvh();
 		Debug.Log("BVH loaded");
-		//bonePositionOffsets = ;
-		//boneRotationOffsets = ;
 	}
 
-	void FixedUpdate()
+	/*void FixedUpdate()
 	{
 		base.ToggleConnect();
 
@@ -120,7 +118,7 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 
 			ApplyMotionPhysically(physicalReference.GetReferenceAnimator(), boundAnimator);
 		}
-	}
+	}*/
 
 	bool ValidateVector3(Vector3 vec)
 	{
@@ -194,8 +192,6 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 		// apply Hips position
 		if (enableHipsMovement)
 		{
-			Debug.Log(nbFrame);
-			if (bvh != null) Debug.Log("Cheh");
 			SetPosition(animator, HumanBodyBones.Hips, bvh.GetReceivedPosition("Hips",nbFrame, false) + positionOffsets[(int)HumanBodyBones.Hips]);
 			SetRotation(animator, HumanBodyBones.Hips, bvh.GetReceivedPosition("Hips", nbFrame, true));
 		}
@@ -204,11 +200,11 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 		if (true)//actor.withDisplacement)
 		{
 			// legs
-			SetPosition(animator, HumanBodyBones.RightUpperLeg, bvh.GetReceivedPosition("RightUpperLeg", nbFrame, false) + positionOffsets[(int)HumanBodyBones.RightUpperLeg]);
-			SetPosition(animator, HumanBodyBones.RightLowerLeg, bvh.GetReceivedPosition("RightLowerLeg", nbFrame, false));
+			SetPosition(animator, HumanBodyBones.RightUpperLeg, bvh.GetReceivedPosition("RightUpLeg", nbFrame, false) + positionOffsets[(int)HumanBodyBones.RightUpperLeg]);
+			SetPosition(animator, HumanBodyBones.RightLowerLeg, bvh.GetReceivedPosition("RightLeg", nbFrame, false));
 			SetPosition(animator, HumanBodyBones.RightFoot, bvh.GetReceivedPosition("RightFoot", nbFrame, false));
-			SetPosition(animator, HumanBodyBones.LeftUpperLeg, bvh.GetReceivedPosition("LeftUpperLeg", nbFrame, false) + positionOffsets[(int)HumanBodyBones.LeftUpperLeg]);
-			SetPosition(animator, HumanBodyBones.LeftLowerLeg, bvh.GetReceivedPosition("LeftLowerLeg", nbFrame, false));
+			SetPosition(animator, HumanBodyBones.LeftUpperLeg, bvh.GetReceivedPosition("LeftUpLeg", nbFrame, false) + positionOffsets[(int)HumanBodyBones.LeftUpperLeg]);
+			SetPosition(animator, HumanBodyBones.LeftLowerLeg, bvh.GetReceivedPosition("LeftLeg", nbFrame, false));
 			SetPosition(animator, HumanBodyBones.LeftFoot, bvh.GetReceivedPosition("LeftFoot", nbFrame, false));
 
 			// spine
@@ -236,9 +232,9 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 			SetPosition(animator, HumanBodyBones.Head, bvh.GetReceivedPosition("Head", nbFrame, false));
 
 			// right arm
-			SetPosition(animator, HumanBodyBones.RightShoulder, bvh.GetReceivedPosition("Neck1", nbFrame, false));
-			SetPosition(animator, HumanBodyBones.RightUpperArm, bvh.GetReceivedPosition("Neck1", nbFrame, false));
-			SetPosition(animator, HumanBodyBones.RightLowerArm, bvh.GetReceivedPosition("Neck1", nbFrame, false));
+			SetPosition(animator, HumanBodyBones.RightShoulder, bvh.GetReceivedPosition("RightShoulder", nbFrame, false));
+			SetPosition(animator, HumanBodyBones.RightUpperArm, bvh.GetReceivedPosition("RightArm", nbFrame, false));
+			SetPosition(animator, HumanBodyBones.RightLowerArm, bvh.GetReceivedPosition("RightForeArm", nbFrame, false));
 
 			// right hand
 			SetPosition(animator, HumanBodyBones.RightHand, bvh.GetReceivedPosition("RightHand", nbFrame, false));
@@ -386,8 +382,8 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 			(EulerToQuaternion(bvh.GetReceivedPosition("LeftInHandIndex", nbFrame, true)) *    //
 			 EulerToQuaternion(bvh.GetReceivedPosition("LeftHandIndex1", nbFrame, true))).eulerAngles  //
 			);
-		SetRotation(animator, HumanBodyBones.LeftIndexIntermediate, bvh.GetReceivedPosition("RightShoulder", nbFrame, true));
-		SetRotation(animator, HumanBodyBones.LeftIndexDistal, bvh.GetReceivedPosition("RightShoulder", nbFrame, true));
+		SetRotation(animator, HumanBodyBones.LeftIndexIntermediate, bvh.GetReceivedPosition("LeftHandIndex2", nbFrame, true));
+		SetRotation(animator, HumanBodyBones.LeftIndexDistal, bvh.GetReceivedPosition("LeftHandIndex3", nbFrame, true));
 
 		//SetRotation( animator, HumanBodyBones.LeftMiddleProximal,		actor.GetReceivedRotation( NeuronBones.LeftHandMiddle1 ) + actor.GetReceivedRotation( NeuronBones.LeftInHandMiddle ) );
 		SetRotation(animator, HumanBodyBones.LeftMiddleProximal,
