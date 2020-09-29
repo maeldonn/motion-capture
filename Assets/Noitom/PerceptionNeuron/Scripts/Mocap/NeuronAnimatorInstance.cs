@@ -185,7 +185,7 @@ public class NeuronAnimatorInstance : NeuronInstance
 	public void ApplyMotion( NeuronActor actor, Animator animator, Vector3[] positionOffsets, Vector3[] rotationOffsets)
     {		
 		// apply Hips position
-		if (true) {
+		if (enableHipsMovement) {
 			SetPosition (animator, HumanBodyBones.Hips, actor.GetReceivedPosition (NeuronBones.Hips) + positionOffsets [(int)HumanBodyBones.Hips]);
 			SetRotation (animator, HumanBodyBones.Hips, actor.GetReceivedRotation (NeuronBones.Hips));
 		}
