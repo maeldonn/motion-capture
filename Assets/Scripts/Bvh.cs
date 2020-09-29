@@ -70,6 +70,7 @@ namespace UniHumanoid
 
     public class BvhNode
     {
+
         public String Name
         {
             get;
@@ -211,6 +212,66 @@ namespace UniHumanoid
             public bool IsLocation;
         }
 
+        public Vector3 GetReceivedPosition(String boneName, int frame, bool rotation)
+        {
+            float NeuronUnityLinearScale = 0.01f;
+            Vector3 temp = new Vector3(0f, 0f, 0f);
+            var index = 0;
+            foreach (var node in Root.Traverse())
+            {
+                for (int i = 0; i < node.Channels.Length; ++i, ++index)
+                {
+                    if (node.Name == boneName)
+                    {
+                        if (rotation)
+                        {
+                            switch (node.Channels[i])
+                            {
+                                case Channel.Xrotation:
+                                    temp.x = Channels[index].Keys[frame];
+                                    break;
+                                case Channel.Yrotation:
+                                    temp.y = -Channels[index].Keys[frame];
+                                    break;
+                                case Channel.Zrotation:
+                                    temp.z = -Channels[index].Keys[frame];
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (node.Channels[i])
+                            {
+                                case Channel.Xposition:
+                                    temp.x = -NeuronUnityLinearScale * Channels[index].Keys[frame];
+                                    break;
+                                case Channel.Yposition:
+                                    temp.y = NeuronUnityLinearScale * Channels[index].Keys[frame];
+                                    break;
+                                case Channel.Zposition:
+                                    temp.z = NeuronUnityLinearScale * Channels[index].Keys[frame];
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+            return temp;
+            //throw new BvhException("channel is not found");
+        }
+
+        public Vector3[] GetPositionOffset()
+        {
+            var bonePositionOffsets = new List<Vector3>();
+            foreach (var node in Root.Traverse())
+            {
+                //bonePositionOffsets.Add();
+                //bonePositionOffsets.Add(Vector3.zero);
+            }
+            return bonePositionOffsets.ToArray();
+        }
+
+
         public bool TryGetPathWithPropertyFromChannel(ChannelCurve channel, out PathWithProperty pathWithProp)
         {
             var index = Channels.ToList().IndexOf(channel);
@@ -318,6 +379,7 @@ namespace UniHumanoid
             {
                 throw new BvhException("frame key count is not match channel count");
             }
+
             for (int i = 0; i < Channels.Length; ++i)
             {
                 Channels[i].SetKey(frame, float.Parse(splited[i], CultureInfo.InvariantCulture.NumberFormat));

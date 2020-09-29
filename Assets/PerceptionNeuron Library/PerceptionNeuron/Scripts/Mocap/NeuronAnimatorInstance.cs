@@ -96,7 +96,6 @@ public class NeuronAnimatorInstance : NeuronInstance
 			{
 				ReleasePhysicalContext();
 			}
-			
 			ApplyMotion( boundActor, boundAnimator, bonePositionOffsets, boneRotationOffsets);
         }
 	}
