@@ -1,12 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.IO;
 using System.Text;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 
 namespace UniHumanoid
@@ -34,7 +28,8 @@ namespace UniHumanoid
         public void Parse()
         {
             // TODO: Import path in Unity
-            Parse(Application.dataPath+"/BVH/DaiJumpAroundChar00.bvh");
+            // Parse(Application.dataPath);
+            Parse(Application.dataPath + "/BVH/Jump.bvh");
         }
 
         public void Parse(string path)

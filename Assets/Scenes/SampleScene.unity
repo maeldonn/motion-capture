@@ -513,4 +513,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1154d8de4ec81974e89c800cc388bc52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_path: Test
+  m_path: Jump.bvh

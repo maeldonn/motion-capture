@@ -17,8 +17,6 @@
  limitations under the License.
 ************************************************************************************/
 
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Neuron;
 using UniHumanoid;
@@ -76,6 +74,7 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 		CaluateOrignalRot();
 	}
 
+	// TODO: Use a Timer
 	new void Update()
 	{
 		if (boundAnimator != null && motionUpdateMethod == UpdateMethod.Normal) // !physicalUpdate )
@@ -100,8 +99,7 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 	void Start()
 	{
 		nbFrame = 0;
-		BvhImporter temp = gameObject.AddComponent<BvhImporter>();
-		bvh = temp.GetBvh();
+		bvh = gameObject.GetComponent<BvhImporter>().GetBvh();
 	}
 
 	bool ValidateVector3(Vector3 vec)
