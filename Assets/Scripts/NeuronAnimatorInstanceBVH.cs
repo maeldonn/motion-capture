@@ -84,12 +84,17 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 			{
 				ReleasePhysicalContext();
 			}
-			if (nbFrame < bvh.FrameCount-1) nbFrame++; else nbFrame = 0;
-			ApplyMotion(boundAnimator, bonePositionOffsets, boneRotationOffsets);
+            timePassedBetweenFrame += Time.deltaTime;
+            if(bvh.FrameTime.TotalSeconds <= timePassedBetweenFrame/*temp passé >= frameTime */)
+            {
+                if (nbFrame < bvh.FrameCount - 1) nbFrame++; else nbFrame = 0;
+                ApplyMotion(boundAnimator, bonePositionOffsets, boneRotationOffsets);
+            }
 		}
 	}
 
 	int nbFrame;
+    float timePassedBetweenFrame;
 	Bvh bvh;
 
 	void Start()
