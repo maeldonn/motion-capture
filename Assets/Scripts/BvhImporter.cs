@@ -7,15 +7,9 @@ namespace UniHumanoid
 {    public class BvhImporter : MonoBehaviour
     {
         public string m_path;
-        string Source; // WARNING: Do not set public !!!!
-        public Bvh Bvh;
+        private Bvh m_bvh;
 
-        private void Start()
-        {
-            Parse();
-        }
-
-        public string Path
+        public string BvhPath
         {
             get { return m_path; }
             set
@@ -25,18 +19,25 @@ namespace UniHumanoid
             }
         }
 
+        public Bvh Bvh
+        {
+            get { return m_bvh; }
+            set
+            {
+                if (m_bvh == value) return;
+                m_bvh = value;
+            }
+        }
+
         public void Parse()
         {
-            // TODO: Import path in Unity
-            // Parse(Application.dataPath);
-            Parse(Application.dataPath + "/BVH/Jump.bvh");
+            Parse(Application.dataPath + "/BVH/" + BvhPath);
         }
 
         public void Parse(string path)
         {
-            Path = path;
-            Source = File.ReadAllText(Path, Encoding.UTF8);
-            Bvh = Bvh.Parse(Source);
+            BvhPath = path;
+            Bvh = Bvh.Parse(File.ReadAllText(BvhPath, Encoding.UTF8));
         }
 
         public Bvh GetBvh()
