@@ -17,8 +17,6 @@
  limitations under the License.
 ************************************************************************************/
 
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Neuron;
 using UniHumanoid;
@@ -76,49 +74,33 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 		CaluateOrignalRot();
 	}
 
+	// TODO: Use a Timer
 	new void Update()
 	{
-		//base.ToggleConnect();
-		//base.Update();
-
 		if (boundAnimator != null && motionUpdateMethod == UpdateMethod.Normal) // !physicalUpdate )
 		{
 			if (physicalReference.Initiated())
 			{
 				ReleasePhysicalContext();
 			}
-			if (nbFrame < bvh.FrameCount-1) nbFrame++; else nbFrame = 0;
-			ApplyMotion(boundAnimator, bonePositionOffsets, boneRotationOffsets);
+            timePassedBetweenFrame += Time.deltaTime;
+            if(bvh.FrameTime.TotalSeconds <= timePassedBetweenFrame/*temp passé >= frameTime */)
+            {
+                if (nbFrame < bvh.FrameCount - 1) nbFrame++; else nbFrame = 0;
+                ApplyMotion(boundAnimator, bonePositionOffsets, boneRotationOffsets);
+            }
 		}
 	}
 
 	int nbFrame;
+    float timePassedBetweenFrame;
 	Bvh bvh;
 
 	void Start()
 	{
-		Debug.Log("BVH bot started");
 		nbFrame = 0;
-		BvhImporter temp = new BvhImporter();
-		bvh = temp.getBvh();
-		Debug.Log("BVH loaded");
+		bvh = gameObject.GetComponent<BvhImporter>().GetBvh();
 	}
-
-	/*void FixedUpdate()
-	{
-		base.ToggleConnect();
-
-		if (boundActor != null && boundAnimator != null && motionUpdateMethod != UpdateMethod.Normal) // && physicalUpdate )
-		{
-			if (!physicalReference.Initiated())
-			{
-				//physicalUpdate = InitPhysicalContext ();
-				InitPhysicalContext();
-			}
-
-			ApplyMotionPhysically(physicalReference.GetReferenceAnimator(), boundAnimator);
-		}
-	}*/
 
 	bool ValidateVector3(Vector3 vec)
 	{
@@ -440,9 +422,7 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 							Vector3 axis = Vector3.zero;
 							dAng.ToAngleAxis(out angle, out axis);
 
-							//float newMagic = Vector3.Distance (src_transform.position, dest_transform.position) * velocityMagic;
 							Vector3 velocityTarget = (src_transform.position - dest_transform.position) * velocityMagic * Time.fixedDeltaTime;
-							//Vector3 velocityTarget = (src_transform.position - dest_transform.position) * velocityMagic * Time.fixedDeltaTime;
 
 							Vector3 angularTarget = (Time.fixedDeltaTime * angle * axis) * angularVelocityMagic;
 
@@ -485,8 +465,6 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 		}
 	}
 
-
-	//bool InitPhysicalContext()
 	void InitPhysicalContext()
 	{
 		if (physicalReference.Init(boundAnimator, physicalReferenceOverride))

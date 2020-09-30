@@ -1,25 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.IO;
 using System.Text;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 
 namespace UniHumanoid
 {    public class BvhImporter : MonoBehaviour
     {
+        public string m_path;
+        private Bvh m_bvh;
 
-        private void Start()
-        {
-            Parse();
-        }
-
-        public String m_path;
-        public String Path
+        public string BvhPath
         {
             get { return m_path; }
             set
@@ -28,22 +18,29 @@ namespace UniHumanoid
                 m_path = value;
             }
         }
-        /*public */String Source; // source
-        public Bvh Bvh;
+
+        public Bvh Bvh
+        {
+            get { return m_bvh; }
+            set
+            {
+                if (m_bvh == value) return;
+                m_bvh = value;
+            }
+        }
 
         public void Parse()
         {
-            Parse(Application.dataPath+"/"+"BVH"+"/" + "DaiJumpAroundChar00.bvh");
+            Parse(Application.dataPath + "/BVH/" + BvhPath);
         }
 
         public void Parse(string path)
         {
-            Path = path;
-            Source = File.ReadAllText(Path, Encoding.UTF8);
-            Bvh = Bvh.Parse(Source);
+            BvhPath = path;
+            Bvh = Bvh.Parse(File.ReadAllText(BvhPath, Encoding.UTF8));
         }
 
-        public Bvh getBvh()
+        public Bvh GetBvh()
         {
             Parse();
             return Bvh;
