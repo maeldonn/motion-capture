@@ -212,17 +212,19 @@ namespace UniHumanoid
             public bool IsLocation;
         }
 
-        public Vector3 GetReceivedPosition(String boneName, int frame, bool rotation)
+        public Vector3 GetReceivedPosition(string boneName, int frame, bool rotation)
         {
             float NeuronUnityLinearScale = 0.01f;
             Vector3 temp = new Vector3(0f, 0f, 0f);
             var index = 0;
+            bool boneFound = false;
             foreach (var node in Root.Traverse())
             {
                 for (int i = 0; i < node.Channels.Length; ++i, ++index)
                 {
                     if (node.Name == boneName)
                     {
+                        boneFound = true;
                         if (rotation)
                         {
                             switch (node.Channels[i])
@@ -255,6 +257,7 @@ namespace UniHumanoid
                         }
                     }
                 }
+                if (boneFound) break;
             }
             return temp;
         }
