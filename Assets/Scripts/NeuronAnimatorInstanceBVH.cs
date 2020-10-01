@@ -86,6 +86,7 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
             timePassedBetweenFrame += Time.deltaTime;
             if(bvh.FrameTime.TotalSeconds <= timePassedBetweenFrame/*temp passé >= frameTime */)
             {
+                timePassedBetweenFrame = 0;
                 if (nbFrame < bvh.FrameCount - 1) nbFrame++; else nbFrame = 0;
                 ApplyMotion(boundAnimator, bonePositionOffsets, boneRotationOffsets);
             }
@@ -96,7 +97,17 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
     float timePassedBetweenFrame;
 	Bvh bvh;
 
-	void Start()
+    public int NbFrame
+    {
+        get { return nbFrame; }
+        set
+        {
+            if (nbFrame == value) return;
+            nbFrame = value;
+        }
+    }
+
+    void Start()
 	{
 		nbFrame = 0;
 		bvh = gameObject.GetComponent<BvhImporter>().GetBvh();

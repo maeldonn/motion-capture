@@ -402,8 +402,10 @@ namespace UniHumanoid
                 var frameTime = 0.0f;
                 if (r.ReadLine() == "MOTION")
                 {
-
-                    var frameSplited = r.ReadLine().Split(':');
+                    var tmp = r.ReadLine();
+                    string[] frameSplited;
+                    if (tmp.Split(':')[0] != "Frames") frameSplited = r.ReadLine().Split(':');
+                    else frameSplited = tmp.Split(':');
 
                     if (frameSplited[0] != "Frames")
                     {
