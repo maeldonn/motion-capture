@@ -38,11 +38,12 @@ public class MvtRecognition : MonoBehaviour
     {
         foreach (var node in bvh.Root.Traverse())
         {
+            if(node.Name == "Hips") { break; }      //La rotation générale de la personne n'est pas pertinante quand il s'agit de comparer des mouvements
             bool checkValidity = true;
-            var neuronBone = (NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name);
-            if (System.Math.Abs(actor.GetReceivedRotation(neuronBone).x - bvh.GetReceivedPosition(node.Name, nbFrame, true).x) >= degreOfMargin) checkValidity = false;
-            else if (System.Math.Abs(actor.GetReceivedRotation(neuronBone).y - bvh.GetReceivedPosition(node.Name, nbFrame, true).y) >= degreOfMargin) checkValidity = false;
-            else if (System.Math.Abs(actor.GetReceivedRotation(neuronBone).z - bvh.GetReceivedPosition(node.Name, nbFrame, true).z) >= degreOfMargin) checkValidity = false;
+            var actorRotation = actor.GetReceivedRotation((NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name));
+            if (System.Math.Abs(actorRotation.x - bvh.GetReceivedPosition(node.Name, nbFrame, true).x) >= degreOfMargin) checkValidity = false;
+            else if (System.Math.Abs(actorRotation.y - bvh.GetReceivedPosition(node.Name, nbFrame, true).y) >= degreOfMargin) checkValidity = false;
+            else if (System.Math.Abs(actorRotation.z - bvh.GetReceivedPosition(node.Name, nbFrame, true).z) >= degreOfMargin) checkValidity = false;
             if (!checkValidity)
             {
                 //Debug.Log(node.Name+"not corresponding");
