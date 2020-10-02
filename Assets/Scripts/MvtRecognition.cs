@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UniHumanoid;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MvtRecognition : MonoBehaviour
 {
@@ -13,13 +14,19 @@ public class MvtRecognition : MonoBehaviour
     float timePassedBetweenFrame;
     public float degreOfMargin;
 
+    [SerializeField]
+    private GameObject player;
+
+    [SerializeField]
+    private GameObject uiHips;
+
     // Start is called before the first frame update
     void Start()
     {
         nbFrame = 0;
         timePassedBetweenFrame = 0;
-        bvh = gameObject.GetComponent<BvhImporter>().GetBvh();
-        actor = gameObject.GetComponent<NeuronAnimatorInstance>().GetActor();
+        bvh = player.GetComponent<BvhImporter>().GetBvh();
+        actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
     }
 
     // Update is called once per frame
@@ -38,7 +45,7 @@ public class MvtRecognition : MonoBehaviour
     {
         foreach (var node in bvh.Root.Traverse())
         {
-            if(node.Name == "Hips") { break; }      //La rotation générale de la personne n'est pas pertinante quand il s'agit de comparer des mouvements
+            if(node.Name == "Hips") { continue; }      //La rotation générale de la personne n'est pas pertinante quand il s'agit de comparer des mouvements
             bool checkValidity = true;
             var actorRotation = actor.GetReceivedRotation((NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name));
             if (System.Math.Abs(actorRotation.x - bvh.GetReceivedPosition(node.Name, nbFrame, true).x) >= degreOfMargin) checkValidity = false;
@@ -47,6 +54,26 @@ public class MvtRecognition : MonoBehaviour
             if (!checkValidity)
             {
                 //Debug.Log(node.Name+"not corresponding");
+                foreach (var c in uiHips.transform.GetComponentsInChildren<Transform>())
+                {
+                    if (node.Name == c.name)
+                    {
+                        c.GetComponent<RawImage>().color= new Color(1f,0f,0f);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                //Debug.Log(node.Name+" corresponding");
+                foreach (var c in uiHips.transform.GetComponentsInChildren<Transform>())
+                {
+                    if (node.Name == c.name)
+                    {
+                        c.GetComponent<RawImage>().color = new Color(0f, 1f, 0f);
+                        break;
+                    }
+                }
             }
         }
     }
