@@ -86,7 +86,7 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 
             //Les 7 lignes suivantes servent à calculer la frame de l'animation suivant le temps passé.
             timePassedBetweenFrame += Time.deltaTime;
-            timePassedBetweenFrame -= timePassedBetweenFrame%totalTime;
+            timePassedBetweenFrame = timePassedBetweenFrame%totalTime;
             nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
             //Debug.Log((int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds));    //Cette ligne peut-être utile pour avoir une idée du nombre de frame qui sont sautées.
 
