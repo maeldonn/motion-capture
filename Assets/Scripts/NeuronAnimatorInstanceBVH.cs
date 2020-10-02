@@ -74,33 +74,47 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 		CaluateOrignalRot();
 	}
 
-	// TODO: Use a Timer
+	// TODO: Use a Timer                //J'ai arrangé l'animation avec Time.deltaTime, ça devrait mieux fonctionner maintenant.
 	new void Update()
 	{
-		if (boundAnimator != null && motionUpdateMethod == UpdateMethod.Normal) // !physicalUpdate )
+		if (boundAnimator != null && motionUpdateMethod == UpdateMethod.Normal)
 		{
 			if (physicalReference.Initiated())
 			{
 				ReleasePhysicalContext();
 			}
+
+            //Les 7 lignes suivantes servent à calculer la frame de l'animation suivant le temps passé.
             timePassedBetweenFrame += Time.deltaTime;
-            if(bvh.FrameTime.TotalSeconds <= timePassedBetweenFrame/*temp passé >= frameTime */)
-            {
-                if (nbFrame < bvh.FrameCount - 1) nbFrame++; else nbFrame = 0;
-                ApplyMotion(boundAnimator, bonePositionOffsets, boneRotationOffsets);
-            }
+            timePassedBetweenFrame = timePassedBetweenFrame%totalTime;
+            nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
+            //Debug.Log((int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds));    //Cette ligne peut-être utile pour avoir une idée du nombre de frame qui sont sautées.
+
+            ApplyMotion(boundAnimator, bonePositionOffsets, boneRotationOffsets);
 		}
 	}
 
-	int nbFrame;
+    int nbFrame;
     float timePassedBetweenFrame;
 	Bvh bvh;
+    private float totalTime;        //Etant donné que cette valeur ne change pas, et puisqu'elle est utilisée régulièrement, on la garde de coté.
 
-	void Start()
+    public int NbFrame
+    {
+        get { return nbFrame; }
+        set
+        {
+            if (nbFrame == value) return;
+            nbFrame = value;
+        }
+    }
+
+    void Start()
 	{
 		nbFrame = 0;
-		bvh = gameObject.GetComponent<BvhImporter>().GetBvh();
-	}
+        bvh = gameObject.GetComponent<BvhImporter>().GetBvh();
+        totalTime = (float)bvh.FrameTime.TotalSeconds * bvh.FrameCount;
+    }
 
 	bool ValidateVector3(Vector3 vec)
 	{
