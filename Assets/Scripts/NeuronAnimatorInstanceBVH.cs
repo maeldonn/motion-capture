@@ -189,7 +189,7 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 		// apply Hips position
 		if (enableHipsMovement)
 		{
-			if(applyPosition) SetPosition(animator, HumanBodyBones.Hips, bvh.GetReceivedPosition("Hips",nbFrame, false) + positionOffsets[(int)HumanBodyBones.Hips]);
+			SetPosition(animator, HumanBodyBones.Hips, bvh.GetReceivedPosition("Hips",nbFrame, false) + positionOffsets[(int)HumanBodyBones.Hips]);
 			SetRotation(animator, HumanBodyBones.Hips, bvh.GetReceivedPosition("Hips", nbFrame, true));
 		}
 
