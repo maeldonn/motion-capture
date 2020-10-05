@@ -385,6 +385,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 387967117}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &395416024 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6726494049453845952, guid: f7477e8c191c83d4b83cdce50c4841ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 674303210}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &399563331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1464,7 +1470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   neuronEyePosition: {fileID: 249600}
-  cam: {fileID: 2063702571}
+  GOcam: {fileID: 395416024}
 --- !u!1 &2052418220 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ce4f04c116ec60048a0dc14ed1c4b856,
@@ -1514,12 +1520,6 @@ MonoBehaviour:
   physicalReferenceOverride: {fileID: 0}
   velocityMagic: 3000
   angularVelocityMagic: 20
---- !u!20 &2063702571 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 6726494049463734667, guid: f7477e8c191c83d4b83cdce50c4841ac,
-    type: 3}
-  m_PrefabInstance: {fileID: 674303210}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2085518983
 GameObject:
   m_ObjectHideFlags: 0
@@ -1673,7 +1673,7 @@ Transform:
   m_GameObject: {fileID: 2123262988}
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -0.25, y: 0.25, z: 10}
+  m_LocalScale: {x: -0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 2085518987}
   m_RootOrder: 0

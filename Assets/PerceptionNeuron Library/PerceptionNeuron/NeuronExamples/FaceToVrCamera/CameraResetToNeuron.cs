@@ -4,10 +4,12 @@ using System.Collections;
 public class CameraResetToNeuron : MonoBehaviour {
 
     public Transform neuronEyePosition;
-    public Camera cam;
+    public GameObject GOcam;
+    Camera cam;
 
 	void Start ()
     {
+        cam = GOcam.GetComponentInChildren<Camera>();
         Invoke("DoReset", 1f);
     }
 	
@@ -27,9 +29,9 @@ public class CameraResetToNeuron : MonoBehaviour {
         neuronQ = Quaternion.Euler(0f, neuronQ.eulerAngles.y, 0f);
 
         Quaternion deltQ = neuronQ * Quaternion.Inverse(camQ);
-        transform.localRotation = deltQ;
+        GOcam.transform.localRotation = deltQ;
 
-        Vector3 deltP = neuronEyePosition.position - transform.localRotation * cam.transform.localPosition;
-        transform.localPosition = deltP;
+        Vector3 deltP = neuronEyePosition.position - GOcam.transform.localRotation * cam.transform.localPosition;
+        GOcam.transform.localPosition = deltP;
     }
 }
