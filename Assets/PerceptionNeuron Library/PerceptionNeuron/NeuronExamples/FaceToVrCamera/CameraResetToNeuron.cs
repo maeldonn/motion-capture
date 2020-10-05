@@ -4,13 +4,12 @@ using System.Collections;
 public class CameraResetToNeuron : MonoBehaviour {
 
     public Transform neuronEyePosition;
-    Camera cam;
+    public Camera cam;
 
 	void Start ()
     {
-        cam = GetComponentInChildren<Camera>();
         Invoke("DoReset", 1f);
-	}
+    }
 	
 	// Update is called once per frame
 	void Update ()
