@@ -94,6 +94,7 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 		}
 	}
 
+    public bool applyPosition;
     int nbFrame;
     float timePassedBetweenFrame;
 	Bvh bvh;
@@ -188,12 +189,12 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 		// apply Hips position
 		if (enableHipsMovement)
 		{
-			SetPosition(animator, HumanBodyBones.Hips, bvh.GetReceivedPosition("Hips",nbFrame, false) + positionOffsets[(int)HumanBodyBones.Hips]);
+			if(applyPosition) SetPosition(animator, HumanBodyBones.Hips, bvh.GetReceivedPosition("Hips",nbFrame, false) + positionOffsets[(int)HumanBodyBones.Hips]);
 			SetRotation(animator, HumanBodyBones.Hips, bvh.GetReceivedPosition("Hips", nbFrame, true));
 		}
 
 		// apply positions
-		if (true)//actor.withDisplacement)
+		if (applyPosition)//actor.withDisplacement)
 		{
 			// legs
 			SetPosition(animator, HumanBodyBones.RightUpperLeg, bvh.GetReceivedPosition("RightUpLeg", nbFrame, false) + positionOffsets[(int)HumanBodyBones.RightUpperLeg]);

@@ -1696,6 +1696,7 @@ MonoBehaviour:
   physicalReferenceOverride: {fileID: 0}
   velocityMagic: 3000
   angularVelocityMagic: 20
+  applyPosition: 1
 --- !u!95 &1860301728
 Animator:
   serializedVersion: 3
@@ -1868,6 +1869,7 @@ MonoBehaviour:
   physicalReferenceOverride: {fileID: 0}
   velocityMagic: 3000
   angularVelocityMagic: 20
+  applyPosition: 0
 --- !u!95 &2052418222
 Animator:
   serializedVersion: 3
