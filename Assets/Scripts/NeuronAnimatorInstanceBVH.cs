@@ -72,7 +72,7 @@ public class NeuronAnimatorInstanceBVH : MonoBehaviour
 	}
 
 	// TODO: Use a Timer                //J'ai arrangé l'animation avec Time.deltaTime, ça devrait mieux fonctionner maintenant.
-	new void Update()
+	void Update()
 	{
 		if (boundAnimator != null && motionUpdateMethod == UpdateMethod.Normal)
 		{
@@ -81,11 +81,7 @@ public class NeuronAnimatorInstanceBVH : MonoBehaviour
 				ReleasePhysicalContext();
 			}
 
-            //Les 7 lignes suivantes servent à calculer la frame de l'animation suivant le temps passé.
-            timePassedBetweenFrame += Time.deltaTime;
-            timePassedBetweenFrame = timePassedBetweenFrame%totalTime;
-            nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
-            //Debug.Log((int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds));    //Cette ligne peut-être utile pour avoir une idée du nombre de frame qui sont sautées.
+            
 
             ApplyMotion(boundAnimator, bonePositionOffsets, boneRotationOffsets);
 		}
@@ -93,9 +89,7 @@ public class NeuronAnimatorInstanceBVH : MonoBehaviour
 
     public bool applyPosition;
     int nbFrame;
-    float timePassedBetweenFrame;
 	Bvh bvh;
-    private float totalTime;        //Etant donné que cette valeur ne change pas, et puisqu'elle est utilisée régulièrement, on la garde de coté.
 
     public int NbFrame
     {
@@ -111,7 +105,6 @@ public class NeuronAnimatorInstanceBVH : MonoBehaviour
 	{
 		nbFrame = 0;
         bvh = gameObject.GetComponent<BvhImporter>().GetBvh();
-        totalTime = (float)bvh.FrameTime.TotalSeconds * bvh.FrameCount;
     }
 
 	bool ValidateVector3(Vector3 vec)

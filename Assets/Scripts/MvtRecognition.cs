@@ -13,9 +13,13 @@ public class MvtRecognition : MonoBehaviour
     int nbFrame;
     float timePassedBetweenFrame;
     public float degreOfMargin;
+    private float totalTime;        //Etant donné que cette valeur ne change pas, et puisqu'elle est utilisée régulièrement, on la garde de coté.
 
     [SerializeField]
     private GameObject player;
+
+    [SerializeField]
+    private GameObject characterExemple;
 
     [SerializeField]
     private GameObject uiHips;
@@ -27,17 +31,18 @@ public class MvtRecognition : MonoBehaviour
         timePassedBetweenFrame = 0;
         bvh = player.GetComponent<BvhImporter>().GetBvh();
         actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
+        totalTime = (float)bvh.FrameTime.TotalSeconds * bvh.FrameCount;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Les 7 lignes suivantes servent à calculer la frame de l'animation suivant le temps passé.
         timePassedBetweenFrame += Time.deltaTime;
-        if (bvh.FrameTime.TotalSeconds <= timePassedBetweenFrame)
-        {
-            timePassedBetweenFrame = 0;
-            if (nbFrame < bvh.FrameCount - 1) nbFrame++; else nbFrame = 0;
-        }
+        timePassedBetweenFrame = timePassedBetweenFrame % totalTime;
+        nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
+        //Debug.Log((int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds));    //Cette ligne peut-être utile pour avoir une idée du nombre de frame qui sont sautées.
+        characterExemple.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame = nbFrame;
         compareMvt();
     }
 
