@@ -179,7 +179,8 @@ public class NeuronAnimatorInstanceBVH : MonoBehaviour
 		// apply Hips position
 		if (enableHipsMovement)
 		{
-			SetPosition(animator, HumanBodyBones.Hips, bvh.GetReceivedPosition("Hips",nbFrame, false) + positionOffsets[(int)HumanBodyBones.Hips]);
+            //Debug.Log(bvh);
+            SetPosition(animator, HumanBodyBones.Hips, bvh.GetReceivedPosition("Hips",nbFrame, false) + positionOffsets[(int)HumanBodyBones.Hips]);
 			SetRotation(animator, HumanBodyBones.Hips, bvh.GetReceivedPosition("Hips", nbFrame, true));
 		}
 

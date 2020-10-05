@@ -36,8 +36,8 @@ namespace UniHumanoid
 
         public void Parse(string path)
         {
-            BvhPath = path;
-            Bvh = Bvh.Parse(File.ReadAllText(BvhPath, Encoding.UTF8));
+            //BvhPath = path;
+            Bvh = Bvh.Parse(File.ReadAllText(path, Encoding.UTF8));
         }
 
         public Bvh GetBvh()

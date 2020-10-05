@@ -29,7 +29,7 @@ public class MvtRecognition : MonoBehaviour
     {
         nbFrame = 0;
         timePassedBetweenFrame = 0;
-        bvh = player.GetComponent<BvhImporter>().GetBvh();
+        bvh = characterExemple.GetComponent<BvhImporter>().GetBvh();
         actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
         totalTime = (float)bvh.FrameTime.TotalSeconds * bvh.FrameCount;
     }
