@@ -21,7 +21,7 @@ using UnityEngine;
 using Neuron;
 using UniHumanoid;
 
-public class NeuronAnimatorInstanceBVH : NeuronInstance
+public class NeuronAnimatorInstanceBVH : MonoBehaviour
 {
 	public bool useNewRig = true;
 	public Animator boundAnimator = null;
@@ -46,26 +46,23 @@ public class NeuronAnimatorInstanceBVH : NeuronInstance
 
 
 	public NeuronAnimatorInstanceBVH(Animator animator, NeuronActor actor)
-		: base(actor)
 	{
 		boundAnimator = animator;
 		UpdateOffset();
 	}
 
 	public NeuronAnimatorInstanceBVH(NeuronActor actor)
-		: base(actor)
 	{
 	}
 
 	bool inited = false;
-	new void OnEnable()
+	void OnEnable()
 	{
 		if (inited)
 		{
 			return;
 		}
 		inited = true;
-		base.OnEnable();
 		if (boundAnimator == null)
 		{
 			boundAnimator = GetComponent<Animator>();
