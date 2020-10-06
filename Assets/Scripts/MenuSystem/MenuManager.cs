@@ -36,13 +36,13 @@ public class MenuManager : MonoBehaviour
     {
         if (panelHistory.Count == 0)
         {
-            // Voulez vous vraiment quitter l'application ?
+            Application.Quit();
             return;
         }
 
         int lastIndex = panelHistory.Count - 1;
         SetCurrent(panelHistory[lastIndex]);
-        panelHistory.RemoveAt(lastIndex);
+        panelHistory.RemoveAt(lastIndex);  
     }
 
     public void SetCurrentWithHistory(Panel newPanel)
@@ -57,10 +57,5 @@ public class MenuManager : MonoBehaviour
 
         currentPanel = newPanel;
         currentPanel.Show();
-    }
-
-    public void ExitApplication()
-    {
-        Application.Quit();
     }
 }
