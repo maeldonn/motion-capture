@@ -401,7 +401,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.025
+      value: 2.13
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
@@ -411,27 +411,27 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.112
+      value: 5.55
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.99849737
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.054800272
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
@@ -446,7 +446,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -186.28299
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
@@ -1148,7 +1148,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.0809817
+      value: 4.95
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
@@ -1158,27 +1158,27 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.2292328
+      value: 5.011
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.9999936
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.0035769867
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
@@ -1193,7 +1193,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -179.59001
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ce4f04c116ec60048a0dc14ed1c4b856,
         type: 3}
@@ -1276,7 +1276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1154d8de4ec81974e89c800cc388bc52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_path: coucou1.bvh
+  m_path: prof1.bvh
 --- !u!114 &1860301727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1453,11 +1453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7883f8128ac209147856cfd4d6efb741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< Updated upstream
   degreOfMargin: 35
-=======
-  degreOfMargin: 100
->>>>>>> Stashed changes
   player: {fileID: 2052418220}
   characterExemple: {fileID: 1860301671}
   uiHips: {fileID: 1506294439}
