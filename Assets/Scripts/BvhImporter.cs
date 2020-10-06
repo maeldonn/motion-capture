@@ -9,6 +9,11 @@ namespace UniHumanoid
         public string m_path;
         private Bvh m_bvh;
 
+        public BvhImporter(string path)
+        {
+            m_path = path;
+        }
+
         public string BvhPath
         {
             get { return m_path; }
