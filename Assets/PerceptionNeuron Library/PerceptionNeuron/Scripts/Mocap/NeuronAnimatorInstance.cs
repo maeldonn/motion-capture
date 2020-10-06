@@ -191,7 +191,7 @@ public class NeuronAnimatorInstance : NeuronInstance
 		}
 
 		// apply positions
-		if( actor.withDisplacement )
+		if( false )     //TODO: virer ce qu'il y a dans le if
 		{
 			// legs
 			SetPosition( animator, HumanBodyBones.RightUpperLeg,			actor.GetReceivedPosition( NeuronBones.RightUpLeg ) + positionOffsets[(int)HumanBodyBones.RightUpperLeg] );
