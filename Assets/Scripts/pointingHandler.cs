@@ -13,6 +13,13 @@ public enum confirmState
     releaseClick
 }
 
+public enum pointingState
+{
+    idle,
+    pointing,
+    idlePointing
+}
+
 public class pointingHandler : MonoBehaviour
 {
     Bvh idlePointing;
@@ -32,12 +39,17 @@ public class pointingHandler : MonoBehaviour
     [SerializeField]
     GameObject leftHand;
 
-    confirmState state;
+    confirmState stateConfirm;
+    pointingState statePointing;
 
     GraphicRaycaster m_Raycaster;
     PointerEventData m_PointerEventData;
     EventSystem m_EventSystem;
 
+    [SerializeField]
+    public AudioClip clipConfirm;
+    [SerializeField]
+    public AudioClip clipPointing;
 
     // Start is called before the first frame update
     void Start()
@@ -54,54 +66,68 @@ public class pointingHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        switch (state)
+        if (statePointing != pointingState.idle)
         {
-            case confirmState.idle:
-                //TODO check if the intermediate position is used
+            switch (stateConfirm)
+            {
+                case confirmState.idle:
+                    //TODO check if the intermediate position is used
 
-                bool checkValidity = true;
-                foreach (var node in BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0].Traverse())     //Traverse on left thumb
-                {
-                    var actorRotation = actor.GetReceivedRotation((NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name));
-                    if (System.Math.Abs(actorRotation.x - BVHactivating.GetReceivedPosition(node.Name, 1, true).x) >= degreeOfMarginValidating) { checkValidity = false; break; }
-                    else if (System.Math.Abs(actorRotation.y - BVHactivating.GetReceivedPosition(node.Name, 1, true).y) >= degreeOfMarginValidating) { checkValidity = false; break; }
-                    else if (System.Math.Abs(actorRotation.z - BVHactivating.GetReceivedPosition(node.Name, 1, true).z) >= degreeOfMarginValidating) { checkValidity = false; break; }
-                }
+                    bool checkValidity = true;
+                    foreach (var node in BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0].Traverse())     //Traverse on left thumb
+                    {
+                        var actorRotation = actor.GetReceivedRotation((NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name));
+                        if (System.Math.Abs(actorRotation.x - BVHactivating.GetReceivedPosition(node.Name, 1, true).x) >= degreeOfMarginValidating) { checkValidity = false; break; }
+                        else if (System.Math.Abs(actorRotation.y - BVHactivating.GetReceivedPosition(node.Name, 1, true).y) >= degreeOfMarginValidating) { checkValidity = false; break; }
+                        else if (System.Math.Abs(actorRotation.z - BVHactivating.GetReceivedPosition(node.Name, 1, true).z) >= degreeOfMarginValidating) { checkValidity = false; break; }
+                    }
 
-                if (checkValidity)
-                {
-                    state = confirmState.click;
-                    lineMenu.endColor = Color.green;
-                }
-                break;
-            case confirmState.click:
-                //TODO interact with environment and change state
+                    if (checkValidity)
+                    {
+                        SoundManager.PlaySound(clipConfirm, leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position);
+                        stateConfirm = confirmState.click;
+                        lineMenu.endColor = Color.green;
+                    }
+                    break;
+                case confirmState.click:
+                    //TODO interact with environment and change state
 
-                state = confirmState.releaseClick;
-                break;
-            case confirmState.releaseClick:
-                //TODO check if the initial position is used
-                checkValidity = true;
-                foreach (var node in BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0].Traverse())     //Traverse on left thumb
-                {
-                    var actorRotation = actor.GetReceivedRotation((NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name));
-                    if (System.Math.Abs(actorRotation.x - BVHactivating.GetReceivedPosition(node.Name, 0, true).x) >= degreeOfMarginValidating) { checkValidity = false; break; }
-                    else if (System.Math.Abs(actorRotation.y - BVHactivating.GetReceivedPosition(node.Name, 0, true).y) >= degreeOfMarginValidating) { checkValidity = false; break; }
-                    else if (System.Math.Abs(actorRotation.z - BVHactivating.GetReceivedPosition(node.Name, 0, true).z) >= degreeOfMarginValidating) { checkValidity = false; break; }
-                }
+                    stateConfirm = confirmState.releaseClick;
+                    break;
+                case confirmState.releaseClick:
+                    //TODO check if the initial position is used
+                    checkValidity = true;
+                    foreach (var node in BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0].Traverse())     //Traverse on left thumb
+                    {
+                        var actorRotation = actor.GetReceivedRotation((NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name));
+                        if (System.Math.Abs(actorRotation.x - BVHactivating.GetReceivedPosition(node.Name, 0, true).x) >= degreeOfMarginValidating) { checkValidity = false; break; }
+                        else if (System.Math.Abs(actorRotation.y - BVHactivating.GetReceivedPosition(node.Name, 0, true).y) >= degreeOfMarginValidating) { checkValidity = false; break; }
+                        else if (System.Math.Abs(actorRotation.z - BVHactivating.GetReceivedPosition(node.Name, 0, true).z) >= degreeOfMarginValidating) { checkValidity = false; break; }
+                    }
 
-                if (checkValidity)
-                {
-                    state = confirmState.idle;
-                    lineMenu.endColor = Color.white;
-                }
-                break;
+                    if (checkValidity)
+                    {
+                        stateConfirm = confirmState.idle;
+                        lineMenu.endColor = Color.white;
+                    }
+                    break;
+            }
         }
         //Debug.Log(state);
-
+        if(statePointing== pointingState.pointing)
+        { 
+            SoundManager.PlaySound(clipPointing, leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position);
+            statePointing = pointingState.idlePointing;
+        }
         if (compareHandPosition())
         {
+            if (statePointing == pointingState.idle)
+            {
+                statePointing = pointingState.pointing;
+            }else
+            {
+                statePointing = pointingState.idlePointing;
+            }
             //Debug.Log("Hand pointing");
             lineMenu.gameObject.SetActive(true);
             Vector3 unitVector = leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position - leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position;
@@ -127,13 +153,14 @@ public class pointingHandler : MonoBehaviour
         else
         {
             //Debug.Log("Hand not pointing");
+            statePointing = pointingState.idle;
             lineMenu.gameObject.SetActive(false);
         }
     }
 
     public confirmState GetState()
     {
-        return state;
+        return stateConfirm;
     }
 
     public bool compareHandPosition()  //position de la main == idlePointing.frame[0]

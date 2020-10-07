@@ -1358,9 +1358,9 @@ RectTransform:
   m_Father: {fileID: 1163185815}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 200, y: -200}
   m_SizeDelta: {x: 400, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1472591353
@@ -2079,6 +2079,8 @@ MonoBehaviour:
   degreeOfMarginValidating: 20
   lineMenu: {fileID: 991941095}
   leftHand: {fileID: 437071741}
+  clipConfirm: {fileID: 8300000, guid: 99b74ead5bdbecc4cb8258f5ff1b2d7b, type: 3}
+  clipPointing: {fileID: 8300000, guid: 933806ee05bd00f47b49e9ea4493b937, type: 3}
 --- !u!1 &2052418220 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ce4f04c116ec60048a0dc14ed1c4b856,
