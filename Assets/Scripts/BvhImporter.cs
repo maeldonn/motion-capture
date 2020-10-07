@@ -36,7 +36,7 @@ namespace UniHumanoid
 
         public void Parse()
         {
-            Parse(Application.dataPath + "/BVH/Arm/" + BvhPath);
+            Parse(Application.dataPath + "/BVH/" + BvhPath);
         }
 
         public void Parse(string path)
