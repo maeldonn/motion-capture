@@ -13,18 +13,26 @@ public class ListCreator : MonoBehaviour
     [SerializeField]
     private RectTransform content = null;
 
-    private ItemDetails[] items = null;
+    [SerializeField]
+    private bool usingArm = false;
+
+    private string[] itemNames = null;
+    private string[] itemPaths = null;
+
+    public string getNameFromPath(string path)
+    {
+        string[] splittedPath = path.Split('/');
+        return splittedPath[splittedPath.Length - 1].Split('.')[0];
+    }
 
     public void SetItems()
     {
-        string[] pathArray = Directory.GetFiles(Application.dataPath + "/BVH/Arm/", "*.bvh");
-        items = new ItemDetails[pathArray.Length];
-        foreach (string path in pathArray)
+        string directoryPath = usingArm ? "/BVH/Arm/" : "/BVH/Body/";
+        itemPaths = Directory.GetFiles(Application.dataPath + directoryPath, "*.bvh");
+        itemNames = new string[itemPaths.Length];
+        for (int i = 0; i < itemNames.Length; i++)
         {
-            //create a new item details object
-            // Set his values with an external function
-            // Add to the array
-            items.Add("aaaa");
+            itemNames[i] = getNameFromPath(itemPaths[i]);
         }
     }
 
@@ -35,9 +43,9 @@ public class ListCreator : MonoBehaviour
         SetItems();
 
         //setContent Holder Height;
-        content.sizeDelta = new Vector2(0, items.Length * 60);
+        content.sizeDelta = new Vector2(0, itemNames.Length * 60);
 
-        for (int i = 0; i < items.Length; i++)
+        for (int i = 0; i < itemNames.Length; i++)
         {
             // 60 width of item
             float spawnY = i * 60;
@@ -49,9 +57,9 @@ public class ListCreator : MonoBehaviour
             SpawnedItem.transform.SetParent(SpawnPoint, false);
             //get ItemDetails Component
             ItemDetails itemDetails = SpawnedItem.GetComponent<ItemDetails>();
-            //set name
-            itemDetails.text.text = items[i];
-
+            //set name and path
+            itemDetails.text.text = itemNames[i];
+            itemDetails.path = itemPaths[i];
         }
     }
 }
