@@ -1,34 +1,57 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.IO;
 using UnityEngine;
 
 public class ListCreator : MonoBehaviour
 {
 
+    [SerializeField]
     private Transform SpawnPoint = null;
 
+    [SerializeField]
     private GameObject item = null;
 
+    [SerializeField]
     private RectTransform content = null;
 
-    private int numberOfItems = 0;
+    private ItemDetails[] items = null;
 
-    public string[] itemNames = null;
-    public Sprite[] itemImages = null;
+    public void SetItems()
+    {
+        string[] pathArray = Directory.GetFiles(Application.dataPath + "/BVH/Arm/", "*.bvh");
+        items = new ItemDetails[pathArray.Length];
+        foreach (string path in pathArray)
+        {
+            //create a new item details object
+            // Set his values with an external function
+            // Add to the array
+            items.Add("aaaa");
+        }
+    }
 
-    // Start is called before the first frame update
+    // Use this for initialization
     void Start()
     {
-        content.sizeDelta = new Vector2(0, numberOfItems * 60);
+        // Initialize itemNames
+        SetItems();
 
-        for (int i = 0; i < numberOfItems; i++)
+        //setContent Holder Height;
+        content.sizeDelta = new Vector2(0, items.Length * 60);
+
+        for (int i = 0; i < items.Length; i++)
         {
+            // 60 width of item
             float spawnY = i * 60;
-            Vector3 pos = new Vector3(SpawnPoint.position.x, -spawnY, SpawnPoint.position.z);
-            GameObject SpawnedItem = Instantiate(item, pos, SpawnPoint.rotation);
+            //newSpawn Position
+            Vector3 pos = new Vector3(SpawnPoint.localPosition.x, -spawnY, SpawnPoint.localPosition.z);
+            //instantiate item
+            GameObject SpawnedItem = Instantiate(item, pos, SpawnPoint.localRotation);
+            //setParent
             SpawnedItem.transform.SetParent(SpawnPoint, false);
-            ArmItemDetails armItemDetails = SpawnedItem.GetComponent<ArmItemDetails>();
-            armItemDetails.text.text = itemNames[i];
+            //get ItemDetails Component
+            ItemDetails itemDetails = SpawnedItem.GetComponent<ItemDetails>();
+            //set name
+            itemDetails.text.text = items[i];
+
         }
     }
 }
