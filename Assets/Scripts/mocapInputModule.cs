@@ -8,10 +8,12 @@ using UnityEngine.EventSystems;
 public class mocapInputModule : BaseInputModule
 {
 
+    public Camera m_camera;     //used for the GraphicRaycast
+
     private GameObject m_CurrentObject= null;
     private PointerEventData m_Data = null;
     [SerializeField]
-    pointingHandler pointhandler;
+    private pointingHandler pointhandler;
 
     protected override void Awake()
     {
@@ -23,7 +25,7 @@ public class mocapInputModule : BaseInputModule
     {
         //Reset data
         m_Data.Reset();
-        m_Data.position = pointhandler.GetStartPos();
+        m_Data.position = new Vector2(m_camera.pixelWidth / 2, m_camera.pixelHeight / 2);
 
         //Raycast
         eventSystem.RaycastAll(m_Data,m_RaycastResultCache);

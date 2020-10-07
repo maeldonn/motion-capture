@@ -121,27 +121,14 @@ public class pointingHandler : MonoBehaviour
             }
 
             lineMenu.SetPositions(new [] { leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position, tmpPos });
+            lineMenu.transform.position = leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position;
+            lineMenu.transform.LookAt(tmpPos);
         }
         else
         {
             //Debug.Log("Hand not pointing");
             lineMenu.gameObject.SetActive(false);
         }
-    }
-
-    public Vector3 GetUnitVector()
-    {
-        return leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position - leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position;
-    }
-
-    public Vector3 GetStartPos()
-    {
-        return leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position;
-    }
-
-    public Vector3 GetEndPos()
-    {
-        return leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position;
     }
 
     public confirmState GetState()
