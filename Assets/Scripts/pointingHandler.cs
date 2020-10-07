@@ -113,7 +113,7 @@ public class pointingHandler : MonoBehaviour
                     break;
             }
         }
-        //Debug.Log(state);
+
         if(statePointing== pointingState.pointing)
         { 
             SoundManager.PlaySound(clipPointing, leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position);
@@ -143,7 +143,7 @@ public class pointingHandler : MonoBehaviour
             else
             {
                 //Debug.Log("No collider hit");
-                tmpPos = new Vector3();
+                tmpPos = unitVector*1000;
             }
 
             lineMenu.SetPositions(new [] { leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position, tmpPos });

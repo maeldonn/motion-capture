@@ -52,11 +52,43 @@ public class mocapInputModule : BaseInputModule
 
     private void ProcessPress(PointerEventData data)
     {
+        //Set raycast
+        data.pointerPressRaycast = data.pointerCurrentRaycast;
 
+        //Check if object hit, get the down handler, call
+        GameObject newPointerPress = ExecuteEvents.ExecuteHierarchy(m_CurrentObject,data,ExecuteEvents.pointerDownHandler);
+
+        //If no down handler, try and get click handler
+        if (newPointerPress == null)
+            newPointerPress = ExecuteEvents.GetEventHandler<IPointerClickHandler>(m_CurrentObject);
+
+        //Set data
+        data.pressPosition = data.position;
+        data.pointerPress = newPointerPress;
+        data.rawPointerPress = m_CurrentObject;
     }
 
     private void ProcessRelease(PointerEventData data)
     {
+        //Execute pointer up
+        ExecuteEvents.Execute(data.pointerPress, data, ExecuteEvents.pointerUpHandler);
+
+        //Check for click handler
+        GameObject pointerUpHandler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(m_CurrentObject);
+
+        //Check if actual
+        if(data.pointerPress == pointerUpHandler)
+        {
+            ExecuteEvents.Execute(data.pointerPress, data, ExecuteEvents.pointerClickHandler);
+        }
+
+        //Clear selected gameObject
+        eventSystem.SetSelectedGameObject(null);
+
+        //Reset data
+        data.pressPosition = Vector2.zero;
+        data.pointerPress = null;
+        data.rawPointerPress = null;
 
     }
 }
