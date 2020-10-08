@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuManager : MonoBehaviour
@@ -28,6 +29,7 @@ public class MenuManager : MonoBehaviour
     {
         if (panelHistory.Count == 0)
         {
+            // System.Diagnostics.Process.GetCurrentProcess().Kill(); // To quit in developement
             Application.Quit();
             return;
         }
@@ -49,5 +51,11 @@ public class MenuManager : MonoBehaviour
 
         currentPanel = newPanel;
         currentPanel.Show();
+    }
+
+    public void GoToDefault()
+    {
+        SetCurrent(panelHistory[0]);
+        panelHistory.RemoveRange(1, panelHistory.Count - 1);
     }
 }

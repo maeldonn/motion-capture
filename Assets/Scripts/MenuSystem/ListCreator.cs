@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ListCreator : MonoBehaviour
 {
@@ -15,6 +16,12 @@ public class ListCreator : MonoBehaviour
 
     [SerializeField]
     private bool usingArm = false;
+
+    [SerializeField]
+    private GameObject menu = null;
+
+    [SerializeField]
+    private Panel panel = null;
 
     private string[] itemNames = null;
     private string[] itemPaths = null;
@@ -53,6 +60,8 @@ public class ListCreator : MonoBehaviour
             Vector3 pos = new Vector3(SpawnPoint.localPosition.x, -spawnY, SpawnPoint.localPosition.z);
             //instantiate item
             GameObject SpawnedItem = Instantiate(item, pos, SpawnPoint.localRotation);
+            // Set on click in script
+            SpawnedItem.GetComponentInChildren<Button>().onClick.AddListener(delegate { menu.GetComponent<MenuManager>().SetCurrentWithHistory(panel); });
             //setParent
             SpawnedItem.transform.SetParent(SpawnPoint, false);
             //get ItemDetails Component
