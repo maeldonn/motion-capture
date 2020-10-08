@@ -24,14 +24,6 @@ public class MenuManager : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        if (true) // Appuyer sur un Boutton du controlleur
-        {
-            GoToPrevious();
-        }
-    }
-
     public void GoToPrevious()
     {
         if (panelHistory.Count == 0)

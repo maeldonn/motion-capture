@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class MvtRecognition : MonoBehaviour
 {
-
     Bvh bvh;
     NeuronActor actor;
     int nbFrame;
@@ -16,20 +15,20 @@ public class MvtRecognition : MonoBehaviour
     private float totalTime;        //Etant donné que cette valeur ne change pas, et puisqu'elle est utilisée régulièrement, on la garde de coté.
 
     [SerializeField]
-    private GameObject player;
+    private GameObject player = null;
 
     [SerializeField]
-    private GameObject characterExemple;
+    private GameObject characterExemple = null;
 
     [SerializeField]
-    private GameObject uiHips;
+    private GameObject uiHips = null;
 
     // Start is called before the first frame update
     void Start()
     {
         nbFrame = 0;
         timePassedBetweenFrame = 0;
-        bvh = characterExemple.GetComponent<BvhImporter>().GetBvh();
+        bvh = GetComponent<BvhImporter>().GetBvh();
         actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
         totalTime = (float)bvh.FrameTime.TotalSeconds * bvh.FrameCount;
     }
@@ -41,7 +40,6 @@ public class MvtRecognition : MonoBehaviour
         timePassedBetweenFrame += Time.deltaTime;
         timePassedBetweenFrame = timePassedBetweenFrame % totalTime;
         nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
-        //Debug.Log((int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds));    //Cette ligne peut-être utile pour avoir une idée du nombre de frame qui sont sautées.
         characterExemple.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame = nbFrame;
         compareMvt();
     }
