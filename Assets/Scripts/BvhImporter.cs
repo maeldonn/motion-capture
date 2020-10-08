@@ -9,6 +9,11 @@ namespace UniHumanoid
         public string m_path;
         private Bvh m_bvh;
 
+        public BvhImporter(string path)
+        {
+            m_path = path;
+        }
+
         public string BvhPath
         {
             get { return m_path; }
@@ -31,7 +36,7 @@ namespace UniHumanoid
 
         public void Parse()
         {
-            Parse(Application.dataPath + "/BVH/" + BvhPath);
+            Parse(Application.dataPath + "/BVH/Arm/" + BvhPath);
         }
 
         public void Parse(string path)
