@@ -143,7 +143,7 @@ public class pointingHandler : MonoBehaviour
             else
             {
                 //Debug.Log("No collider hit");
-                tmpPos = unitVector*1000;
+                tmpPos = leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position+unitVector * 1000;
             }
 
             lineMenu.SetPositions(new [] { leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position, tmpPos });
