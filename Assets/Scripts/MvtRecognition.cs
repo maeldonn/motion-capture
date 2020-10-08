@@ -23,6 +23,14 @@ public class MvtRecognition : MonoBehaviour
     [SerializeField]
     private GameObject uiHips = null;
 
+    [SerializeField]
+    private int nbFirstMvtToCheck;      //The number of frame needed to check if the mouvement is launched
+    private List<List<Vector3>> firstMvt = null;            //The list containing all the frame to check to see if the user is doing the mouvement
+    //private List<List<Vector3>> currentfirstMvt = null;         //The list containing the last mouvement made by the user; will be compared with firstMvt
+    private List<bool> checkedValues = null;    //Corresponding
+    bool mvtLaunched = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +39,9 @@ public class MvtRecognition : MonoBehaviour
         bvh = GetComponent<BvhImporter>().GetBvh();
         actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
         totalTime = (float)bvh.FrameTime.TotalSeconds * bvh.FrameCount;
+        firstMvt = bvh.GetListFrame(0,nbFirstMvtToCheck);
+        checkedValues = new List<bool>();
+        resetNbFirstMvtToCheck();
     }
 
     // Update is called once per frame
@@ -38,10 +49,25 @@ public class MvtRecognition : MonoBehaviour
     {
         //Les 7 lignes suivantes servent à calculer la frame de l'animation suivant le temps passé.
         timePassedBetweenFrame += Time.deltaTime;
-        timePassedBetweenFrame = timePassedBetweenFrame % totalTime;
-        nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
-        characterExemple.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame = nbFrame;
-        compareMvt();
+
+        if (mvtLaunched)
+        {
+            timePassedBetweenFrame = timePassedBetweenFrame % totalTime;
+            nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
+            compareMvt();
+        }
+        else
+        {
+            timePassedBetweenFrame = timePassedBetweenFrame % (float)bvh.FrameTime.TotalSeconds * 50;
+            nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
+            //checkedValues
+        }
+        if (characterExemple != null) characterExemple.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame = nbFrame;
+    }
+
+    void resetNbFirstMvtToCheck()
+    {
+        for (int i = 0; i < nbFirstMvtToCheck; i++) checkedValues.Add(false);
     }
 
     void compareMvt()
@@ -79,5 +105,10 @@ public class MvtRecognition : MonoBehaviour
                 }
             }
         }
+    }
+
+    void launchComparison()
+    {
+
     }
 }

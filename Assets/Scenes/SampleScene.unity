@@ -1476,6 +1476,12 @@ PrefabInstance:
     - {fileID: 6726494049453845955, guid: f7477e8c191c83d4b83cdce50c4841ac, type: 3}
     - {fileID: 6726494050537669630, guid: f7477e8c191c83d4b83cdce50c4841ac, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f7477e8c191c83d4b83cdce50c4841ac, type: 3}
+--- !u!1 &695176170 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6726494050627412814, guid: f7477e8c191c83d4b83cdce50c4841ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 674303210}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &701350915
 GameObject:
   m_ObjectHideFlags: 0
@@ -4211,6 +4217,7 @@ GameObject:
   - component: {fileID: 2048113674}
   - component: {fileID: 2048113675}
   - component: {fileID: 2048113676}
+  - component: {fileID: 2048113673}
   m_Layer: 0
   m_Name: gameManager
   m_TagString: Untagged
@@ -4232,6 +4239,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2048113673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048113671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7883f8128ac209147856cfd4d6efb741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  degreOfMargin: 40
+  player: {fileID: 1341332105}
+  characterExemple: {fileID: 0}
+  uiHips: {fileID: 695176170}
+  nbFirstMvtToCheck: 50
 --- !u!114 &2048113674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4263,7 +4287,7 @@ MonoBehaviour:
   degreeOfMarginValidating: 20
   lineMenu: {fileID: 991941095}
   leftHand: {fileID: 1341332107}
-  clipConfirm: {fileID: 8300000, guid: 99b74ead5bdbecc4cb8258f5ff1b2d7b, type: 3}
+  clipConfirm: {fileID: 8300000, guid: a267526f38dfca445934f840bac7e69c, type: 3}
   clipPointing: {fileID: 8300000, guid: 933806ee05bd00f47b49e9ea4493b937, type: 3}
 --- !u!114 &2048113676
 MonoBehaviour:
