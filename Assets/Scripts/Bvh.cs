@@ -212,22 +212,6 @@ namespace UniHumanoid
             public bool IsLocation;
         }
 
-        public List<List<Vector3>> GetListFrame(int firstFrame, int lastFrame)
-        {
-            if(firstFrame<0 || lastFrame>=m_frames || firstFrame>lastFrame) throw new Exception("Bad parameters");
-            List<List<Vector3>> returnValue = new List<List<Vector3>>();
-            for (int i =firstFrame; i<lastFrame; i++)
-            {
-                List<Vector3> frameValues = new List<Vector3>();
-                foreach (var node in Root.Traverse())
-                {
-                    frameValues.Add(GetReceivedPosition(node.Name,i,true));
-                }
-                returnValue.Add(frameValues);
-            }
-            return returnValue;
-        }
-
         public Vector3 GetReceivedPosition(string boneName, int frame, bool rotation)
         {
             float NeuronUnityLinearScale = 0.01f;
