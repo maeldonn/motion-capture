@@ -24,12 +24,13 @@ public class Store : MonoBehaviour
         {
             if (m_path == value) return;
             m_path = value;
+            Bvh = new Bvh().GetBvhFromPath(m_path);
         }
     }
     public Bvh Bvh
     {
         get { return m_bvh; }
-        set
+        private set
         {
             if (m_bvh == value) return;
             m_bvh = value;
@@ -43,10 +44,6 @@ public class Store : MonoBehaviour
 
     private void Update()
     {
-        // TODO: Update
-        if (Path != null && Bvh == null)
-        {
-            Bvh = new Bvh().GetBvhFromPath(Path);
-        }
+        Debug.Log("Path: " + Path);
     }
 }

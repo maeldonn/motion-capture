@@ -55,8 +55,6 @@ public class ListCreator : MonoBehaviour
             Vector3 pos = new Vector3(0, -spawnY, 0);
             //instantiate item
             GameObject SpawnedItem = Instantiate(item, pos, SpawnPoint.localRotation);
-            // Set on click in script
-            SpawnedItem.GetComponentInChildren<Button>().onClick.AddListener(delegate { menu.GetComponent<MenuManager>().SetCurrentWithHistory(panel); });
             //setParent
             SpawnedItem.transform.SetParent(SpawnPoint, false);
             //get ItemDetails Component
@@ -64,9 +62,17 @@ public class ListCreator : MonoBehaviour
             //set name and path
             itemDetails.text.text = itemNames[i];
             itemDetails.path = itemPaths[i];
+            // Set on click in script
+            SpawnedItem.GetComponentInChildren<Button>().onClick.AddListener(delegate { onClick(itemDetails.path); });
             //setContent Holder Height;
             content.sizeDelta = new Vector2(0, itemNames.Length * 60);
         }
+    }
+
+    private void onClick(string path)
+    {
+        menu.GetComponent<MenuManager>().SetCurrentWithHistory(panel);
+        store.Path = path;
     }
 
     public void removeItems()
