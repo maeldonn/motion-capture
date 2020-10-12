@@ -1,6 +1,4 @@
 ﻿using Neuron;
-using System.Collections;
-using System.Collections.Generic;
 using UniHumanoid;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,12 +21,15 @@ public class MvtRecognition : MonoBehaviour
     [SerializeField]
     private GameObject uiHips = null;
 
+    [SerializeField]
+    private Store store = null;
+
     // Start is called before the first frame update
     void Start()
     {
         nbFrame = 0;
         timePassedBetweenFrame = 0;
-        bvh = GetComponent<BvhImporter>().GetBvh();
+        bvh = store.Bvh;
         actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
         totalTime = (float)bvh.FrameTime.TotalSeconds * bvh.FrameCount;
     }

@@ -1,6 +1,4 @@
 ﻿using Neuron;
-using System.Collections;
-using System.Collections.Generic;
 using UniHumanoid;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -25,41 +23,36 @@ public class pointingHandler : MonoBehaviour
     Bvh idlePointing;
     Bvh BVHactivating;
     NeuronActor actor;
+
     [SerializeField]
     private GameObject player;
+
     [SerializeField]
     int degreeOfMarginPointing;
+
     [SerializeField]
     int degreeOfMarginValidating;
 
     [SerializeField]
     LineRenderer lineMenu;
 
-    private BvhNode BVHleftHand;
     [SerializeField]
     GameObject leftHand;
 
     confirmState stateConfirm;
     pointingState statePointing;
 
-    GraphicRaycaster m_Raycaster;
-    PointerEventData m_PointerEventData;
-    EventSystem m_EventSystem;
-
     [SerializeField]
     public AudioClip clipConfirm;
+
     [SerializeField]
     public AudioClip clipPointing;
 
     // Start is called before the first frame update
     void Start()
     {
-        BvhImporter tmp = new BvhImporter("pointeur_3.bvh");
-        tmp.Parse();
-        idlePointing = tmp.GetBvh();
-        tmp.BvhPath = "pointeur_2.bvh";
-        tmp.Parse();
-        BVHactivating = tmp.GetBvh();
+        idlePointing = new Bvh().GetBvhFromPath("Assets/BVH/pointeur_3.bvh");
+        BVHactivating = new Bvh().GetBvhFromPath("Assets/BVH/pointeur_2.bvh");
         actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
     }
 

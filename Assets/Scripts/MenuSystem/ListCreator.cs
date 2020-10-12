@@ -21,7 +21,7 @@ public class ListCreator : MonoBehaviour
     private Panel panel = null;
 
     [SerializeField]
-    private Arm arm = null;
+    private Store store = null;
 
     private string[] itemNames = null;
     private string[] itemPaths = null;
@@ -36,7 +36,7 @@ public class ListCreator : MonoBehaviour
 
     public void SetItems()
     {
-        string directoryPath = arm.UsingArm ? "/BVH/Arm/" : "/BVH/Body/";
+        string directoryPath = store.UsingArm ? "/BVH/Arm/" : "/BVH/Body/";
         itemPaths = Directory.GetFiles(Application.dataPath + directoryPath, "*.bvh");
         itemNames = new string[itemPaths.Length];
         for (int i = 0; i < itemNames.Length; i++)
@@ -80,7 +80,7 @@ public class ListCreator : MonoBehaviour
 
     private void Start()
     {
-        lastArm = arm.UsingArm;
+        lastArm = store.UsingArm;
 
         // Initialize itemNames
         SetItems();
@@ -91,12 +91,12 @@ public class ListCreator : MonoBehaviour
 
     private void Update()
     {
-        if (arm.UsingArm != lastArm)
+        if (store.UsingArm != lastArm)
         {
             removeItems();
             SetItems();
             ShowItems();
-            lastArm = arm.UsingArm;
+            lastArm = store.UsingArm;
         }
     }
 }

@@ -25,7 +25,10 @@ public class NeuronAnimatorInstanceBVH : MonoBehaviour
 {
 	[SerializeField]
 	private GameObject gameManager = null;
-	
+
+	[SerializeField]
+	private Store store = null;
+
 	public bool useNewRig = true;
 	public Animator boundAnimator = null;
 	public UpdateMethod motionUpdateMethod = UpdateMethod.Normal;
@@ -107,7 +110,7 @@ public class NeuronAnimatorInstanceBVH : MonoBehaviour
     void Start()
 	{
 		nbFrame = 0;
-        bvh = gameManager.GetComponent<BvhImporter>().GetBvh();
+        bvh = store.Bvh;
     }
 
 	bool ValidateVector3(Vector3 vec)
