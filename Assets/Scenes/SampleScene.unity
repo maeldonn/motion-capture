@@ -1515,6 +1515,7 @@ PrefabInstance:
     - {fileID: 6726494049453845955, guid: f7477e8c191c83d4b83cdce50c4841ac, type: 3}
     - {fileID: 6726494050537669630, guid: f7477e8c191c83d4b83cdce50c4841ac, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f7477e8c191c83d4b83cdce50c4841ac, type: 3}
+
 --- !u!1 &711578622
 GameObject:
   m_ObjectHideFlags: 0
@@ -1858,6 +1859,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 816491512}
   m_CullTransparentMesh: 0
+
 --- !u!1 &860842295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1897,11 +1899,13 @@ RectTransform:
   m_SizeDelta: {x: 300, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &860842297
+
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+
   m_GameObject: {fileID: 860842295}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -1954,6 +1958,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+
 --- !u!1 &925584057
 GameObject:
   m_ObjectHideFlags: 0
@@ -3681,6 +3686,36 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &1827327244
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1827327245}
+  m_Layer: 0
+  m_Name: eyePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1827327245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827327244}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 825022822}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1833931377
 GameObject:
   m_ObjectHideFlags: 0
@@ -4410,9 +4445,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2048113671}
   m_Enabled: 1
   m_EditorHideFlags: 0
+
   m_Script: {fileID: 11500000, guid: 0c5e417ab9bb2bd43bc55c36fc03055f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+
 --- !u!114 &2048113674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4444,8 +4481,9 @@ MonoBehaviour:
   degreeOfMarginValidating: 20
   lineMenu: {fileID: 991941095}
   leftHand: {fileID: 1341332107}
-  clipConfirm: {fileID: 8300000, guid: 99b74ead5bdbecc4cb8258f5ff1b2d7b, type: 3}
+  clipConfirm: {fileID: 8300000, guid: a267526f38dfca445934f840bac7e69c, type: 3}
   clipPointing: {fileID: 8300000, guid: 933806ee05bd00f47b49e9ea4493b937, type: 3}
+
 --- !u!1 &2049434457
 GameObject:
   m_ObjectHideFlags: 0

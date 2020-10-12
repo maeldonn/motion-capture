@@ -48,6 +48,9 @@ public class pointingHandler : MonoBehaviour
     [SerializeField]
     public AudioClip clipPointing;
 
+    [SerializeField]
+    MvtRecognition mvtRecognition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -64,9 +67,13 @@ public class pointingHandler : MonoBehaviour
             switch (stateConfirm)
             {
                 case confirmState.idle:
-                    //TODO check if the intermediate position is used
-
-                    bool checkValidity = true;
+                    if(mvtRecognition.launchComparison(BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0], BVHactivating, degreeOfMarginValidating, new string[0],1))
+                    {
+                        SoundManager.PlaySound(clipConfirm, leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position);
+                        stateConfirm = confirmState.click;
+                        lineMenu.endColor = Color.green;
+                    }
+                    /*bool checkValidity = true;            //A ENLEVER
                     foreach (var node in BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0].Traverse())     //Traverse on left thumb
                     {
                         var actorRotation = actor.GetReceivedRotation((NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name));
@@ -80,16 +87,20 @@ public class pointingHandler : MonoBehaviour
                         SoundManager.PlaySound(clipConfirm, leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position);
                         stateConfirm = confirmState.click;
                         lineMenu.endColor = Color.green;
-                    }
+                    }*/
                     break;
-                case confirmState.click:
-                    //TODO interact with environment and change state
 
+                case confirmState.click:
                     stateConfirm = confirmState.releaseClick;
                     break;
+
                 case confirmState.releaseClick:
-                    //TODO check if the initial position is used
-                    checkValidity = true;
+                    if (mvtRecognition.launchComparison(BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0], BVHactivating, degreeOfMarginValidating, new string[0],0))
+                    {
+                        stateConfirm = confirmState.idle;
+                        lineMenu.endColor = Color.white;
+                    }
+                    /*checkValidity = true;         //A ENLEVER
                     foreach (var node in BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0].Traverse())     //Traverse on left thumb
                     {
                         var actorRotation = actor.GetReceivedRotation((NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name));
@@ -102,7 +113,7 @@ public class pointingHandler : MonoBehaviour
                     {
                         stateConfirm = confirmState.idle;
                         lineMenu.endColor = Color.white;
-                    }
+                    }*/
                     break;
             }
         }
@@ -112,7 +123,8 @@ public class pointingHandler : MonoBehaviour
             SoundManager.PlaySound(clipPointing, leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position);
             statePointing = pointingState.idlePointing;
         }
-        if (compareHandPosition())
+        //if (compareHandPosition())
+        if(mvtRecognition.launchComparison(idlePointing.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0], idlePointing, degreeOfMarginPointing,new string[1] { "Thumb" },0))
         {
             if (statePointing == pointingState.idle)
             {
@@ -156,7 +168,7 @@ public class pointingHandler : MonoBehaviour
         return stateConfirm;
     }
 
-    public bool compareHandPosition()  //position de la main == idlePointing.frame[0]
+    /*public bool compareHandPosition()  //position de la main == idlePointing.frame[0]         //A ENLEVER
     {
         bool checkValidity = true;
         foreach (var node in idlePointing.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Traverse())  //Traverse on left hand
@@ -170,5 +182,5 @@ public class pointingHandler : MonoBehaviour
         }
 
         return true;
-    }
+    }*/
 }
