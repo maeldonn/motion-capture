@@ -4375,7 +4375,7 @@ MonoBehaviour:
   player: {fileID: 1341332105}
   characterExemple: {fileID: 825022821}
   uiHips: {fileID: 695176170}
-  nbFirstMvtToCheck: 200
+  nbFirstMvtToCheck: 100
 --- !u!114 &2048113674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4422,7 +4422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1154d8de4ec81974e89c800cc388bc52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_path: Tristan.bvh
+  m_path: Jump.bvh
 --- !u!1 &2049434457
 GameObject:
   m_ObjectHideFlags: 0

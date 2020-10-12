@@ -44,15 +44,13 @@ public class MvtRecognition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Les 7 lignes suivantes servent à calculer la frame de l'animation suivant le temps passé.
-        timePassedBetweenFrame += Time.deltaTime;
+        float deltaTime = Time.deltaTime;
+        timePassedBetweenFrame += deltaTime;
 
         if (mvtLaunched)
         {
             timePassedBetweenFrame = timePassedBetweenFrame % totalTime;
             nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
-            Debug.Log(bvh.FrameTime.TotalSeconds);
-            //compareMvt();
             launchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" },nbFrame, changeColorUICharacter);
         }
         else
@@ -66,7 +64,7 @@ public class MvtRecognition : MonoBehaviour
             {
                 for (int i = 0; i < tabTimePassedBetweenFrame.Count; i++)
                 {
-                    tabTimePassedBetweenFrame[i] += Time.deltaTime;
+                    tabTimePassedBetweenFrame[i] += deltaTime;
                     if (tabTimePassedBetweenFrame[i] >= (float)bvh.FrameTime.TotalSeconds * nbFirstMvtToCheck)
                     {
                         mvtLaunched = true;
@@ -74,15 +72,16 @@ public class MvtRecognition : MonoBehaviour
                         tabTimePassedBetweenFrame = null;
                         break;
                     }
-                    nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
+                    nbFrame = (int)((tabTimePassedBetweenFrame[i] - tabTimePassedBetweenFrame[i] % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
                     if (!launchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, nbFrame))
                     {
-                        tabTimePassedBetweenFrame.Remove(i);
+                        tabTimePassedBetweenFrame.RemoveAt(i);
                         i--;
                     }
                 }
             }
         }
+        //Debug.Log(nbFrame);
         if (characterExemple != null) characterExemple.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame = nbFrame;
     }
 
