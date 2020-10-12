@@ -1,7 +1,4 @@
 ﻿using Neuron;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UniHumanoid;
 using UnityEngine;
@@ -26,17 +23,17 @@ public class MvtRecognition : MonoBehaviour
     private GameObject uiHips = null;
 
     [SerializeField]
+    private Store store = null;
     private int nbFirstMvtToCheck;      //The number of frame needed to check if the mouvement is launched
     private List<float> tabTimePassedBetweenFrame = null;    //Corresponding
     bool mvtLaunched = false;
-
 
     // Start is called before the first frame update
     void Start()
     {
         nbFrame = 0;
         timePassedBetweenFrame = 0;
-        bvh = GetComponent<BvhImporter>().GetBvh();
+        bvh = store.Bvh;
         actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
         totalTime = (float)bvh.FrameTime.TotalSeconds * bvh.FrameCount;
     }
