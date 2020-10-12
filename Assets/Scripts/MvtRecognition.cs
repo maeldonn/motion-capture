@@ -1,6 +1,8 @@
 ﻿using Neuron;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UniHumanoid;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +13,7 @@ public class MvtRecognition : MonoBehaviour
     NeuronActor actor;
     int nbFrame;
     float timePassedBetweenFrame;
-    public float degreOfMargin;
+    public int degreOfMargin;
     private float totalTime;        //Etant donné que cette valeur ne change pas, et puisqu'elle est utilisée régulièrement, on la garde de coté.
 
     [SerializeField]
@@ -22,6 +24,12 @@ public class MvtRecognition : MonoBehaviour
 
     [SerializeField]
     private GameObject uiHips = null;
+
+    [SerializeField]
+    private int nbFirstMvtToCheck;      //The number of frame needed to check if the mouvement is launched
+    private List<float> tabTimePassedBetweenFrame = null;    //Corresponding
+    bool mvtLaunched = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -36,15 +44,48 @@ public class MvtRecognition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Les 7 lignes suivantes servent à calculer la frame de l'animation suivant le temps passé.
-        timePassedBetweenFrame += Time.deltaTime;
-        timePassedBetweenFrame = timePassedBetweenFrame % totalTime;
-        nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
-        characterExemple.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame = nbFrame;
-        compareMvt();
+        float deltaTime = Time.deltaTime;
+        timePassedBetweenFrame += deltaTime;
+
+        if (mvtLaunched)
+        {
+            timePassedBetweenFrame = timePassedBetweenFrame % totalTime;
+            nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
+            launchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" },nbFrame, changeColorUICharacter);
+        }
+        else
+        {
+            if(launchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, 0))
+            {
+                if (tabTimePassedBetweenFrame == null) tabTimePassedBetweenFrame = new List<float>();
+                tabTimePassedBetweenFrame.Add(0f);
+            }
+            if (tabTimePassedBetweenFrame != null)
+            {
+                for (int i = 0; i < tabTimePassedBetweenFrame.Count; i++)
+                {
+                    tabTimePassedBetweenFrame[i] += deltaTime;
+                    if (tabTimePassedBetweenFrame[i] >= (float)bvh.FrameTime.TotalSeconds * nbFirstMvtToCheck)
+                    {
+                        mvtLaunched = true;
+                        timePassedBetweenFrame = tabTimePassedBetweenFrame[i];
+                        tabTimePassedBetweenFrame = null;
+                        break;
+                    }
+                    nbFrame = (int)((tabTimePassedBetweenFrame[i] - tabTimePassedBetweenFrame[i] % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
+                    if (!launchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, nbFrame))
+                    {
+                        tabTimePassedBetweenFrame.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+        }
+        //Debug.Log(nbFrame);
+        if (characterExemple != null) characterExemple.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame = nbFrame;
     }
 
-    void compareMvt()
+    /*void compareMvt()             //Remplacée par launchComparison. Je la laisse là au cas ou, mais normalement on en a plus besoin
     {
         foreach (var node in bvh.Root.Traverse())
         {
@@ -61,7 +102,7 @@ public class MvtRecognition : MonoBehaviour
                 {
                     if (node.Name == c.name)
                     {
-                        c.GetComponent<RawImage>().color= new Color(1f,0f,0f);
+                        c.GetComponent<RawImage>().color = Color.red;
                         break;
                     }
                 }
@@ -73,11 +114,53 @@ public class MvtRecognition : MonoBehaviour
                 {
                     if (node.Name == c.name)
                     {
-                        c.GetComponent<RawImage>().color = new Color(0f, 1f, 0f);
+                        c.GetComponent<RawImage>().color = Color.green;
                         break;
                     }
                 }
             }
         }
+    }*/
+
+    int changeColorUICharacter(BvhNode node, bool color)     //If true: color green, else color red
+    {
+        foreach (var c in uiHips.transform.GetComponentsInChildren<Transform>())
+        {
+            if (node.Name == c.name)
+            {
+                c.GetComponent<RawImage>().color = color ? Color.green : Color.red;
+                break;
+            }
+        }
+        return 0;
+    }
+
+    public void launchComparison(BvhNode Root, Bvh animationToCompare, int degreeOfMargin, string[] bodyPartsToIgnore, int frame, Func<BvhNode,bool,int> functionCalledAtEveryNode)
+    {
+        foreach (var node in Root.Traverse())
+        {
+            bool checkValidity = true;
+            if (bodyPartsToIgnore.Any(node.Name.Contains)) continue;
+            var actorRotation = actor.GetReceivedRotation((NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name));
+            if (System.Math.Abs(actorRotation.x - animationToCompare.GetReceivedPosition(node.Name, frame, true).x) >= degreeOfMargin) checkValidity = false;
+            else if (System.Math.Abs(actorRotation.y - animationToCompare.GetReceivedPosition(node.Name, frame, true).y) >= degreeOfMargin) checkValidity = false;
+            else if (System.Math.Abs(actorRotation.z - animationToCompare.GetReceivedPosition(node.Name, frame, true).z) >= degreeOfMargin) checkValidity = false;
+            functionCalledAtEveryNode.Invoke(node, checkValidity);
+        }
+    }
+
+    public bool launchComparison(BvhNode Root, Bvh animationToCompare, int degreeOfMargin, string[] bodyPartsToIgnore, int frame)
+    {
+        foreach (var node in Root.Traverse())
+        {
+            bool checkValidity = true;
+            if (bodyPartsToIgnore.Any(node.Name.Contains)) continue;
+            var actorRotation = actor.GetReceivedRotation((NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name));
+            if (System.Math.Abs(actorRotation.x - animationToCompare.GetReceivedPosition(node.Name, frame, true).x) >= degreeOfMargin) checkValidity = false;
+            else if (System.Math.Abs(actorRotation.y - animationToCompare.GetReceivedPosition(node.Name, frame, true).y) >= degreeOfMargin) checkValidity = false;
+            else if (System.Math.Abs(actorRotation.z - animationToCompare.GetReceivedPosition(node.Name, frame, true).z) >= degreeOfMargin) checkValidity = false;
+            if (!checkValidity) { return false; }
+        }
+        return true;
     }
 }
