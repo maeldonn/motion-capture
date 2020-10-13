@@ -54,8 +54,8 @@ public class pointingHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        idlePointing = new Bvh().GetBvhFromPath("Assets/BVH/pointeur_3.bvh");
-        BVHactivating = new Bvh().GetBvhFromPath("Assets/BVH/pointeur_2.bvh");
+        idlePointing = new Bvh().GetBvhFromPath("Assets/BVH/Pointer/pointeur_3.bvh");
+        BVHactivating = new Bvh().GetBvhFromPath("Assets/BVH/Pointer/pointeur_2.bvh");
         actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
     }
 
