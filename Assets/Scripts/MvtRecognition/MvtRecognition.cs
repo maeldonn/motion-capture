@@ -49,13 +49,15 @@ public class MvtRecognition : MonoBehaviour
     private GameObject player = null;
 
     [SerializeField]
-    /// <value>The gameObject of the character controlled by the player</value>
+    /// <value>The gameObject of the character controlled by the bvh file</value>
     private GameObject characterExemple = null;
 
     [SerializeField]
+    /// <value>The gameObject of the hips of the </value>
     private GameObject uiHips = null;
 
     [SerializeField]
+    /// <value>TODO</value>
     private Store store = null;
 
     //Values used to check if a mouvement is launched
@@ -76,6 +78,9 @@ public class MvtRecognition : MonoBehaviour
         updateMvtRecognition();
     }
 
+    /// <summary>
+    /// Control motion recognition: if a movement is chosen, it will try to recognise the beginning of it. Then, if the movement is started, it will check if they are right.
+    /// </summary>
     void updateMvtRecognition()
     {
         if (mvtChoosen)
@@ -94,11 +99,17 @@ public class MvtRecognition : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Initialize the NeuronAnimatorInstance actor.
+    /// </summary>
     void initActor()
     {
         actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
     }
 
+    /// <summary>
+    /// Initialize all the values of the MvtRecognition class to work as intended.
+    /// </summary>
     void initiateValuesBvh()
     {
         nbFrame = 0;
@@ -108,6 +119,10 @@ public class MvtRecognition : MonoBehaviour
         totalTime = (float)bvh.FrameTime.TotalSeconds * bvh.FrameCount;
     }
 
+    /// <summary>
+    /// Check if the mouvements of the user is the same as the one in the bvh file. It will also change the color on the character on the ui.
+    /// </summary>
+    /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
     bool checkIfMvtIsRight(float deltaTime)
     {
         timePassedBetweenFrame += deltaTime;
@@ -117,30 +132,35 @@ public class MvtRecognition : MonoBehaviour
         return launchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, nbFrame);
     }
 
-
+    /// <summary>
+    /// Tries to recognize the movement of the bvh in the user.
+    /// </summary>
+    /// <returns>Return true if a mouvement is detected.</returns>
+    /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
     bool checkBeginningMvt(float deltaTime)
     {
-        if (launchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, 0))
+        if (launchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, 0))        //If the user have a position corresponding to the first frame of the mouvement
         {
             if (tabTimePassedBetweenFrame == null) tabTimePassedBetweenFrame = new List<float>();
-            tabTimePassedBetweenFrame.Add(0f);
+            tabTimePassedBetweenFrame.Add(0f);          //It adds a new element to the tabTimePassedBetweenFrame list.
         }
-        if (tabTimePassedBetweenFrame != null)
+        if (tabTimePassedBetweenFrame != null)      //If the list is not empty
         {
-            for (int i = 0; i < tabTimePassedBetweenFrame.Count; i++)
+            for (int i = 0; i < tabTimePassedBetweenFrame.Count; i++)       //We go through it
             {
-                tabTimePassedBetweenFrame[i] += deltaTime;
-                if (tabTimePassedBetweenFrame[i] >= (float)bvh.FrameTime.TotalSeconds * nbFirstMvtToCheck)
+                tabTimePassedBetweenFrame[i] += deltaTime;      //Updating the time since the first frame was detected
+                if (tabTimePassedBetweenFrame[i] >= (float)bvh.FrameTime.TotalSeconds * nbFirstMvtToCheck)      //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
                 {
-                    mvtLaunched = true;
+                    //The first X frames have been detected, we start the mouvement recognition
+                    mvtLaunched = true;     
                     timePassedBetweenFrame = tabTimePassedBetweenFrame[i];
                     tabTimePassedBetweenFrame = null;
                     return true;
                 }
                 nbFrame = (int)((tabTimePassedBetweenFrame[i] - tabTimePassedBetweenFrame[i] % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
-                if (!launchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, nbFrame))
+                if (!launchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, nbFrame))         //If the position of the user does not correspond to that of the frame
                 {
-                    tabTimePassedBetweenFrame.RemoveAt(i);
+                    tabTimePassedBetweenFrame.RemoveAt(i);      //Remove this element of the tabTimePassedBetweenFrame list
                     i--;
                 }
             }
@@ -148,19 +168,48 @@ public class MvtRecognition : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Changes the color of the parts of the character on the user interface to red or green.
+    /// </summary>
+    /// <returns>The code error. For now it only return 0.</returns>
+    /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
     int changeColorUICharacter(BvhNode node, bool color)     //If true: color green, else color red
     {
         foreach (var c in uiHips.transform.GetComponentsInChildren<Transform>())
         {
+
             if (node.Name == c.name)
             {
                 c.GetComponent<RawImage>().color = color ? Color.green : Color.red;
                 break;
             }
         }
+
         return 0;
     }
 
+    /// <summary>
+    /// Compare the position of the actor and a frame of <paramref name="animationToCompare"/>, and launch a function for every node.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// launchComparison(bvhHand, bvh, 40, new string[2]{ "Leg","Spine2" },23,changeColorUICharacter)
+    /// </code>
+    /// </example>
+    /// <param name="Root">The <c>BvhNode</c> from which we want to compare the mouvement.</param>
+    /// <param name="animationToCompare">The bvh which contain the mouvement to compare.</param>
+    /// <param name="degreeOfMargin">The margin angle with which the user can make the movement.</param>
+    /// <param name="bodyPartsToIgnore">An array of strings containing the names of the parts of the body that we do not want to compare in the movement. The following list show some valid exemples:
+    /// <list type="bullet">
+    /// <item><term></term>Hips</item>
+    /// <item><term></term>Arm</item>
+    /// <item><term></term>Hand</item>
+    /// <item><term></term>LeftHandIndex</item>
+    /// <item><term></term>...</item>
+    /// </list>
+    /// </param>
+    /// <param name="frame">The index of the frame to look.</param>
+    /// <param name="functionCalledAtEveryNode">A function taking as arguments a <c>BvhNode</c> and a <c>bool</c>, and which return an int.</param>
     public void launchComparison(BvhNode Root, Bvh animationToCompare, int degreeOfMargin, string[] bodyPartsToIgnore, int frame, Func<BvhNode,bool,int> functionCalledAtEveryNode)
     {
         foreach (var node in Root.Traverse())
@@ -175,6 +224,33 @@ public class MvtRecognition : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Compare the position of the actor and a frame of <paramref name="animationToCompare"/>.
+    /// </summary>
+    /// <returns>
+    /// The result of the comparison (true or false)
+    /// </returns>
+    /// <example>
+    /// <code>
+    /// if(launchComparison(bvhHand, bvh, 40, new string[2]{ "Leg","Spine2" },23))
+    /// {
+    ///     Debug.Log("The mouvements of the hand are corresponding.");
+    /// }
+    /// </code>
+    /// </example>
+    /// <param name="Root">The <c>BvhNode</c> from which we want to compare the mouvement.</param>
+    /// <param name="animationToCompare">The bvh which contain the mouvement to compare.</param>
+    /// <param name="degreeOfMargin">The margin angle with which the user can make the movement.</param>
+    /// <param name="bodyPartsToIgnore">An array of strings containing the names of the parts of the body that we do not want to compare in the movement. The following list show some valid exemples:
+    /// <list type="bullet">
+    /// <item><term></term>Hips</item>
+    /// <item><term></term>Arm</item>
+    /// <item><term></term>Hand</item>
+    /// <item><term></term>LeftHandIndex</item>
+    /// <item><term></term>...</item>
+    /// </list>
+    /// </param>
+    /// <param name="frame">The index of the frame to look.</param>
     public bool launchComparison(BvhNode Root, Bvh animationToCompare, int degreeOfMargin, string[] bodyPartsToIgnore, int frame)
     {
         foreach (var node in Root.Traverse())
@@ -187,6 +263,7 @@ public class MvtRecognition : MonoBehaviour
             else if (System.Math.Abs(actorRotation.z - animationToCompare.GetReceivedPosition(node.Name, frame, true).z) >= degreeOfMargin) checkValidity = false;
             if (!checkValidity) { return false; }
         }
+
         return true;
     }
 }
