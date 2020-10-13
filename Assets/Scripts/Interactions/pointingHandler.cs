@@ -67,7 +67,7 @@ public class pointingHandler : MonoBehaviour
             switch (stateConfirm)
             {
                 case confirmState.idle:
-                    if(mvtRecognition.launchComparison(BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0], BVHactivating, degreeOfMarginValidating, new string[0],1))
+                    if(mvtRecognition.LaunchComparison(BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0], BVHactivating, degreeOfMarginValidating, new string[0],1))
                     {
                         SoundManager.PlaySound(clipConfirm, leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position);
                         stateConfirm = confirmState.click;
@@ -95,7 +95,7 @@ public class pointingHandler : MonoBehaviour
                     break;
 
                 case confirmState.releaseClick:
-                    if (mvtRecognition.launchComparison(BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0], BVHactivating, degreeOfMarginValidating, new string[0],0))
+                    if (mvtRecognition.LaunchComparison(BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0], BVHactivating, degreeOfMarginValidating, new string[0],0))
                     {
                         stateConfirm = confirmState.idle;
                         lineMenu.endColor = Color.white;
@@ -124,7 +124,7 @@ public class pointingHandler : MonoBehaviour
             statePointing = pointingState.idlePointing;
         }
         //if (compareHandPosition())
-        if(mvtRecognition.launchComparison(idlePointing.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0], idlePointing, degreeOfMarginPointing,new string[1] { "Thumb" },0))
+        if(mvtRecognition.LaunchComparison(idlePointing.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0], idlePointing, degreeOfMarginPointing,new string[1] { "Thumb" },0))
         {
             if (statePointing == pointingState.idle)
             {

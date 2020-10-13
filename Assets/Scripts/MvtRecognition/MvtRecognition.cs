@@ -69,19 +69,19 @@ public class MvtRecognition : MonoBehaviour
 
     private void Start()
     {
-        initActor();
+        InitActor();
     }
 
     // Update is called once per frame
     void Update()
     {
-        updateMvtRecognition();
+        UpdateMvtRecognition();
     }
 
     /// <summary>
     /// Control motion recognition: if a movement is chosen, it will try to recognise the beginning of it. Then, if the movement is started, it will check if they are right.
     /// </summary>
-    void updateMvtRecognition()
+    void UpdateMvtRecognition()
     {
         if (mvtChoosen)
         {
@@ -89,11 +89,11 @@ public class MvtRecognition : MonoBehaviour
 
             if (mvtLaunched)
             {
-                checkIfMvtIsRight(deltaTime);
+                CheckIfMvtIsRight(deltaTime);
             }
             else
             {
-                checkBeginningMvt(deltaTime);
+                CheckBeginningMvt(deltaTime);
             }
             if (characterExemple != null) characterExemple.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame = nbFrame;     //If a character is set, then animate him.
         }
@@ -102,7 +102,7 @@ public class MvtRecognition : MonoBehaviour
     /// <summary>
     /// Initialize the NeuronAnimatorInstance actor.
     /// </summary>
-    void initActor()
+    void InitActor()
     {
         actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
     }
@@ -110,12 +110,12 @@ public class MvtRecognition : MonoBehaviour
     /// <summary>
     /// Initialize all the values of the MvtRecognition class to work as intended.
     /// </summary>
-    void initiateValuesBvh()
+    void InitiateValuesBvh()
     {
         nbFrame = 0;
         timePassedBetweenFrame = 0;
         bvh = store.Bvh;
-        initActor();
+        InitActor();
         totalTime = (float)bvh.FrameTime.TotalSeconds * bvh.FrameCount;
     }
 
@@ -123,13 +123,13 @@ public class MvtRecognition : MonoBehaviour
     /// Check if the mouvements of the user is the same as the one in the bvh file. It will also change the color on the character on the ui.
     /// </summary>
     /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
-    bool checkIfMvtIsRight(float deltaTime)
+    bool CheckIfMvtIsRight(float deltaTime)
     {
         timePassedBetweenFrame += deltaTime;
         timePassedBetweenFrame = timePassedBetweenFrame % totalTime;
         nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
-        launchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, nbFrame, changeColorUICharacter);
-        return launchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, nbFrame);
+        LaunchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, nbFrame, ChangeColorUICharacter);
+        return LaunchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, nbFrame);
     }
 
     /// <summary>
@@ -137,9 +137,9 @@ public class MvtRecognition : MonoBehaviour
     /// </summary>
     /// <returns>Return true if a mouvement is detected.</returns>
     /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
-    bool checkBeginningMvt(float deltaTime)
+    bool CheckBeginningMvt(float deltaTime)
     {
-        if (launchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, 0))        //If the user have a position corresponding to the first frame of the mouvement
+        if (LaunchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, 0))        //If the user have a position corresponding to the first frame of the mouvement
         {
             if (tabTimePassedBetweenFrame == null) tabTimePassedBetweenFrame = new List<float>();
             tabTimePassedBetweenFrame.Add(0f);          //It adds a new element to the tabTimePassedBetweenFrame list.
@@ -158,7 +158,7 @@ public class MvtRecognition : MonoBehaviour
                     return true;
                 }
                 nbFrame = (int)((tabTimePassedBetweenFrame[i] - tabTimePassedBetweenFrame[i] % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
-                if (!launchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, nbFrame))         //If the position of the user does not correspond to that of the frame
+                if (!LaunchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, nbFrame))         //If the position of the user does not correspond to that of the frame
                 {
                     tabTimePassedBetweenFrame.RemoveAt(i);      //Remove this element of the tabTimePassedBetweenFrame list
                     i--;
@@ -173,7 +173,7 @@ public class MvtRecognition : MonoBehaviour
     /// </summary>
     /// <returns>The code error. For now it only return 0.</returns>
     /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
-    int changeColorUICharacter(BvhNode node, bool color)     //If true: color green, else color red
+    int ChangeColorUICharacter(BvhNode node, bool color)     //If true: color green, else color red
     {
         foreach (var c in uiHips.transform.GetComponentsInChildren<Transform>())
         {
@@ -210,7 +210,7 @@ public class MvtRecognition : MonoBehaviour
     /// </param>
     /// <param name="frame">The index of the frame to look.</param>
     /// <param name="functionCalledAtEveryNode">A function taking as arguments a <c>BvhNode</c> and a <c>bool</c>, and which return an int.</param>
-    public void launchComparison(BvhNode Root, Bvh animationToCompare, int degreeOfMargin, string[] bodyPartsToIgnore, int frame, Func<BvhNode,bool,int> functionCalledAtEveryNode)
+    public void LaunchComparison(BvhNode Root, Bvh animationToCompare, int degreeOfMargin, string[] bodyPartsToIgnore, int frame, Func<BvhNode,bool,int> functionCalledAtEveryNode)
     {
         foreach (var node in Root.Traverse())
         {
@@ -251,7 +251,7 @@ public class MvtRecognition : MonoBehaviour
     /// </list>
     /// </param>
     /// <param name="frame">The index of the frame to look.</param>
-    public bool launchComparison(BvhNode Root, Bvh animationToCompare, int degreeOfMargin, string[] bodyPartsToIgnore, int frame)
+    public bool LaunchComparison(BvhNode Root, Bvh animationToCompare, int degreeOfMargin, string[] bodyPartsToIgnore, int frame)
     {
         foreach (var node in Root.Traverse())
         {
