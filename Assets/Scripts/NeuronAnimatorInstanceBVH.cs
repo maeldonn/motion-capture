@@ -24,9 +24,6 @@ using UniHumanoid;
 public class NeuronAnimatorInstanceBVH : MonoBehaviour
 {
 	[SerializeField]
-	private GameObject gameManager = null;
-
-	[SerializeField]
 	private Store store = null;
 
 	public bool useNewRig = true;

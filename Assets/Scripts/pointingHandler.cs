@@ -20,36 +20,36 @@ public enum pointingState
 
 public class pointingHandler : MonoBehaviour
 {
-    Bvh idlePointing;
-    Bvh BVHactivating;
-    NeuronActor actor;
+    Bvh idlePointing = null;
+    Bvh BVHactivating = null;
+    NeuronActor actor = null;
 
     [SerializeField]
-    private GameObject player;
+    private GameObject player = null;
 
     [SerializeField]
-    int degreeOfMarginPointing;
+    int degreeOfMarginPointing = 0;
 
     [SerializeField]
-    int degreeOfMarginValidating;
+    int degreeOfMarginValidating = 0;
 
     [SerializeField]
-    LineRenderer lineMenu;
+    LineRenderer lineMenu = null;
 
     [SerializeField]
-    GameObject leftHand;
+    GameObject leftHand = null;
 
     confirmState stateConfirm;
     pointingState statePointing;
 
     [SerializeField]
-    public AudioClip clipConfirm;
+    public AudioClip clipConfirm = null;
 
     [SerializeField]
-    public AudioClip clipPointing;
+    public AudioClip clipPointing = null;
 
     [SerializeField]
-    MvtRecognition mvtRecognition;
+    MvtRecognition mvtRecognition = null;
 
     // Start is called before the first frame update
     void Start()
