@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// The <c>MvtRecognition</c> class.
-/// Contains all methods to detect and analyse mouvements.
+/// Contains all methods to detect and analyze movements.
 /// <list type="bullet">
 /// <item>
 /// <term>initiateValues</term>
@@ -16,11 +16,11 @@ using UnityEngine.UI;
 /// </item>
 /// <item>
 /// <term>checkIfMvtIsRight</term>
-/// <description>Compare the mouvements made by the user with the one he should reproduce.</description>
+/// <description>Compare the movements made by the user with the one he should reproduce.</description>
 /// </item>
 /// <item>
 /// <term>checkBeginningMvt</term>
-/// <description>Check if the user is doing the beginning of a mouvement.</description>
+/// <description>Check if the user is doing the beginning of a movement.</description>
 /// </item>
 /// <item>
 /// <term>changeColorUICharacter</term>
@@ -37,33 +37,33 @@ using UnityEngine.UI;
 /// </remarks>
 public class MvtRecognition : MonoBehaviour
 {
-    Bvh bvh = null;
-    NeuronActor actor = null;
-    int nbFrame = 0;
-    float timePassedBetweenFrame = 0;
-    public int degreOfMargin = 0;
-    private float totalTime = 0;        //Etant donné que cette valeur ne change pas, et puisqu'elle est utilisée régulièrement, on la garde de coté.
+    private Bvh bvh = null;
+    private NeuronActor actor = null;
+    private int nbFrame = 0;
+    private float timePassedBetweenFrame = 0;
+    public int degreeOfMargin = 0;
+    private float totalTime = 0;        //Since this value does not change, and since it is used regularly, it is kept aside.
 
     [SerializeField]
-    /// <value>The gameObject of the character controlled by the player</value>
+    // The gameObject of the character controlled by the player
     private GameObject player = null;
 
     [SerializeField]
-    /// <value>The gameObject of the character controlled by the bvh file</value>
+    //The gameObject of the character controlled by the bvh file
     private GameObject characterExemple = null;
 
     [SerializeField]
-    /// <value>The gameObject of the hips of the </value>
+    //The gameObject of the hips of the
     private GameObject uiHips = null;
 
     [SerializeField]
-    /// <value>TODO</value>
+    //TODO
     private Store store = null;
 
-    //Values used to check if a mouvement is launched
-    private int nbFirstMvtToCheck=0;      //The number of frame needed to check if the mouvement is launched
-    private List<float> tabTimePassedBetweenFrame = null;
-    bool mvtLaunched = false;
+    //Values used to check if a movement is launched
+    private int nbFirstMvtToCheck=0;      //The number of frame needed to check if the movement is launched
+    private List<float> tabTimePassedBetweenFrame;
+    private bool mvtLaunched;
 
     bool mvtChoosen = false;
 
@@ -79,13 +79,13 @@ public class MvtRecognition : MonoBehaviour
     }
 
     /// <summary>
-    /// Control motion recognition: if a movement is chosen, it will try to recognise the beginning of it. Then, if the movement is started, it will check if they are right.
+    /// Control motion recognition: if a movement is chosen, it will try to recognize the beginning of it. Then, if the movement is started, it will check if they are right.
     /// </summary>
-    void UpdateMvtRecognition()
+    private void UpdateMvtRecognition()
     {
         if (mvtChoosen)
         {
-            float deltaTime = Time.deltaTime;
+            var deltaTime = Time.deltaTime;
 
             if (mvtLaunched)
             {
@@ -102,7 +102,7 @@ public class MvtRecognition : MonoBehaviour
     /// <summary>
     /// Initialize the NeuronAnimatorInstance actor.
     /// </summary>
-    void InitActor()
+    private void InitActor()
     {
         actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
     }
@@ -110,7 +110,7 @@ public class MvtRecognition : MonoBehaviour
     /// <summary>
     /// Initialize all the values of the MvtRecognition class to work as intended.
     /// </summary>
-    void InitiateValuesBvh()
+    private void InitiateValuesBvh()
     {
         nbFrame = 0;
         timePassedBetweenFrame = 0;
@@ -120,60 +120,60 @@ public class MvtRecognition : MonoBehaviour
     }
 
     /// <summary>
-    /// Check if the mouvements of the user is the same as the one in the bvh file. It will also change the color on the character on the ui.
+    /// Check if the movements of the user is the same as the one in the bvh file. It will also change the color on the character on the ui.
     /// </summary>
     /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
-    bool CheckIfMvtIsRight(float deltaTime)
+    private bool CheckIfMvtIsRight(float deltaTime)
     {
         timePassedBetweenFrame += deltaTime;
-        timePassedBetweenFrame = timePassedBetweenFrame % totalTime;
+        timePassedBetweenFrame %= totalTime;
         nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
-        LaunchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, nbFrame, ChangeColorUICharacter);
-        return LaunchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, nbFrame);
+        LaunchComparison(bvh.Root, bvh, degreeOfMargin, new [] { "Hips" }, nbFrame, ChangeColorUiCharacter);
+        return LaunchComparison(bvh.Root, bvh, degreeOfMargin, new[] { "Hips" }, nbFrame);
     }
 
     /// <summary>
     /// Tries to recognize the movement of the bvh in the user.
     /// </summary>
-    /// <returns>Return true if a mouvement is detected.</returns>
+    /// <returns>Return true if a movement is detected.</returns>
     /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
-    bool CheckBeginningMvt(float deltaTime)
+    private void CheckBeginningMvt(float deltaTime)
     {
-        if (LaunchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, 0))        //If the user have a position corresponding to the first frame of the mouvement
+        if (LaunchComparison(bvh.Root, bvh, degreeOfMargin, new[] { "Hips" }, 0))        //If the user have a position corresponding to the first frame of the movement
         {
             if (tabTimePassedBetweenFrame == null) tabTimePassedBetweenFrame = new List<float>();
             tabTimePassedBetweenFrame.Add(0f);          //It adds a new element to the tabTimePassedBetweenFrame list.
         }
         if (tabTimePassedBetweenFrame != null)      //If the list is not empty
         {
-            for (int i = 0; i < tabTimePassedBetweenFrame.Count; i++)       //We go through it
+            for (var i = 0; i < tabTimePassedBetweenFrame.Count; i++)       //We go through it
             {
                 tabTimePassedBetweenFrame[i] += deltaTime;      //Updating the time since the first frame was detected
                 if (tabTimePassedBetweenFrame[i] >= (float)bvh.FrameTime.TotalSeconds * nbFirstMvtToCheck)      //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
                 {
-                    //The first X frames have been detected, we start the mouvement recognition
+                    //The first X frames have been detected, we start the movement recognition
                     mvtLaunched = true;     
                     timePassedBetweenFrame = tabTimePassedBetweenFrame[i];
                     tabTimePassedBetweenFrame = null;
-                    return true;
+                    return;
                 }
                 nbFrame = (int)((tabTimePassedBetweenFrame[i] - tabTimePassedBetweenFrame[i] % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
-                if (!LaunchComparison(bvh.Root, bvh, degreOfMargin, new string[1] { "Hips" }, nbFrame))         //If the position of the user does not correspond to that of the frame
+                if (!LaunchComparison(bvh.Root, bvh, degreeOfMargin, new[] { "Hips" }, nbFrame))         //If the position of the user does not correspond to that of the frame
                 {
                     tabTimePassedBetweenFrame.RemoveAt(i);      //Remove this element of the tabTimePassedBetweenFrame list
                     i--;
                 }
             }
         }
-        return false;
     }
 
     /// <summary>
     /// Changes the color of the parts of the character on the user interface to red or green.
     /// </summary>
     /// <returns>The code error. For now it only return 0.</returns>
-    /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
-    int ChangeColorUICharacter(BvhNode node, bool color)     //If true: color green, else color red
+    /// <param name="node">The node whose color you want to change</param>
+    /// <param name="color">The color you want to change: true equal green, false equal red</param>
+    private int ChangeColorUiCharacter(BvhNode node, bool color)     //If true: color green, else color red
     {
         foreach (var c in uiHips.transform.GetComponentsInChildren<Transform>())
         {
@@ -193,13 +193,13 @@ public class MvtRecognition : MonoBehaviour
     /// </summary>
     /// <example>
     /// <code>
-    /// launchComparison(bvhHand, bvh, 40, new string[2]{ "Leg","Spine2" },23,changeColorUICharacter)
+    /// launchComparison(bvhHand, bvh, 40, new []{ "Leg","Spine2" },23,changeColorUICharacter)
     /// </code>
     /// </example>
-    /// <param name="Root">The <c>BvhNode</c> from which we want to compare the mouvement.</param>
-    /// <param name="animationToCompare">The bvh which contain the mouvement to compare.</param>
-    /// <param name="degreeOfMargin">The margin angle with which the user can make the movement.</param>
-    /// <param name="bodyPartsToIgnore">An array of strings containing the names of the parts of the body that we do not want to compare in the movement. The following list show some valid exemples:
+    /// <param name="root">The <c>BvhNode</c> from which we want to compare the movement.</param>
+    /// <param name="animationToCompare">The bvh which contain the movement to compare.</param>
+    /// <param name="degOfMargin">The margin angle with which the user can make the movement.</param>
+    /// <param name="bodyPartsToIgnore">An array of strings containing the names of the parts of the body that we do not want to compare in the movement. The following list show some valid examples:
     /// <list type="bullet">
     /// <item><term></term>Hips</item>
     /// <item><term></term>Arm</item>
@@ -210,16 +210,17 @@ public class MvtRecognition : MonoBehaviour
     /// </param>
     /// <param name="frame">The index of the frame to look.</param>
     /// <param name="functionCalledAtEveryNode">A function taking as arguments a <c>BvhNode</c> and a <c>bool</c>, and which return an int.</param>
-    public void LaunchComparison(BvhNode Root, Bvh animationToCompare, int degreeOfMargin, string[] bodyPartsToIgnore, int frame, Func<BvhNode,bool,int> functionCalledAtEveryNode)
+    public void LaunchComparison(BvhNode root, Bvh animationToCompare, int degOfMargin, string[] bodyPartsToIgnore, int frame, Func<BvhNode,bool,int> functionCalledAtEveryNode)
     {
-        foreach (var node in Root.Traverse())
+        if (degOfMargin <= 0) throw new ArgumentOutOfRangeException(nameof(degOfMargin));
+        foreach (var node in root.Traverse())
         {
-            bool checkValidity = true;
+            var checkValidity = true;
             if (bodyPartsToIgnore.Any(node.Name.Contains)) continue;
-            var actorRotation = actor.GetReceivedRotation((NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name));
-            if (System.Math.Abs(actorRotation.x - animationToCompare.GetReceivedPosition(node.Name, frame, true).x) >= degreeOfMargin) checkValidity = false;
-            else if (System.Math.Abs(actorRotation.y - animationToCompare.GetReceivedPosition(node.Name, frame, true).y) >= degreeOfMargin) checkValidity = false;
-            else if (System.Math.Abs(actorRotation.z - animationToCompare.GetReceivedPosition(node.Name, frame, true).z) >= degreeOfMargin) checkValidity = false;
+            var actorRotation = actor.GetReceivedRotation((NeuronBones)Enum.Parse(typeof(NeuronBones), node.Name));
+            if (Math.Abs(actorRotation.x - animationToCompare.GetReceivedPosition(node.Name, frame, true).x) >= degOfMargin) checkValidity = false;
+            else if (Math.Abs(actorRotation.y - animationToCompare.GetReceivedPosition(node.Name, frame, true).y) >= degOfMargin) checkValidity = false;
+            else if (Math.Abs(actorRotation.z - animationToCompare.GetReceivedPosition(node.Name, frame, true).z) >= degOfMargin) checkValidity = false;
             functionCalledAtEveryNode.Invoke(node, checkValidity);
         }
     }
@@ -232,16 +233,16 @@ public class MvtRecognition : MonoBehaviour
     /// </returns>
     /// <example>
     /// <code>
-    /// if(launchComparison(bvhHand, bvh, 40, new string[2]{ "Leg","Spine2" },23))
+    /// if(launchComparison(bvhHand, bvh, 40, new []{ "Leg","Spine2" },23))
     /// {
-    ///     Debug.Log("The mouvements of the hand are corresponding.");
+    ///     Debug.Log("The movements of the hand are corresponding.");
     /// }
     /// </code>
     /// </example>
-    /// <param name="Root">The <c>BvhNode</c> from which we want to compare the mouvement.</param>
-    /// <param name="animationToCompare">The bvh which contain the mouvement to compare.</param>
-    /// <param name="degreeOfMargin">The margin angle with which the user can make the movement.</param>
-    /// <param name="bodyPartsToIgnore">An array of strings containing the names of the parts of the body that we do not want to compare in the movement. The following list show some valid exemples:
+    /// <param name="root">The <c>BvhNode</c> from which we want to compare the movement.</param>
+    /// <param name="animationToCompare">The bvh which contain the movement to compare.</param>
+    /// <param name="degOfMargin">The margin angle with which the user can make the movement.</param>
+    /// <param name="bodyPartsToIgnore">An array of strings containing the names of the parts of the body that we do not want to compare in the movement. The following list show some valid examples:
     /// <list type="bullet">
     /// <item><term></term>Hips</item>
     /// <item><term></term>Arm</item>
@@ -251,16 +252,17 @@ public class MvtRecognition : MonoBehaviour
     /// </list>
     /// </param>
     /// <param name="frame">The index of the frame to look.</param>
-    public bool LaunchComparison(BvhNode Root, Bvh animationToCompare, int degreeOfMargin, string[] bodyPartsToIgnore, int frame)
+    public bool LaunchComparison(BvhNode root, Bvh animationToCompare, int degOfMargin, string[] bodyPartsToIgnore, int frame)
     {
-        foreach (var node in Root.Traverse())
+        if (degOfMargin <= 0) throw new ArgumentOutOfRangeException(nameof(degOfMargin));
+        foreach (var node in root.Traverse())
         {
-            bool checkValidity = true;
+            var checkValidity = true;
             if (bodyPartsToIgnore.Any(node.Name.Contains)) continue;
-            var actorRotation = actor.GetReceivedRotation((NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name));
-            if (System.Math.Abs(actorRotation.x - animationToCompare.GetReceivedPosition(node.Name, frame, true).x) >= degreeOfMargin) checkValidity = false;
-            else if (System.Math.Abs(actorRotation.y - animationToCompare.GetReceivedPosition(node.Name, frame, true).y) >= degreeOfMargin) checkValidity = false;
-            else if (System.Math.Abs(actorRotation.z - animationToCompare.GetReceivedPosition(node.Name, frame, true).z) >= degreeOfMargin) checkValidity = false;
+            var actorRotation = actor.GetReceivedRotation((NeuronBones)Enum.Parse(typeof(NeuronBones), node.Name));
+            if (Math.Abs(actorRotation.x - animationToCompare.GetReceivedPosition(node.Name, frame, true).x) >= degOfMargin) checkValidity = false;
+            else if (Math.Abs(actorRotation.y - animationToCompare.GetReceivedPosition(node.Name, frame, true).y) >= degOfMargin) checkValidity = false;
+            else if (Math.Abs(actorRotation.z - animationToCompare.GetReceivedPosition(node.Name, frame, true).z) >= degOfMargin) checkValidity = false;
             if (!checkValidity) { return false; }
         }
 
