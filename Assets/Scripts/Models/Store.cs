@@ -39,11 +39,7 @@ public class Store : MonoBehaviour
     
     public void toggleUsingArm()
     {
+        Debug.Log(UsingArm);
         UsingArm = !UsingArm;
-    }
-
-    private void Update()
-    {
-        Debug.Log("Path: " + Path);
     }
 }
