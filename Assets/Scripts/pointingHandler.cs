@@ -1,6 +1,4 @@
 ﻿using Neuron;
-using System.Collections;
-using System.Collections.Generic;
 using UniHumanoid;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,44 +20,42 @@ public enum pointingState
 
 public class pointingHandler : MonoBehaviour
 {
-    Bvh idlePointing;
-    Bvh BVHactivating;
-    NeuronActor actor;
-    [SerializeField]
-    private GameObject player;
-    [SerializeField]
-    int degreeOfMarginPointing;
-    [SerializeField]
-    int degreeOfMarginValidating;
+    Bvh idlePointing = null;
+    Bvh BVHactivating = null;
+    NeuronActor actor = null;
 
     [SerializeField]
-    LineRenderer lineMenu;
+    private GameObject player = null;
 
-    private BvhNode BVHleftHand;
     [SerializeField]
-    GameObject leftHand;
+    int degreeOfMarginPointing = 0;
+
+    [SerializeField]
+    int degreeOfMarginValidating = 0;
+
+    [SerializeField]
+    LineRenderer lineMenu = null;
+
+    [SerializeField]
+    GameObject leftHand = null;
 
     confirmState stateConfirm;
     pointingState statePointing;
 
-    GraphicRaycaster m_Raycaster;
-    PointerEventData m_PointerEventData;
-    EventSystem m_EventSystem;
+    [SerializeField]
+    public AudioClip clipConfirm = null;
 
     [SerializeField]
-    public AudioClip clipConfirm;
+    public AudioClip clipPointing = null;
+
     [SerializeField]
-    public AudioClip clipPointing;
+    MvtRecognition mvtRecognition = null;
 
     // Start is called before the first frame update
     void Start()
     {
-        BvhImporter tmp = new BvhImporter("pointeur_3.bvh");
-        tmp.Parse();
-        idlePointing = tmp.GetBvh();
-        tmp.BvhPath = "pointeur_2.bvh";
-        tmp.Parse();
-        BVHactivating = tmp.GetBvh();
+        idlePointing = new Bvh().GetBvhFromPath("Assets/BVH/pointeur_3.bvh");
+        BVHactivating = new Bvh().GetBvhFromPath("Assets/BVH/pointeur_2.bvh");
         actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
     }
 
@@ -71,9 +67,13 @@ public class pointingHandler : MonoBehaviour
             switch (stateConfirm)
             {
                 case confirmState.idle:
-                    //TODO check if the intermediate position is used
-
-                    bool checkValidity = true;
+                    if(mvtRecognition.launchComparison(BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0], BVHactivating, degreeOfMarginValidating, new string[0],1))
+                    {
+                        SoundManager.PlaySound(clipConfirm, leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position);
+                        stateConfirm = confirmState.click;
+                        lineMenu.endColor = Color.green;
+                    }
+                    /*bool checkValidity = true;            //A ENLEVER
                     foreach (var node in BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0].Traverse())     //Traverse on left thumb
                     {
                         var actorRotation = actor.GetReceivedRotation((NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name));
@@ -87,16 +87,20 @@ public class pointingHandler : MonoBehaviour
                         SoundManager.PlaySound(clipConfirm, leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position);
                         stateConfirm = confirmState.click;
                         lineMenu.endColor = Color.green;
-                    }
+                    }*/
                     break;
-                case confirmState.click:
-                    //TODO interact with environment and change state
 
+                case confirmState.click:
                     stateConfirm = confirmState.releaseClick;
                     break;
+
                 case confirmState.releaseClick:
-                    //TODO check if the initial position is used
-                    checkValidity = true;
+                    if (mvtRecognition.launchComparison(BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0], BVHactivating, degreeOfMarginValidating, new string[0],0))
+                    {
+                        stateConfirm = confirmState.idle;
+                        lineMenu.endColor = Color.white;
+                    }
+                    /*checkValidity = true;         //A ENLEVER
                     foreach (var node in BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0].Traverse())     //Traverse on left thumb
                     {
                         var actorRotation = actor.GetReceivedRotation((NeuronBones)System.Enum.Parse(typeof(NeuronBones), node.Name));
@@ -109,7 +113,7 @@ public class pointingHandler : MonoBehaviour
                     {
                         stateConfirm = confirmState.idle;
                         lineMenu.endColor = Color.white;
-                    }
+                    }*/
                     break;
             }
         }
@@ -119,7 +123,8 @@ public class pointingHandler : MonoBehaviour
             SoundManager.PlaySound(clipPointing, leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position);
             statePointing = pointingState.idlePointing;
         }
-        if (compareHandPosition())
+        //if (compareHandPosition())
+        if(mvtRecognition.launchComparison(idlePointing.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0], idlePointing, degreeOfMarginPointing,new string[1] { "Thumb" },0))
         {
             if (statePointing == pointingState.idle)
             {
@@ -163,7 +168,7 @@ public class pointingHandler : MonoBehaviour
         return stateConfirm;
     }
 
-    public bool compareHandPosition()  //position de la main == idlePointing.frame[0]
+    /*public bool compareHandPosition()  //position de la main == idlePointing.frame[0]         //A ENLEVER
     {
         bool checkValidity = true;
         foreach (var node in idlePointing.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Traverse())  //Traverse on left hand
@@ -177,5 +182,5 @@ public class pointingHandler : MonoBehaviour
         }
 
         return true;
-    }
+    }*/
 }

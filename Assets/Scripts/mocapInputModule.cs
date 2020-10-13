@@ -13,7 +13,7 @@ public class mocapInputModule : BaseInputModule
     private GameObject m_CurrentObject= null;
     private PointerEventData m_Data = null;
     [SerializeField]
-    private pointingHandler pointhandler;
+    private pointingHandler pointhandler = null;
 
     protected override void Awake()
     {

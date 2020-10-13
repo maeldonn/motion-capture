@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 namespace UniHumanoid
@@ -181,6 +182,16 @@ namespace UniHumanoid
 
     public class Bvh
     {
+        public Bvh()
+        {
+            // do nothing
+        }
+
+        public Bvh GetBvhFromPath(string path)
+        {
+            return Parse(File.ReadAllText(path, Encoding.UTF8));
+        }
+
         public BvhNode Root
         {
             get;
