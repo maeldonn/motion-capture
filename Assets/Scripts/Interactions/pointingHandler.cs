@@ -2,8 +2,6 @@
 using Neuron;
 using UniHumanoid;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public enum confirmState
 {
@@ -54,27 +52,27 @@ public enum pointingState
 /// </remarks>
 public class pointingHandler : MonoBehaviour
 {
-    Bvh idlePointing = null;
-    Bvh BVHactivating = null;
-    NeuronActor actor = null;
+    private Bvh idlePointing = null;
+    private Bvh BVHactivating = null;
+    private NeuronActor actor = null;
 
     [SerializeField]
     private GameObject player = null;
 
     [SerializeField]
-    int degreeOfMarginPointing = 0;
+    private int degreeOfMarginPointing = 0;
 
     [SerializeField]
-    int degreeOfMarginValidating = 0;
+    private int degreeOfMarginValidating = 0;
 
     [SerializeField]
-    LineRenderer lineMenu = null;
+    private LineRenderer lineMenu = null;
 
     [SerializeField]
-    GameObject leftHand = null;
+    private GameObject leftHand = null;
 
-    confirmState stateConfirm;
-    pointingState statePointing;
+    private confirmState stateConfirm;
+    private pointingState statePointing;
 
     [SerializeField]
     public AudioClip clipConfirm = null;
@@ -83,7 +81,7 @@ public class pointingHandler : MonoBehaviour
     public AudioClip clipPointing = null;
 
     [SerializeField]
-    MvtRecognition mvtRecognition = null;
+    private MvtRecognition mvtRecognition = null;
 
     // Start is called before the first frame update
     private void Start()
@@ -215,7 +213,6 @@ public class pointingHandler : MonoBehaviour
             //Debug.Log("No collider hit");
             tmpPos = leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position + unitVector * 1000;
         }
-
         lineMenu.SetPositions(new[] { leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position, tmpPos });
         lineMenu.transform.position = leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position;
         lineMenu.transform.LookAt(tmpPos);

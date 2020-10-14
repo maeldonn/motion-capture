@@ -10,7 +10,9 @@ namespace UniHumanoid
 {
     public class BvhException : Exception
     {
-        public BvhException(string msg) : base(msg) { }
+        public BvhException(string msg) : base(msg)
+        {
+        }
     }
 
     public enum Channel
@@ -22,6 +24,7 @@ namespace UniHumanoid
         Yrotation,
         Zrotation,
     }
+
     public static class ChannelExtensions
     {
         public static string ToProperty(this Channel ch)
@@ -106,7 +109,7 @@ namespace UniHumanoid
             Channels = ParseChannel(r.ReadLine());
         }
 
-        static Single3 ParseOffset(string line)
+        private static Single3 ParseOffset(string line)
         {
             var splited = line.Trim().Split();
             if (splited[0] != "OFFSET") throw new BvhException("OFFSET is not found");
@@ -114,7 +117,7 @@ namespace UniHumanoid
             return new Single3(offset[0], offset[1], offset[2]);
         }
 
-        static Channel[] ParseChannel(string line)
+        private static Channel[] ParseChannel(string line)
         {
             var splited = line.Trim().Split();
             if (splited[0] != "CHANNELS") throw new BvhException("CHANNELS is not found");
@@ -227,17 +230,19 @@ namespace UniHumanoid
                                 case Channel.Xrotation:
                                     temp.x = Channels[index].Keys[frame];
                                     break;
+
                                 case Channel.Yrotation:
                                     temp.y = -Channels[index].Keys[frame];
                                     break;
+
                                 case Channel.Zrotation:
                                     temp.z = -Channels[index].Keys[frame];
                                     break;
+
                                 default:
                                     break;
                             }
                         }
-
                         else
                         {
                             switch (node.Channels[i])
@@ -245,12 +250,15 @@ namespace UniHumanoid
                                 case Channel.Xposition:
                                     temp.x = -NeuronUnityLinearScale * Channels[index].Keys[frame];
                                     break;
+
                                 case Channel.Yposition:
                                     temp.y = NeuronUnityLinearScale * Channels[index].Keys[frame];
                                     break;
+
                                 case Channel.Zposition:
                                     temp.z = NeuronUnityLinearScale * Channels[index].Keys[frame];
                                     break;
+
                                 default:
                                     break;
                             }
@@ -269,7 +277,6 @@ namespace UniHumanoid
             var bonePositionOffsets = new List<Vector3>();
             return bonePositionOffsets.ToArray();
         }
-
 
         public bool TryGetPathWithPropertyFromChannel(ChannelCurve channel, out PathWithProperty pathWithProp)
         {
@@ -442,7 +449,7 @@ namespace UniHumanoid
             }
         }
 
-        static BvhNode ParseNode(StringReader r, int level = 0)
+        private static BvhNode ParseNode(StringReader r, int level = 0)
         {
             var firstline = r.ReadLine().Trim();
             var splited = firstline.Split();
@@ -512,7 +519,7 @@ namespace UniHumanoid
                     node.Children.Add(child);
                 }
             }
-            
+
             return node;
         }
     }

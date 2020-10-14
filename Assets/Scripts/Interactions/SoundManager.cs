@@ -1,16 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class SoundManager
 {
-
     private static GameObject oneShotGameObject;
     private static AudioSource oneShotAudioSource;
 
     public static void PlaySound(AudioClip clip)
     {
-        if(oneShotGameObject == null)
+        if (oneShotGameObject == null)
         {
             oneShotGameObject = new GameObject("Sound");
             oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
