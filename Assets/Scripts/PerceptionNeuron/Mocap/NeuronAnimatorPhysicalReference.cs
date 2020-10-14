@@ -17,108 +17,114 @@
  limitations under the License.
 ************************************************************************************/
 
-using System;
 using UnityEngine;
 
 namespace Neuron
 {
-	public class NeuronAnimatorPhysicalReference
-	{
-		GameObject referenceObject = null;
-		Animator referenceAnimator = null;
-		
-		public bool Init( Animator animator, Animator animatorOverride )
-		{			
-			if( animator == null )
-			{
-				Debug.LogError(	"[NeuronAnimatorPhysicalReference] Invalid Animator" );
-				return false;
-			}
-			
-			// check if there is enough Rigidbody Component on the bones,
-			// if not return false to prevent init reference_object
-			if( !CheckRigidbodies( animator ) )
-			{
-				Debug.LogError(	string.Format(
-					"[NeuronAnimatorPhysicalReference] Trying to use physics update but no Rigidbody Component in Actor \"{0}\". Did you forget to add Rigidbody Component?",
-					animator.gameObject.name ), animator );
-				return false;
-			}
+    public class NeuronAnimatorPhysicalReference
+    {
+        private GameObject referenceObject = null;
+        private Animator referenceAnimator = null;
 
-			if (animatorOverride == null) {
-				// duplicate bound object as reference object,
-				// we only use this reference object's transforms to get world transforms
-				referenceObject = (GameObject)GameObject.Instantiate (animator.gameObject, animator.gameObject.transform.position, animator.gameObject.transform.rotation);
-				referenceObject.name = string.Format ("{0} (neuron reference)", animator.gameObject.name);
-				referenceAnimator = referenceObject.GetComponent<Animator> ();
+        public bool Init(Animator animator, Animator animatorOverride)
+        {
+            if (animator == null)
+            {
+                Debug.LogError("[NeuronAnimatorPhysicalReference] Invalid Animator");
+                return false;
+            }
 
-				NeuronAnimatorInstance referenceInstance = referenceObject.GetComponent<NeuronAnimatorInstance> ();
-				if (referenceInstance != null) {
-					//referenceInstance.physicalUpdate = false;
-					referenceInstance.motionUpdateMethod = Neuron.UpdateMethod.Normal;
-				}
-			
-				// remove all unnecessary components, this will prevent rendering and any unexpected behaviour from custom scripts
-				Component[] components = referenceObject.GetComponentsInChildren<Component> ();
-				for (int i = 0; i < components.Length; ++i) {
-					if (components [i].GetType () != typeof(Transform)
-					    && components [i].GetType () != typeof(Animator)
-					    && components [i].GetType () != typeof(NeuronAnimatorInstance)) {
-						GameObject.DestroyImmediate (components [i]);
-					}
-				}
-			} else {
-				referenceAnimator = animatorOverride;
-			}
-			return true;
-		}
-		
-		public void Release()
-		{
-			if( referenceObject != null )
-			{
-				GameObject.DestroyImmediate( referenceObject );
-				referenceObject = null;
-				referenceAnimator = null;
-			}
-		}
-				
-		public bool Initiated()
-		{
-			return referenceObject != null && referenceAnimator != null;
-		}
-		
-		public GameObject GetReferenceObject()
-		{
-			return referenceObject;
-		}
-		
-		public Animator GetReferenceAnimator()
-		{
-			return referenceAnimator;
-		}
-		
-		bool CheckRigidbodies( Animator animator )
-		{
-			if( animator == null )
-			{
-				return false;
-			}
-			
-			bool ret = true;
-			for( HumanBodyBones i = 0; i < HumanBodyBones.LastBone; ++i )
-			{
-				Transform t = animator.GetBoneTransform( i );
-				if( t != null )
-				{
-					if (t.GetComponent<Rigidbody> () == null) {
-						ret = false;
-						break;
-					}
-				}
-			}
-			
-			return ret;
-		}
-	}
+            // check if there is enough Rigidbody Component on the bones,
+            // if not return false to prevent init reference_object
+            if (!CheckRigidbodies(animator))
+            {
+                Debug.LogError(string.Format(
+                    "[NeuronAnimatorPhysicalReference] Trying to use physics update but no Rigidbody Component in Actor \"{0}\". Did you forget to add Rigidbody Component?",
+                    animator.gameObject.name), animator);
+                return false;
+            }
+
+            if (animatorOverride == null)
+            {
+                // duplicate bound object as reference object,
+                // we only use this reference object's transforms to get world transforms
+                referenceObject = (GameObject)GameObject.Instantiate(animator.gameObject, animator.gameObject.transform.position, animator.gameObject.transform.rotation);
+                referenceObject.name = string.Format("{0} (neuron reference)", animator.gameObject.name);
+                referenceAnimator = referenceObject.GetComponent<Animator>();
+
+                NeuronAnimatorInstance referenceInstance = referenceObject.GetComponent<NeuronAnimatorInstance>();
+                if (referenceInstance != null)
+                {
+                    //referenceInstance.physicalUpdate = false;
+                    referenceInstance.motionUpdateMethod = Neuron.UpdateMethod.Normal;
+                }
+
+                // remove all unnecessary components, this will prevent rendering and any unexpected behaviour from custom scripts
+                Component[] components = referenceObject.GetComponentsInChildren<Component>();
+                for (int i = 0; i < components.Length; ++i)
+                {
+                    if (components[i].GetType() != typeof(Transform)
+                        && components[i].GetType() != typeof(Animator)
+                        && components[i].GetType() != typeof(NeuronAnimatorInstance))
+                    {
+                        GameObject.DestroyImmediate(components[i]);
+                    }
+                }
+            }
+            else
+            {
+                referenceAnimator = animatorOverride;
+            }
+            return true;
+        }
+
+        public void Release()
+        {
+            if (referenceObject != null)
+            {
+                GameObject.DestroyImmediate(referenceObject);
+                referenceObject = null;
+                referenceAnimator = null;
+            }
+        }
+
+        public bool Initiated()
+        {
+            return referenceObject != null && referenceAnimator != null;
+        }
+
+        public GameObject GetReferenceObject()
+        {
+            return referenceObject;
+        }
+
+        public Animator GetReferenceAnimator()
+        {
+            return referenceAnimator;
+        }
+
+        private bool CheckRigidbodies(Animator animator)
+        {
+            if (animator == null)
+            {
+                return false;
+            }
+
+            bool ret = true;
+            for (HumanBodyBones i = 0; i < HumanBodyBones.LastBone; ++i)
+            {
+                Transform t = animator.GetBoneTransform(i);
+                if (t != null)
+                {
+                    if (t.GetComponent<Rigidbody>() == null)
+                    {
+                        ret = false;
+                        break;
+                    }
+                }
+            }
+
+            return ret;
+        }
+    }
 }

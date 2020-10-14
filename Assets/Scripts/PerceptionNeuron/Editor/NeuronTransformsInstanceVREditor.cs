@@ -1,42 +1,37 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEditor;
+﻿using UnityEditor;
+using UnityEngine;
 
 [CustomEditor(typeof(NeuronTransformsInstanceVR))]
-public class NeuronTransformsInstanceVREditor : Editor 
+public class NeuronTransformsInstanceVREditor : Editor
 {
-	public override void OnInspectorGUI()
-	{
-		NeuronTransformsInstanceVR vrScript = (NeuronTransformsInstanceVR)target;
+    public override void OnInspectorGUI()
+    {
+        NeuronTransformsInstanceVR vrScript = (NeuronTransformsInstanceVR)target;
 
+        DrawDefaultInspector();
 
-		DrawDefaultInspector ();
+        if (GUILayout.Button("Load bone references"))
+        {
+            Debug.Log("[NeuronTransformsInstanceVR] - LOAD all Transform references into the bones list!");
 
+            vrScript.Bind(vrScript.root, vrScript.prefix);
+            vrScript.editorScriptHasLoadedBones = true;
 
-		if(GUILayout.Button("Load bone references"))
-		{
-			Debug.Log ("[NeuronTransformsInstanceVR] - LOAD all Transform references into the bones list!");
+            EditorUtility.SetDirty(vrScript);
+        }
 
-			vrScript.Bind( vrScript.root, vrScript.prefix );
-			vrScript.editorScriptHasLoadedBones = true;
+        if (GUILayout.Button("Clear bone references"))
+        {
+            Debug.Log("[NeuronTransformsInstanceVR] - CLEAR all Transform references in the bones list!");
 
-			EditorUtility.SetDirty (vrScript);
-		}
+            for (int i = 0; i < vrScript.bones.Length; i++)
+            {
+                vrScript.bones[i] = null;
+            }
 
-		if(GUILayout.Button("Clear bone references"))
-		{
-			Debug.Log ("[NeuronTransformsInstanceVR] - CLEAR all Transform references in the bones list!");
+            vrScript.editorScriptHasLoadedBones = false;
 
-			for (int i=0; i < vrScript.bones.Length; i++){
-				vrScript.bones[i] = null;
-			}
-
-			vrScript.editorScriptHasLoadedBones = false;
-
-			EditorUtility.SetDirty (vrScript);
-		}
-
-
-
-	}
+            EditorUtility.SetDirty(vrScript);
+        }
+    }
 }

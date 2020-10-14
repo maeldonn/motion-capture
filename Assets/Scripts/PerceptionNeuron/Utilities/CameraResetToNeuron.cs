@@ -1,27 +1,25 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class CameraResetToNeuron : MonoBehaviour
 {
-
     public Transform neuronEyePosition;
     public GameObject GOcam;
-    Camera cam;
+    private Camera cam;
 
-    void Start()
+    private void Start()
     {
         cam = GOcam.GetComponentInChildren<Camera>();
         Invoke("DoReset", 1f);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
             DoReset();
     }
 
-    void DoReset()
+    private void DoReset()
     {
         Quaternion camQ = cam.transform.localRotation;
         Quaternion neuronQ = neuronEyePosition.rotation;

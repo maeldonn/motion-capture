@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class ListCreator : MonoBehaviour
 {
-
     [SerializeField]
     private Transform SpawnPoint = null;
 
@@ -82,7 +81,6 @@ public class ListCreator : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-
 
     private void Start()
     {
