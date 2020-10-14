@@ -17,185 +17,183 @@
  limitations under the License.
 ************************************************************************************/
 
-using System.Collections.Generic;
 using UnityEngine;
-using NeuronDataReaderManaged;
 
 namespace Neuron
 {
-	public enum UpdateMethod 
-	{
-		Normal,
-		Physical,
-		EstimatedPhysical,
-		MixedPhysical
-	}
+    public enum UpdateMethod
+    {
+        Normal,
+        Physical,
+        EstimatedPhysical,
+        MixedPhysical
+    }
 
-	// NeuronInstance 
-	public class NeuronInstance : MonoBehaviour
-	{
-		[Header("Connection settings:")]
-		public string						address = "127.0.0.1";
-		public int							port = 7001;
-		int									commandServerPort = -1;
-		public NeuronConnection.SocketType	socketType = NeuronConnection.SocketType.TCP;
-		public int							actorID = 0;
-		public bool							connectToAxis = false;
+    // NeuronInstance
+    public class NeuronInstance : MonoBehaviour
+    {
+        [Header("Connection settings:")]
+        public string address = "127.0.0.1";
 
-		protected NeuronActor				boundActor = null;
-		protected bool						standalone = true;
-		protected int						lastEvaluateTime = 0;
-		protected bool						boneSizesDirty = false;
-		protected bool						applyBoneSizes = false;
+        public int port = 7001;
+        private int commandServerPort = -1;
+        public NeuronConnection.SocketType socketType = NeuronConnection.SocketType.TCP;
+        public int actorID = 0;
+        public bool connectToAxis = false;
 
-		public bool							noFrameData { get ; private set; }
+        protected NeuronActor boundActor = null;
+        protected bool standalone = true;
+        protected int lastEvaluateTime = 0;
+        protected bool boneSizesDirty = false;
+        protected bool applyBoneSizes = false;
+
+        public bool noFrameData { get; private set; }
 
         protected NeuronSource source;
 
         public NeuronInstance()
-		{
-		}
+        {
+        }
 
-		public NeuronInstance( string address, int port, int commandServerPort, NeuronConnection.SocketType socketType, int actorID )
-		{
-			standalone = true;
-		}
+        public NeuronInstance(string address, int port, int commandServerPort, NeuronConnection.SocketType socketType, int actorID)
+        {
+            standalone = true;
+        }
 
-		public NeuronInstance( NeuronActor boundActor )
-		{
-			if( boundActor != null )
-			{
-				this.boundActor = boundActor;
-				RegisterCallbacks();
-				standalone = false;
-			}
-		}
+        public NeuronInstance(NeuronActor boundActor)
+        {
+            if (boundActor != null)
+            {
+                this.boundActor = boundActor;
+                RegisterCallbacks();
+                standalone = false;
+            }
+        }
 
-		public void SetBoundActor( NeuronActor actor )
-		{
-			if( boundActor != null )
-			{
-				UnregisterCallbacks();
-			}
+        public void SetBoundActor(NeuronActor actor)
+        {
+            if (boundActor != null)
+            {
+                UnregisterCallbacks();
+            }
 
-			if( actor != null )
-			{
-				boundActor = actor;
-				RegisterCallbacks();
-				actorID = actor.actorID;
+            if (actor != null)
+            {
+                boundActor = actor;
+                RegisterCallbacks();
+                actorID = actor.actorID;
 
-				NeuronSource source = actor.owner;
-				address = source.address;
-				port = source.port;
-				commandServerPort = source.commandServerPort;
-				socketType = source.socketType;
+                NeuronSource source = actor.owner;
+                address = source.address;
+                port = source.port;
+                commandServerPort = source.commandServerPort;
+                socketType = source.socketType;
 
-				standalone = false;
-			}
-		}
+                standalone = false;
+            }
+        }
 
-		protected void RegisterCallbacks()
-		{
-			if( boundActor != null )
-			{
-				boundActor.RegisterNoFrameDataCallback( OnNoFrameData );
-				boundActor.RegisterResumeFrameDataCallback( OnResumeFrameData );
-			}
-		}
+        protected void RegisterCallbacks()
+        {
+            if (boundActor != null)
+            {
+                boundActor.RegisterNoFrameDataCallback(OnNoFrameData);
+                boundActor.RegisterResumeFrameDataCallback(OnResumeFrameData);
+            }
+        }
 
-		protected void UnregisterCallbacks()
-		{
-			if( boundActor != null )
-			{
-				boundActor.UnregisterNoFrameDataCallback( OnNoFrameData );
-				boundActor.UnregisterResumeFrameDataCallback( OnResumeFrameData );
-			}
-		}
+        protected void UnregisterCallbacks()
+        {
+            if (boundActor != null)
+            {
+                boundActor.UnregisterNoFrameDataCallback(OnNoFrameData);
+                boundActor.UnregisterResumeFrameDataCallback(OnResumeFrameData);
+            }
+        }
 
-		protected void OnEnable()
-		{
-			ToggleConnect();
-		}
+        protected void OnEnable()
+        {
+            ToggleConnect();
+        }
 
-		protected void OnDisable()
-		{
-			if( boundActor != null && standalone )
-			{
-				Disconnect();
-				boundActor = null;
-			}
-		}
+        protected void OnDisable()
+        {
+            if (boundActor != null && standalone)
+            {
+                Disconnect();
+                boundActor = null;
+            }
+        }
 
-		protected void Update()
-		{
-			if( standalone && boundActor != null )
-			{
-				boundActor.owner.OnUpdate();
-			}
-		}
+        protected void Update()
+        {
+            if (standalone && boundActor != null)
+            {
+                boundActor.owner.OnUpdate();
+            }
+        }
 
-		protected void ToggleConnect()
-		{
-			if( standalone && connectToAxis && boundActor == null )
-			{
+        protected void ToggleConnect()
+        {
+            if (standalone && connectToAxis && boundActor == null)
+            {
                 connectToAxis = Connect();
-			}
-			else if( standalone && !connectToAxis && boundActor != null )
-			{
-				Disconnect();
-			}
-		}
+            }
+            else if (standalone && !connectToAxis && boundActor != null)
+            {
+                Disconnect();
+            }
+        }
 
+        protected bool Connect()
+        {
+            source = NeuronConnection.Connect(address, port, commandServerPort, socketType);
+            if (source != null)
+            {
+                boundActor = source.AcquireActor(actorID);
+                RegisterCallbacks();
+            }
 
-		protected bool Connect()
-		{		
-			source = NeuronConnection.Connect( address, port, commandServerPort, socketType );
-			if( source != null )
-			{
-				boundActor = source.AcquireActor( actorID );
-				RegisterCallbacks();
-			}
+            return source != null;
+        }
 
-			return source != null;
-		}
-
-		protected void Disconnect()
-		{
-			NeuronConnection.Disconnect( boundActor.owner );
-			UnregisterCallbacks();
-			boundActor = null;
+        protected void Disconnect()
+        {
+            NeuronConnection.Disconnect(boundActor.owner);
+            UnregisterCallbacks();
+            boundActor = null;
             source = null;
         }
 
-		public virtual bool OnNoFrameData()
-		{
-			noFrameData = true;
-			return false;
-		}
+        public virtual bool OnNoFrameData()
+        {
+            noFrameData = true;
+            return false;
+        }
 
-		public virtual bool OnResumeFrameData()
-		{
-			noFrameData = false;
-			return false;
-		}
+        public virtual bool OnResumeFrameData()
+        {
+            noFrameData = false;
+            return false;
+        }
 
-		public virtual bool OnReceivedBoneSizes()
-		{
-			boneSizesDirty = applyBoneSizes;
-			return false;
-		}
+        public virtual bool OnReceivedBoneSizes()
+        {
+            boneSizesDirty = applyBoneSizes;
+            return false;
+        }
 
-		public NeuronActor GetActor()
-		{
-			return boundActor;
-		}
+        public NeuronActor GetActor()
+        {
+            return boundActor;
+        }
 
-		protected static float CalculateSwapRatio( int timeStamp, ref int last_evaluate_time )
-		{
-			int now = NeuronActor.GetTimeStamp();
-			float swap_ratio = (float)( timeStamp - last_evaluate_time ) / (float)( now - last_evaluate_time );
-			last_evaluate_time = now;
-			return Mathf.Clamp( swap_ratio, 0.0f, 1.0f );
-		}
-	}
+        protected static float CalculateSwapRatio(int timeStamp, ref int last_evaluate_time)
+        {
+            int now = NeuronActor.GetTimeStamp();
+            float swap_ratio = (float)(timeStamp - last_evaluate_time) / (float)(now - last_evaluate_time);
+            last_evaluate_time = now;
+            return Mathf.Clamp(swap_ratio, 0.0f, 1.0f);
+        }
+    }
 }

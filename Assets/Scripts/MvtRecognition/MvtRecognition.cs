@@ -63,7 +63,8 @@ public class MvtRecognition : MonoBehaviour
     //Values used to check if a movement is launched
     [SerializeField]
     //TODO
-    private int nbFirstMvtToCheck=0;      //The number of frame needed to check if the movement is launched
+    private int nbFirstMvtToCheck = 0;      //The number of frame needed to check if the movement is launched
+
     private List<float> tabTimePassedBetweenFrame;
     private bool mvtLaunched;
 
@@ -139,7 +140,7 @@ public class MvtRecognition : MonoBehaviour
         timePassedBetweenFrame += deltaTime;
         timePassedBetweenFrame %= totalTime;
         nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) / bvh.FrameTime.TotalSeconds);
-        LaunchComparison(bvh.Root, bvh, degreeOfMargin, new [] { "Hips" }, nbFrame, ChangeColorUiCharacter);
+        LaunchComparison(bvh.Root, bvh, degreeOfMargin, new[] { "Hips" }, nbFrame, ChangeColorUiCharacter);
         return LaunchComparison(bvh.Root, bvh, degreeOfMargin, new[] { "Hips" }, nbFrame);
     }
 
@@ -163,7 +164,7 @@ public class MvtRecognition : MonoBehaviour
                 if (tabTimePassedBetweenFrame[i] >= (float)bvh.FrameTime.TotalSeconds * nbFirstMvtToCheck)      //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
                 {
                     //The first X frames have been detected, we start the movement recognition
-                    mvtLaunched = true;     
+                    mvtLaunched = true;
                     timePassedBetweenFrame = tabTimePassedBetweenFrame[i];
                     tabTimePassedBetweenFrame = null;
                     return;
@@ -188,7 +189,6 @@ public class MvtRecognition : MonoBehaviour
     {
         foreach (var c in uiHips.transform.GetComponentsInChildren<Transform>())
         {
-
             if (node.Name == c.name)
             {
                 c.GetComponent<RawImage>().color = color ? Color.green : Color.red;
@@ -221,7 +221,7 @@ public class MvtRecognition : MonoBehaviour
     /// </param>
     /// <param name="frame">The index of the frame to look.</param>
     /// <param name="functionCalledAtEveryNode">A function taking as arguments a <c>BvhNode</c> and a <c>bool</c>, and which return an int.</param>
-    public void LaunchComparison(BvhNode root, Bvh animationToCompare, int degOfMargin, string[] bodyPartsToIgnore, int frame, Func<BvhNode,bool,int> functionCalledAtEveryNode)
+    public void LaunchComparison(BvhNode root, Bvh animationToCompare, int degOfMargin, string[] bodyPartsToIgnore, int frame, Func<BvhNode, bool, int> functionCalledAtEveryNode)
     {
         if (degOfMargin <= 0) throw new ArgumentOutOfRangeException(nameof(degOfMargin));
         foreach (var node in root.Traverse())

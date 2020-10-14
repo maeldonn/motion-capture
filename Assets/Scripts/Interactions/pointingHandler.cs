@@ -1,8 +1,6 @@
 ﻿using Neuron;
 using UniHumanoid;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public enum confirmState
 {
@@ -20,27 +18,27 @@ public enum pointingState
 
 public class pointingHandler : MonoBehaviour
 {
-    Bvh idlePointing = null;
-    Bvh BVHactivating = null;
-    NeuronActor actor = null;
+    private Bvh idlePointing = null;
+    private Bvh BVHactivating = null;
+    private NeuronActor actor = null;
 
     [SerializeField]
     private GameObject player = null;
 
     [SerializeField]
-    int degreeOfMarginPointing = 0;
+    private int degreeOfMarginPointing = 0;
 
     [SerializeField]
-    int degreeOfMarginValidating = 0;
+    private int degreeOfMarginValidating = 0;
 
     [SerializeField]
-    LineRenderer lineMenu = null;
+    private LineRenderer lineMenu = null;
 
     [SerializeField]
-    GameObject leftHand = null;
+    private GameObject leftHand = null;
 
-    confirmState stateConfirm;
-    pointingState statePointing;
+    private confirmState stateConfirm;
+    private pointingState statePointing;
 
     [SerializeField]
     public AudioClip clipConfirm = null;
@@ -49,10 +47,10 @@ public class pointingHandler : MonoBehaviour
     public AudioClip clipPointing = null;
 
     [SerializeField]
-    MvtRecognition mvtRecognition = null;
+    private MvtRecognition mvtRecognition = null;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         idlePointing = new Bvh().GetBvhFromPath("Assets/BVH/Pointer/pointeur_3.bvh");
         BVHactivating = new Bvh().GetBvhFromPath("Assets/BVH/Pointer/pointeur_2.bvh");
@@ -60,14 +58,14 @@ public class pointingHandler : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (statePointing != pointingState.idle)
         {
             switch (stateConfirm)
             {
                 case confirmState.idle:
-                    if(mvtRecognition.LaunchComparison(BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0], BVHactivating, degreeOfMarginValidating, new string[0],1))
+                    if (mvtRecognition.LaunchComparison(BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0], BVHactivating, degreeOfMarginValidating, new string[0], 1))
                     {
                         SoundManager.PlaySound(clipConfirm, leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position);
                         stateConfirm = confirmState.click;
@@ -95,7 +93,7 @@ public class pointingHandler : MonoBehaviour
                     break;
 
                 case confirmState.releaseClick:
-                    if (mvtRecognition.LaunchComparison(BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0], BVHactivating, degreeOfMarginValidating, new string[0],0))
+                    if (mvtRecognition.LaunchComparison(BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0].Children[0], BVHactivating, degreeOfMarginValidating, new string[0], 0))
                     {
                         stateConfirm = confirmState.idle;
                         lineMenu.endColor = Color.white;
@@ -118,18 +116,19 @@ public class pointingHandler : MonoBehaviour
             }
         }
 
-        if(statePointing== pointingState.pointing)
-        { 
+        if (statePointing == pointingState.pointing)
+        {
             SoundManager.PlaySound(clipPointing, leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position);
             statePointing = pointingState.idlePointing;
         }
         //if (compareHandPosition())
-        if(mvtRecognition.LaunchComparison(idlePointing.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0], idlePointing, degreeOfMarginPointing,new string[1] { "Thumb" },0))
+        if (mvtRecognition.LaunchComparison(idlePointing.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0].Children[0], idlePointing, degreeOfMarginPointing, new string[1] { "Thumb" }, 0))
         {
             if (statePointing == pointingState.idle)
             {
                 statePointing = pointingState.pointing;
-            }else
+            }
+            else
             {
                 statePointing = pointingState.idlePointing;
             }
@@ -148,10 +147,10 @@ public class pointingHandler : MonoBehaviour
             else
             {
                 //Debug.Log("No collider hit");
-                tmpPos = leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position+unitVector * 1000;
+                tmpPos = leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position + unitVector * 1000;
             }
 
-            lineMenu.SetPositions(new [] { leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position, tmpPos });
+            lineMenu.SetPositions(new[] { leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position, tmpPos });
             lineMenu.transform.position = leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).position;
             lineMenu.transform.LookAt(tmpPos);
         }

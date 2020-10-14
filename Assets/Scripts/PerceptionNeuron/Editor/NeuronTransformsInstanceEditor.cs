@@ -1,13 +1,12 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEditor;
+﻿using UnityEditor;
+using UnityEngine;
 
 [CustomEditor(typeof(Neuron.NeuronTransformsInstance))]
-public class NeuronTransformsInstanceEditor : Editor 
+public class NeuronTransformsInstanceEditor : Editor
 {
-
     // https://catlikecoding.com/unity/tutorials/editor/custom-list/
-    SerializedProperty transformsField;
+    private SerializedProperty transformsField;
+
     //void OnEnable()
     //{
     //    // Setup the SerializedProperties.
@@ -20,7 +19,7 @@ public class NeuronTransformsInstanceEditor : Editor
 
         bool preUseNewRig = script.useNewRig;
         DrawDefaultInspector();
-        if(preUseNewRig != script.useNewRig)
+        if (preUseNewRig != script.useNewRig)
         {
             if (script.root == null)
                 script.root = script.transform;
@@ -42,7 +41,6 @@ public class NeuronTransformsInstanceEditor : Editor
             EditorUtility.SetDirty(script);
 
             UnityEditor.SceneManagement.EditorSceneManager.MarkAllScenesDirty();
-
         }
 
         // 这种做法适合不定长数组,对定长数组不起作用
@@ -52,7 +50,7 @@ public class NeuronTransformsInstanceEditor : Editor
         EditorGUILayout.PropertyField(serializedObject.FindProperty("transforms"), new GUIContent("transforms"), true);
 
         EditorGUI.indentLevel += 1;
-       // if (transformsField.isExpanded)
+        // if (transformsField.isExpanded)
         {
             //EditorGUILayout.PropertyField(transformsField.FindPropertyRelative("Array.size"));
             for (int i = 0; i < transformsField.arraySize; i++)
@@ -65,6 +63,5 @@ public class NeuronTransformsInstanceEditor : Editor
         }
         EditorGUI.indentLevel -= 1;
         serializedObject.ApplyModifiedProperties();
-
     }
 }

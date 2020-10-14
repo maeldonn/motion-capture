@@ -3005,7 +3005,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 25252949}
+  m_TargetGraphic: {fileID: 0}
   toggleTransition: 1
   graphic: {fileID: 0}
   m_Group: {fileID: 0}
@@ -3049,19 +3049,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400148, guid: 0617c33f035cafc4f9f8c9355d4b38ac, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400148, guid: 0617c33f035cafc4f9f8c9355d4b38ac, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.71296895
       objectReference: {fileID: 0}
     - target: {fileID: 400148, guid: 0617c33f035cafc4f9f8c9355d4b38ac, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400148, guid: 0617c33f035cafc4f9f8c9355d4b38ac, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7011956
       objectReference: {fileID: 0}
     - target: {fileID: 400148, guid: 0617c33f035cafc4f9f8c9355d4b38ac, type: 3}
       propertyPath: m_RootOrder
@@ -3073,7 +3073,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400148, guid: 0617c33f035cafc4f9f8c9355d4b38ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90.954
       objectReference: {fileID: 0}
     - target: {fileID: 400148, guid: 0617c33f035cafc4f9f8c9355d4b38ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

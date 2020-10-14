@@ -17,82 +17,80 @@
  limitations under the License.
 ************************************************************************************/
 
-using System;
 using UnityEngine;
-using Neuron;
 
 namespace Neuron
 {
-	[ExecuteInEditMode]
-	class BoneLine : MonoBehaviour
-	{
-		public Material			RendererMaterial;
-		public Transform		ParentTransform;
-		public Transform		ChildTransform;
-		public float			ParentWidth;
-		public float			ChildWidth;
-		public bool				Enabled { get { return line_renderer.enabled; } set { line_renderer.enabled = value; } }
-		
-		LineRenderer 			line_renderer = null;
-		
-		public void AddRenderer( Material material, float parent_width, float child_width, Transform parent_transform, Transform child_transform )
-		{
-			if( material != null )
-			{
-				line_renderer = GetComponent<LineRenderer>();
-				if( line_renderer == null )
-				{
-					line_renderer = gameObject.AddComponent<LineRenderer>();	
-				}
-				
-				line_renderer.material = material;
-				line_renderer.SetWidth( parent_width, child_width );
-				line_renderer.useWorldSpace = true;
-				
-				#if UNITY_4_6_1
+    [ExecuteInEditMode]
+    internal class BoneLine : MonoBehaviour
+    {
+        public Material RendererMaterial;
+        public Transform ParentTransform;
+        public Transform ChildTransform;
+        public float ParentWidth;
+        public float ChildWidth;
+        public bool Enabled { get { return line_renderer.enabled; } set { line_renderer.enabled = value; } }
+
+        private LineRenderer line_renderer = null;
+
+        public void AddRenderer(Material material, float parent_width, float child_width, Transform parent_transform, Transform child_transform)
+        {
+            if (material != null)
+            {
+                line_renderer = GetComponent<LineRenderer>();
+                if (line_renderer == null)
+                {
+                    line_renderer = gameObject.AddComponent<LineRenderer>();
+                }
+
+                line_renderer.material = material;
+                line_renderer.SetWidth(parent_width, child_width);
+                line_renderer.useWorldSpace = true;
+
+#if UNITY_4_6_1
 				line_renderer.castShadows = false;
-				#elif UNITY_5
+#elif UNITY_5
 				line_renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-				#endif
-				
-				line_renderer.receiveShadows = false;
-				
-				line_renderer.SetPosition( 0, parent_transform.position );
-				line_renderer.SetPosition( 1, child_transform.position );
-				
-				RendererMaterial = material;
-				ParentWidth = parent_width;
-				ChildWidth = child_width;
-				ParentTransform = parent_transform;
-				ChildTransform = child_transform;
-			}
-			else
-			{
-				Debug.LogError( string.Format( "[NeuronBoneLine] Invalid material {0} for bone line.", material.name ) );
-			}
-		}
-		
-		public void RemoveRenderer()
-		{
-			if( line_renderer != null )
-			{
-				DestroyImmediate( line_renderer );
-				line_renderer = null;
-			}
-		}
-		
-		public void Update()
-		{
-			if( line_renderer == null )
-			{
-				line_renderer = GetComponent<LineRenderer>();
-			}
-			
-			if( line_renderer != null && line_renderer.enabled && transform.parent != null )
-			{
-				line_renderer.SetPosition( 0, ParentTransform.position );
-				line_renderer.SetPosition( 1, ChildTransform.position );
-			}
-		}
-	};
+#endif
+
+                line_renderer.receiveShadows = false;
+
+                line_renderer.SetPosition(0, parent_transform.position);
+                line_renderer.SetPosition(1, child_transform.position);
+
+                RendererMaterial = material;
+                ParentWidth = parent_width;
+                ChildWidth = child_width;
+                ParentTransform = parent_transform;
+                ChildTransform = child_transform;
+            }
+            else
+            {
+                Debug.LogError(string.Format("[NeuronBoneLine] Invalid material {0} for bone line.", material.name));
+            }
+        }
+
+        public void RemoveRenderer()
+        {
+            if (line_renderer != null)
+            {
+                DestroyImmediate(line_renderer);
+                line_renderer = null;
+            }
+        }
+
+        public void Update()
+        {
+            if (line_renderer == null)
+            {
+                line_renderer = GetComponent<LineRenderer>();
+            }
+
+            if (line_renderer != null && line_renderer.enabled && transform.parent != null)
+            {
+                line_renderer.SetPosition(0, ParentTransform.position);
+                line_renderer.SetPosition(1, ChildTransform.position);
+            }
+        }
+    };
 }

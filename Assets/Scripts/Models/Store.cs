@@ -6,7 +6,7 @@ public class Store : MonoBehaviour
     private bool m_usingArm = false;
     private string m_path = null;
     private Bvh m_bvh = null;
-      
+
     public bool UsingArm
     {
         get { return m_usingArm; }
@@ -27,6 +27,7 @@ public class Store : MonoBehaviour
             Bvh = new Bvh().GetBvhFromPath(m_path);
         }
     }
+
     public Bvh Bvh
     {
         get { return m_bvh; }
@@ -36,7 +37,7 @@ public class Store : MonoBehaviour
             m_bvh = value;
         }
     }
-    
+
     public void toggleUsingArm()
     {
         Debug.Log(UsingArm);
