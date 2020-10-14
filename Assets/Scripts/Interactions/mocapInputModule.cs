@@ -36,7 +36,7 @@ public class mocapInputModule : BaseInputModule
         HandlePointerExitAndEnter(m_Data, m_CurrentObject);
 
         //Press
-        if (pointhandler.GetState().ToString() == "click") ProcessPress(m_Data);
+        if (pointhandler.GetConfirmState().ToString() == "click") ProcessPress(m_Data);
 
         //Release
         else ProcessRelease(m_Data);

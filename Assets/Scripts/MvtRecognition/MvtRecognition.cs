@@ -8,14 +8,14 @@ using UnityEngine.UI;
 
 /// <summary>
 /// The <c>MvtRecognition</c> class.
-/// Contains all methods to detect and analyze movements.
+/// Contains all the methods to detect and analyze movements.
 /// <list type="bullet">
 /// <item>
 /// <term>initiateValues</term>
 /// <description>Initiate the different values of the class.</description>
 /// </item>
 /// <item>
-/// <term>checkIfMvtIsRight</term>
+/// <term>CheckIfMvtIsRight</term>
 /// <description>Compare the movements made by the user with the one he should reproduce.</description>
 /// </item>
 /// <item>
@@ -33,7 +33,7 @@ using UnityEngine.UI;
 /// </list>
 /// </summary>
 /// <remarks>
-/// The <c>Start()</c> and <c>Update()</c> methods are used, it might be a good idea to do the treatment on another file.
+/// The <c>Start()</c> and <c>Update()</c> methods are used, it might be a good idea to do the processing on another file.
 /// </remarks>
 public class MvtRecognition : MonoBehaviour
 {
@@ -70,14 +70,14 @@ public class MvtRecognition : MonoBehaviour
 
     private bool mvtChoosen = false;
 
-    /*public MvtRecognition(GameObject _player, GameObject _characterExample, GameObject _uiHips, Store _store, int _nbFirstMvtToCheck)
+    public MvtRecognition(GameObject _player, GameObject _characterExample, GameObject _uiHips, Store _store, int _nbFirstMvtToCheck)
     {
         player = _player;
         characterExample = _characterExample;
         uiHips = _uiHips;
         store = _store;
         nbFirstMvtToCheck = _nbFirstMvtToCheck;
-    }*/
+    }
 
     private void Start()
     {
