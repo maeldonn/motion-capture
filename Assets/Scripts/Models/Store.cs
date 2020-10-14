@@ -10,7 +10,7 @@ public class Store : MonoBehaviour
     public bool UsingArm
     {
         get { return m_usingArm; }
-        set
+        private set
         {
             if (m_usingArm == value) return;
             m_usingArm = value;
@@ -40,7 +40,6 @@ public class Store : MonoBehaviour
 
     public void toggleUsingArm()
     {
-        Debug.Log(UsingArm);
         UsingArm = !UsingArm;
     }
 }
