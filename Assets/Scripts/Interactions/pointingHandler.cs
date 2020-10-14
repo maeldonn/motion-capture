@@ -1,5 +1,5 @@
-﻿using System;
-using Neuron;
+﻿using Neuron;
+using System;
 using UniHumanoid;
 using UnityEngine;
 
@@ -108,7 +108,7 @@ public class pointingHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Update all that is related to the user input (the pointing line and the clicks). 
+    /// Update all that is related to the user input (the pointing line and the clicks).
     /// </summary>
     public void UpdateUserInputs()
     {
@@ -178,6 +178,7 @@ public class pointingHandler : MonoBehaviour
                     lineMenu.endColor = Color.white;
                 }
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }
