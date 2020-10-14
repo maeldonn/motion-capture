@@ -319,7 +319,7 @@ namespace UniHumanoid
             return string.Join("/", list.ToArray());
         }
 
-        BvhNode GetParent(BvhNode node)
+        public BvhNode GetParent(BvhNode node)
         {
             foreach (var x in Root.Traverse())
             {
