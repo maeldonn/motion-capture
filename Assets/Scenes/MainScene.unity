@@ -4403,11 +4403,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19114344b07638e42b838236f2f4e9cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  degreOfMargin: 40
+  degreeOfMargin: 40
   player: {fileID: 1341332105}
-  characterExemple: {fileID: 0}
+  characterExample: {fileID: 0}
   uiHips: {fileID: 6726494051009210618}
   store: {fileID: 2048113673}
+  nbFirstMvtToCheck: 100
 --- !u!1 &2049434457
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,7 +50,7 @@ public class MvtRecognition : MonoBehaviour
 
     [SerializeField]
     //The gameObject of the character controlled by the bvh file
-    private GameObject characterExemple = null;
+    private GameObject characterExample = null;
 
     [SerializeField]
     //The gameObject of the hips of the
@@ -61,11 +61,22 @@ public class MvtRecognition : MonoBehaviour
     private Store store = null;
 
     //Values used to check if a movement is launched
+    [SerializeField]
+    //TODO
     private int nbFirstMvtToCheck=0;      //The number of frame needed to check if the movement is launched
     private List<float> tabTimePassedBetweenFrame;
     private bool mvtLaunched;
 
-    bool mvtChoosen = false;
+    private bool mvtChoosen = false;
+
+    /*public MvtRecognition(GameObject _player, GameObject _characterExample, GameObject _uiHips, Store _store, int _nbFirstMvtToCheck)
+    {
+        player = _player;
+        characterExample = _characterExample;
+        uiHips = _uiHips;
+        store = _store;
+        nbFirstMvtToCheck = _nbFirstMvtToCheck;
+    }*/
 
     private void Start()
     {
@@ -73,7 +84,7 @@ public class MvtRecognition : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         UpdateMvtRecognition();
     }
@@ -95,7 +106,7 @@ public class MvtRecognition : MonoBehaviour
             {
                 CheckBeginningMvt(deltaTime);
             }
-            if (characterExemple != null) characterExemple.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame = nbFrame;     //If a character is set, then animate him.
+            if (characterExample != null) characterExample.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame = nbFrame;     //If a character is set, then animate him.
         }
     }
 
