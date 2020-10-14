@@ -25,7 +25,7 @@ public class mocapInputModule : BaseInputModule
     {
         //Reset data
         m_Data.Reset();
-        m_Data.position = new Vector2(m_camera.pixelWidth / 2, m_camera.pixelHeight / 2);
+        m_Data.position = new Vector2(m_camera.pixelWidth / 2f, m_camera.pixelHeight / 2f);
 
         //Raycast
         eventSystem.RaycastAll(m_Data,m_RaycastResultCache);
@@ -39,7 +39,7 @@ public class mocapInputModule : BaseInputModule
         HandlePointerExitAndEnter(m_Data,m_CurrentObject);
 
         //Press
-        if (pointhandler.GetConfirmState().ToString() == "click") ProcessPress(m_Data);
+        if (pointhandler.GetConfirmState().ToString() == "Click") ProcessPress(m_Data);
 
         //Release
         else ProcessRelease(m_Data);
@@ -74,7 +74,7 @@ public class mocapInputModule : BaseInputModule
         ExecuteEvents.Execute(data.pointerPress, data, ExecuteEvents.pointerUpHandler);
 
         //Check for click handler
-        GameObject pointerUpHandler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(m_CurrentObject);
+        var pointerUpHandler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(m_CurrentObject);
 
         //Check if actual
         if(data.pointerPress == pointerUpHandler)
