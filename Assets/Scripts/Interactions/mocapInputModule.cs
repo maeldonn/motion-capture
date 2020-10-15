@@ -10,22 +10,17 @@ namespace CERV.MouvementRecognition.Interactions
     {
         public GameManager Gm;
 
-        private PointingHandler ph;
         private Camera m_camera; //used for the GraphicRaycast
 
         private GameObject m_CurrentObject = null;
         private PointerEventData m_Data = null;
 
-        void Start()
-        {
-            ph = Gm.pointingHandler;
-            m_camera = Gm.GOcam.transform.GetChild(0).gameObject.GetComponent<Camera>();
-        }
 
         protected override void Awake()
         {
             base.Awake();
             m_Data = new PointerEventData(eventSystem);
+            m_camera = Gm.GOcam.transform.GetChild(0).gameObject.GetComponent<Camera>();
         }
 
         public override void Process()
@@ -45,11 +40,12 @@ namespace CERV.MouvementRecognition.Interactions
             //Hover
             HandlePointerExitAndEnter(m_Data, m_CurrentObject);
 
+            if (Gm.pointingHandler == null) return;
             //Press
-            if (ph.GetConfirmState().ToString() == "Action") ProcessPress(m_Data);
+            if (Gm.pointingHandler.GetConfirmState().ToString() == "Action") ProcessPress(m_Data);
 
             //Release
-            else if (ph.GetConfirmState().ToString() == "Idle") ProcessRelease(m_Data);
+            else if (Gm.pointingHandler.GetConfirmState().ToString() == "Idle") ProcessRelease(m_Data);
         }
 
 

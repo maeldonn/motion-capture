@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class NeuronAnimatorInstanceBVH
+    <title>Class GameManager
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class NeuronAnimatorInstanceBVH
+    <meta name="title" content="Class GameManager
    ">
     <meta name="generator" content="docfx 2.56.3.0">
     
@@ -68,15 +68,12 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH">
+            <article class="content wrap" id="_content" data-uid="CERV.MouvementRecognition.gameManager.GameManager">
   
   
-  <h1 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH" class="text-break">Class NeuronAnimatorInstanceBVH
+  <h1 id="CERV_MouvementRecognition_gameManager_GameManager" data-uid="CERV.MouvementRecognition.gameManager.GameManager" class="text-break">Class GameManager
   </h1>
-  <div class="markdown level0 summary"><p>The <code>NeuronAnimatorInstanceBVH</code> class.
-Contains all the methods to animate a character with a .bvh file. Most of this class is from a pre-existing class on the Neuron library.
-<ul><li>SetPosition: Set position for bone in animator.</li><li>SetRotation: Set rotation for bone in animator.</li><li>ApplyMotion: Apply transforms extracted from the .bvh file data to transforms of animator bones.</li><li>EulerToQuaternion: Convert an euler angle to a quaternion.</li><li>ReleasePhysicalContext: Call the release method on the PhysicalReference object. TODO: go and see what exactly it does.</li><li>UpdateOffset: We do some adjustment for the bones here which would replaced by our model retargeting later.</li><li>CalculateOriginalRot: Calculate the original rotation of the model. TODO: go and see what exactly it does.</li></ul></p>
-</div>
+  <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
@@ -85,7 +82,7 @@ Contains all the methods to animate a character with a .bvh file. Most of this c
     <div class="level2"><span class="xref">UnityEngine.Component</span></div>
     <div class="level3"><span class="xref">UnityEngine.Behaviour</span></div>
     <div class="level4"><span class="xref">UnityEngine.MonoBehaviour</span></div>
-    <div class="level5"><span class="xref">NeuronAnimatorInstanceBVH</span></div>
+    <div class="level5"><span class="xref">GameManager</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -375,86 +372,24 @@ Contains all the methods to animate a character with a .bvh file. Most of this c
       <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
     </div>
   </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="CERV.MouvementRecognition.Animations.html">CERV.MouvementRecognition.Animations</a></h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="CERV.MouvementRecognition.gameManager.html">CERV.MouvementRecognition.gameManager</a></h6>
   <h6><strong>Assembly</strong>: Assembly-CSharp.dll</h6>
-  <h5 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_syntax">Syntax</h5>
+  <h5 id="CERV_MouvementRecognition_gameManager_GameManager_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class NeuronAnimatorInstanceBVH : MonoBehaviour</code></pre>
+    <pre><code class="lang-csharp hljs">public class GameManager : MonoBehaviour</code></pre>
   </div>
-  <h5 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>The <code>Start()</code> and <code>Update()</code> methods are used, it might be a good idea to do the processing on another file.</p>
-</div>
-  <h3 id="constructors">Constructors
-  </h3>
-  
-  
-  <a id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH__ctor_" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.#ctor*"></a>
-  <h4 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH__ctor_Neuron_NeuronActor_" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.#ctor(Neuron.NeuronActor)">NeuronAnimatorInstanceBVH(NeuronActor)</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public NeuronAnimatorInstanceBVH(NeuronActor actor)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Neuron.NeuronActor.html">NeuronActor</a></td>
-        <td><span class="parametername">actor</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <a id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH__ctor_" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.#ctor*"></a>
-  <h4 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH__ctor_UnityEngine_Animator_Neuron_NeuronActor_" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.#ctor(UnityEngine.Animator,Neuron.NeuronActor)">NeuronAnimatorInstanceBVH(Animator, NeuronActor)</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public NeuronAnimatorInstanceBVH(Animator animator, NeuronActor actor)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">UnityEngine.Animator</span></td>
-        <td><span class="parametername">animator</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Neuron.NeuronActor.html">NeuronActor</a></td>
-        <td><span class="parametername">actor</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="fields">Fields
   </h3>
   
   
-  <h4 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_AngularVelocityMagic" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.AngularVelocityMagic">AngularVelocityMagic</h4>
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_CharacterExample" data-uid="CERV.MouvementRecognition.gameManager.GameManager.CharacterExample">CharacterExample</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public float AngularVelocityMagic</code></pre>
+    <pre><code class="lang-csharp hljs">[Space(2F)]
+[Header(&quot;Movement Manager:&quot;)]
+public GameObject CharacterExample</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -466,19 +401,19 @@ Contains all the methods to animate a character with a .bvh file. Most of this c
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Single</span></td>
+        <td><span class="xref">UnityEngine.GameObject</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_applyPosition" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.applyPosition">applyPosition</h4>
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_ClipConfirm" data-uid="CERV.MouvementRecognition.gameManager.GameManager.ClipConfirm">ClipConfirm</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool applyPosition</code></pre>
+    <pre><code class="lang-csharp hljs">public AudioClip ClipConfirm</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -490,19 +425,19 @@ Contains all the methods to animate a character with a .bvh file. Most of this c
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="xref">UnityEngine.AudioClip</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_BoundAnimator" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.BoundAnimator">BoundAnimator</h4>
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_ClipPointing" data-uid="CERV.MouvementRecognition.gameManager.GameManager.ClipPointing">ClipPointing</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Animator BoundAnimator</code></pre>
+    <pre><code class="lang-csharp hljs">public AudioClip ClipPointing</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -514,168 +449,21 @@ Contains all the methods to animate a character with a .bvh file. Most of this c
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">UnityEngine.Animator</span></td>
+        <td><span class="xref">UnityEngine.AudioClip</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   
-  <h4 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_EnableHipsMovement" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.EnableHipsMovement">EnableHipsMovement</h4>
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_DegreeOfMargin" data-uid="CERV.MouvementRecognition.gameManager.GameManager.DegreeOfMargin">DegreeOfMargin</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool EnableHipsMovement</code></pre>
+    <pre><code class="lang-csharp hljs">public int DegreeOfMargin</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_MotionUpdateMethod" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.MotionUpdateMethod">MotionUpdateMethod</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public UpdateMethod MotionUpdateMethod</code></pre>
-  </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Neuron.UpdateMethod.html">UpdateMethod</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_PhysicalReference" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.PhysicalReference">PhysicalReference</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public NeuronAnimatorPhysicalReference PhysicalReference</code></pre>
-  </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Neuron.NeuronAnimatorPhysicalReference.html">NeuronAnimatorPhysicalReference</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_PhysicalReferenceOverride" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.PhysicalReferenceOverride">PhysicalReferenceOverride</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Animator PhysicalReferenceOverride</code></pre>
-  </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">UnityEngine.Animator</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_UseNewRig" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.UseNewRig">UseNewRig</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool UseNewRig</code></pre>
-  </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  
-  <h4 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_VelocityMagic" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.VelocityMagic">VelocityMagic</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public float VelocityMagic</code></pre>
-  </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Single</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="properties">Properties
-  </h3>
-  
-  
-  <a id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_NbFrame_" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.NbFrame*"></a>
-  <h4 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_NbFrame" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.NbFrame">NbFrame</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int NbFrame { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
@@ -690,41 +478,296 @@ Contains all the methods to animate a character with a .bvh file. Most of this c
       </tr>
     </tbody>
   </table>
-  <h3 id="methods">Methods
-  </h3>
   
   
-  <a id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_ApplyMotion_" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.ApplyMotion*"></a>
-  <h4 id="CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_ApplyMotion_UnityEngine_Animator_UnityEngine_Vector3___UnityEngine_Vector3___" data-uid="CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.ApplyMotion(UnityEngine.Animator,UnityEngine.Vector3[],UnityEngine.Vector3[])">ApplyMotion(Animator, Vector3[], Vector3[])</h4>
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_DegreeOfMarginPointing" data-uid="CERV.MouvementRecognition.gameManager.GameManager.DegreeOfMarginPointing">DegreeOfMarginPointing</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void ApplyMotion(Animator animator, Vector3[] positionOffsets, Vector3[] rotationOffsets)</code></pre>
+    <pre><code class="lang-csharp hljs">[Space(2F)]
+[Header(&quot;Interactions:&quot;)]
+public int DegreeOfMarginPointing</code></pre>
   </div>
-  <h5 class="parameters">Parameters</h5>
+  <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
         <th>Type</th>
-        <th>Name</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">UnityEngine.Animator</span></td>
-        <td><span class="parametername">animator</span></td>
+        <td><span class="xref">System.Int32</span></td>
         <td></td>
       </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_DegreeOfMarginValidating" data-uid="CERV.MouvementRecognition.gameManager.GameManager.DegreeOfMarginValidating">DegreeOfMarginValidating</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int DegreeOfMarginValidating</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
       <tr>
-        <td><span class="xref">UnityEngine.Vector3</span>[]</td>
-        <td><span class="parametername">positionOffsets</span></td>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
         <td></td>
       </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_GOcam" data-uid="CERV.MouvementRecognition.gameManager.GameManager.GOcam">GOcam</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GameObject GOcam</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
       <tr>
-        <td><span class="xref">UnityEngine.Vector3</span>[]</td>
-        <td><span class="parametername">rotationOffsets</span></td>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnityEngine.GameObject</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_LeftHand" data-uid="CERV.MouvementRecognition.gameManager.GameManager.LeftHand">LeftHand</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GameObject LeftHand</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnityEngine.GameObject</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_LineMenu" data-uid="CERV.MouvementRecognition.gameManager.GameManager.LineMenu">LineMenu</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public LineRenderer LineMenu</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnityEngine.LineRenderer</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_NbFirstMvtToCheck" data-uid="CERV.MouvementRecognition.gameManager.GameManager.NbFirstMvtToCheck">NbFirstMvtToCheck</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int NbFirstMvtToCheck</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_NeuronEyePosition" data-uid="CERV.MouvementRecognition.gameManager.GameManager.NeuronEyePosition">NeuronEyePosition</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Transform NeuronEyePosition</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnityEngine.Transform</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_Player" data-uid="CERV.MouvementRecognition.gameManager.GameManager.Player">Player</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GameObject Player</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnityEngine.GameObject</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_Store" data-uid="CERV.MouvementRecognition.gameManager.GameManager.Store">Store</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Store Store</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="CERV.MouvementRecognition.Models.Store.html">Store</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_UiHips" data-uid="CERV.MouvementRecognition.gameManager.GameManager.UiHips">UiHips</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GameObject UiHips</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnityEngine.GameObject</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="CERV_MouvementRecognition_gameManager_GameManager_mvtRecognition_" data-uid="CERV.MouvementRecognition.gameManager.GameManager.mvtRecognition*"></a>
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_mvtRecognition" data-uid="CERV.MouvementRecognition.gameManager.GameManager.mvtRecognition">mvtRecognition</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MvtRecognition mvtRecognition { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="CERV.MouvementRecognition.Recognition.MvtRecognition.html">MvtRecognition</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="CERV_MouvementRecognition_gameManager_GameManager_pointingHandler_" data-uid="CERV.MouvementRecognition.gameManager.GameManager.pointingHandler*"></a>
+  <h4 id="CERV_MouvementRecognition_gameManager_GameManager_pointingHandler" data-uid="CERV.MouvementRecognition.gameManager.GameManager.pointingHandler">pointingHandler</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PointingHandler pointingHandler { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="CERV.MouvementRecognition.Interactions.PointingHandler.html">PointingHandler</a></td>
         <td></td>
       </tr>
     </tbody>

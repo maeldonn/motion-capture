@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using CERV.MouvementRecognition.gameManager;
 using CERV.MouvementRecognition.Models;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,8 @@ namespace CERV.MouvementRecognition.Menus
         [SerializeField] private Panel panel = null;
 
         [SerializeField] private Store store = null;
+
+        [SerializeField] private GameManager Gm = null;
 
         private string[] itemNames = null;
         private string[] itemPaths = null;
@@ -70,6 +73,7 @@ namespace CERV.MouvementRecognition.Menus
         {
             menu.GetComponent<MenuManager>().SetCurrentWithHistory(panel);
             store.Path = path;
+            Gm.mvtRecognition.InitiateValuesBvh();
         }
 
         public void removeItems()

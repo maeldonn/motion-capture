@@ -13,12 +13,6 @@ references:
   commentId: T:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH
   fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH
   nameWithType: NeuronAnimatorInstanceBVH
-- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.#ctor
-  name: NeuronAnimatorInstanceBVH()
-  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH__ctor
-  commentId: M:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.#ctor
-  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.NeuronAnimatorInstanceBVH()
-  nameWithType: NeuronAnimatorInstanceBVH.NeuronAnimatorInstanceBVH()
 - uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.#ctor(Neuron.NeuronActor)
   name: NeuronAnimatorInstanceBVH(NeuronActor)
   href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH__ctor_Neuron_NeuronActor_
@@ -38,12 +32,12 @@ references:
   isSpec: "True"
   fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.NeuronAnimatorInstanceBVH
   nameWithType: NeuronAnimatorInstanceBVH.NeuronAnimatorInstanceBVH
-- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.angularVelocityMagic
-  name: angularVelocityMagic
-  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_angularVelocityMagic
-  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.angularVelocityMagic
-  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.angularVelocityMagic
-  nameWithType: NeuronAnimatorInstanceBVH.angularVelocityMagic
+- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.AngularVelocityMagic
+  name: AngularVelocityMagic
+  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_AngularVelocityMagic
+  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.AngularVelocityMagic
+  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.AngularVelocityMagic
+  nameWithType: NeuronAnimatorInstanceBVH.AngularVelocityMagic
 - uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.ApplyMotion(UnityEngine.Animator,UnityEngine.Vector3[],UnityEngine.Vector3[])
   name: ApplyMotion(Animator, Vector3[], Vector3[])
   href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_ApplyMotion_UnityEngine_Animator_UnityEngine_Vector3___UnityEngine_Vector3___
@@ -60,43 +54,30 @@ references:
   isSpec: "True"
   fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.ApplyMotion
   nameWithType: NeuronAnimatorInstanceBVH.ApplyMotion
-- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.ApplyMotionPhysically(UnityEngine.Animator,UnityEngine.Animator)
-  name: ApplyMotionPhysically(Animator, Animator)
-  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_ApplyMotionPhysically_UnityEngine_Animator_UnityEngine_Animator_
-  commentId: M:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.ApplyMotionPhysically(UnityEngine.Animator,UnityEngine.Animator)
-  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.ApplyMotionPhysically(UnityEngine.Animator, UnityEngine.Animator)
-  nameWithType: NeuronAnimatorInstanceBVH.ApplyMotionPhysically(Animator, Animator)
-- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.ApplyMotionPhysically*
-  name: ApplyMotionPhysically
-  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_ApplyMotionPhysically_
-  commentId: Overload:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.ApplyMotionPhysically
-  isSpec: "True"
-  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.ApplyMotionPhysically
-  nameWithType: NeuronAnimatorInstanceBVH.ApplyMotionPhysically
 - uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.applyPosition
   name: applyPosition
   href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_applyPosition
   commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.applyPosition
   fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.applyPosition
   nameWithType: NeuronAnimatorInstanceBVH.applyPosition
-- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.boundAnimator
-  name: boundAnimator
-  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_boundAnimator
-  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.boundAnimator
-  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.boundAnimator
-  nameWithType: NeuronAnimatorInstanceBVH.boundAnimator
-- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.enableHipsMovement
-  name: enableHipsMovement
-  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_enableHipsMovement
-  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.enableHipsMovement
-  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.enableHipsMovement
-  nameWithType: NeuronAnimatorInstanceBVH.enableHipsMovement
-- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.motionUpdateMethod
-  name: motionUpdateMethod
-  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_motionUpdateMethod
-  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.motionUpdateMethod
-  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.motionUpdateMethod
-  nameWithType: NeuronAnimatorInstanceBVH.motionUpdateMethod
+- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.BoundAnimator
+  name: BoundAnimator
+  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_BoundAnimator
+  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.BoundAnimator
+  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.BoundAnimator
+  nameWithType: NeuronAnimatorInstanceBVH.BoundAnimator
+- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.EnableHipsMovement
+  name: EnableHipsMovement
+  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_EnableHipsMovement
+  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.EnableHipsMovement
+  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.EnableHipsMovement
+  nameWithType: NeuronAnimatorInstanceBVH.EnableHipsMovement
+- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.MotionUpdateMethod
+  name: MotionUpdateMethod
+  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_MotionUpdateMethod
+  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.MotionUpdateMethod
+  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.MotionUpdateMethod
+  nameWithType: NeuronAnimatorInstanceBVH.MotionUpdateMethod
 - uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.NbFrame
   name: NbFrame
   href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_NbFrame
@@ -110,60 +91,158 @@ references:
   isSpec: "True"
   fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.NbFrame
   nameWithType: NeuronAnimatorInstanceBVH.NbFrame
-- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.physicalReference
-  name: physicalReference
-  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_physicalReference
-  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.physicalReference
-  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.physicalReference
-  nameWithType: NeuronAnimatorInstanceBVH.physicalReference
-- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.physicalReferenceOverride
-  name: physicalReferenceOverride
-  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_physicalReferenceOverride
-  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.physicalReferenceOverride
-  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.physicalReferenceOverride
-  nameWithType: NeuronAnimatorInstanceBVH.physicalReferenceOverride
-- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.useNewRig
-  name: useNewRig
-  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_useNewRig
-  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.useNewRig
-  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.useNewRig
-  nameWithType: NeuronAnimatorInstanceBVH.useNewRig
-- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.velocityMagic
-  name: velocityMagic
-  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_velocityMagic
-  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.velocityMagic
-  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.velocityMagic
-  nameWithType: NeuronAnimatorInstanceBVH.velocityMagic
+- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.PhysicalReference
+  name: PhysicalReference
+  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_PhysicalReference
+  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.PhysicalReference
+  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.PhysicalReference
+  nameWithType: NeuronAnimatorInstanceBVH.PhysicalReference
+- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.PhysicalReferenceOverride
+  name: PhysicalReferenceOverride
+  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_PhysicalReferenceOverride
+  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.PhysicalReferenceOverride
+  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.PhysicalReferenceOverride
+  nameWithType: NeuronAnimatorInstanceBVH.PhysicalReferenceOverride
+- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.UseNewRig
+  name: UseNewRig
+  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_UseNewRig
+  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.UseNewRig
+  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.UseNewRig
+  nameWithType: NeuronAnimatorInstanceBVH.UseNewRig
+- uid: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.VelocityMagic
+  name: VelocityMagic
+  href: api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html#CERV_MouvementRecognition_Animations_NeuronAnimatorInstanceBVH_VelocityMagic
+  commentId: F:CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.VelocityMagic
+  fullName: CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.VelocityMagic
+  nameWithType: NeuronAnimatorInstanceBVH.VelocityMagic
+- uid: CERV.MouvementRecognition.gameManager
+  name: CERV.MouvementRecognition.gameManager
+  href: api/CERV.MouvementRecognition.gameManager.html
+  commentId: N:CERV.MouvementRecognition.gameManager
+  fullName: CERV.MouvementRecognition.gameManager
+  nameWithType: CERV.MouvementRecognition.gameManager
+- uid: CERV.MouvementRecognition.gameManager.GameManager
+  name: GameManager
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html
+  commentId: T:CERV.MouvementRecognition.gameManager.GameManager
+  fullName: CERV.MouvementRecognition.gameManager.GameManager
+  nameWithType: GameManager
+- uid: CERV.MouvementRecognition.gameManager.GameManager.CharacterExample
+  name: CharacterExample
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_CharacterExample
+  commentId: F:CERV.MouvementRecognition.gameManager.GameManager.CharacterExample
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.CharacterExample
+  nameWithType: GameManager.CharacterExample
+- uid: CERV.MouvementRecognition.gameManager.GameManager.ClipConfirm
+  name: ClipConfirm
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_ClipConfirm
+  commentId: F:CERV.MouvementRecognition.gameManager.GameManager.ClipConfirm
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.ClipConfirm
+  nameWithType: GameManager.ClipConfirm
+- uid: CERV.MouvementRecognition.gameManager.GameManager.ClipPointing
+  name: ClipPointing
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_ClipPointing
+  commentId: F:CERV.MouvementRecognition.gameManager.GameManager.ClipPointing
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.ClipPointing
+  nameWithType: GameManager.ClipPointing
+- uid: CERV.MouvementRecognition.gameManager.GameManager.DegreeOfMargin
+  name: DegreeOfMargin
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_DegreeOfMargin
+  commentId: F:CERV.MouvementRecognition.gameManager.GameManager.DegreeOfMargin
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.DegreeOfMargin
+  nameWithType: GameManager.DegreeOfMargin
+- uid: CERV.MouvementRecognition.gameManager.GameManager.DegreeOfMarginPointing
+  name: DegreeOfMarginPointing
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_DegreeOfMarginPointing
+  commentId: F:CERV.MouvementRecognition.gameManager.GameManager.DegreeOfMarginPointing
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.DegreeOfMarginPointing
+  nameWithType: GameManager.DegreeOfMarginPointing
+- uid: CERV.MouvementRecognition.gameManager.GameManager.DegreeOfMarginValidating
+  name: DegreeOfMarginValidating
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_DegreeOfMarginValidating
+  commentId: F:CERV.MouvementRecognition.gameManager.GameManager.DegreeOfMarginValidating
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.DegreeOfMarginValidating
+  nameWithType: GameManager.DegreeOfMarginValidating
+- uid: CERV.MouvementRecognition.gameManager.GameManager.GOcam
+  name: GOcam
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_GOcam
+  commentId: F:CERV.MouvementRecognition.gameManager.GameManager.GOcam
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.GOcam
+  nameWithType: GameManager.GOcam
+- uid: CERV.MouvementRecognition.gameManager.GameManager.LeftHand
+  name: LeftHand
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_LeftHand
+  commentId: F:CERV.MouvementRecognition.gameManager.GameManager.LeftHand
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.LeftHand
+  nameWithType: GameManager.LeftHand
+- uid: CERV.MouvementRecognition.gameManager.GameManager.LineMenu
+  name: LineMenu
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_LineMenu
+  commentId: F:CERV.MouvementRecognition.gameManager.GameManager.LineMenu
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.LineMenu
+  nameWithType: GameManager.LineMenu
+- uid: CERV.MouvementRecognition.gameManager.GameManager.mvtRecognition
+  name: mvtRecognition
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_mvtRecognition
+  commentId: P:CERV.MouvementRecognition.gameManager.GameManager.mvtRecognition
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.mvtRecognition
+  nameWithType: GameManager.mvtRecognition
+- uid: CERV.MouvementRecognition.gameManager.GameManager.mvtRecognition*
+  name: mvtRecognition
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_mvtRecognition_
+  commentId: Overload:CERV.MouvementRecognition.gameManager.GameManager.mvtRecognition
+  isSpec: "True"
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.mvtRecognition
+  nameWithType: GameManager.mvtRecognition
+- uid: CERV.MouvementRecognition.gameManager.GameManager.NbFirstMvtToCheck
+  name: NbFirstMvtToCheck
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_NbFirstMvtToCheck
+  commentId: F:CERV.MouvementRecognition.gameManager.GameManager.NbFirstMvtToCheck
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.NbFirstMvtToCheck
+  nameWithType: GameManager.NbFirstMvtToCheck
+- uid: CERV.MouvementRecognition.gameManager.GameManager.NeuronEyePosition
+  name: NeuronEyePosition
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_NeuronEyePosition
+  commentId: F:CERV.MouvementRecognition.gameManager.GameManager.NeuronEyePosition
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.NeuronEyePosition
+  nameWithType: GameManager.NeuronEyePosition
+- uid: CERV.MouvementRecognition.gameManager.GameManager.Player
+  name: Player
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_Player
+  commentId: F:CERV.MouvementRecognition.gameManager.GameManager.Player
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.Player
+  nameWithType: GameManager.Player
+- uid: CERV.MouvementRecognition.gameManager.GameManager.pointingHandler
+  name: pointingHandler
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_pointingHandler
+  commentId: P:CERV.MouvementRecognition.gameManager.GameManager.pointingHandler
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.pointingHandler
+  nameWithType: GameManager.pointingHandler
+- uid: CERV.MouvementRecognition.gameManager.GameManager.pointingHandler*
+  name: pointingHandler
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_pointingHandler_
+  commentId: Overload:CERV.MouvementRecognition.gameManager.GameManager.pointingHandler
+  isSpec: "True"
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.pointingHandler
+  nameWithType: GameManager.pointingHandler
+- uid: CERV.MouvementRecognition.gameManager.GameManager.Store
+  name: Store
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_Store
+  commentId: F:CERV.MouvementRecognition.gameManager.GameManager.Store
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.Store
+  nameWithType: GameManager.Store
+- uid: CERV.MouvementRecognition.gameManager.GameManager.UiHips
+  name: UiHips
+  href: api/CERV.MouvementRecognition.gameManager.GameManager.html#CERV_MouvementRecognition_gameManager_GameManager_UiHips
+  commentId: F:CERV.MouvementRecognition.gameManager.GameManager.UiHips
+  fullName: CERV.MouvementRecognition.gameManager.GameManager.UiHips
+  nameWithType: GameManager.UiHips
 - uid: CERV.MouvementRecognition.Interactions
   name: CERV.MouvementRecognition.Interactions
   href: api/CERV.MouvementRecognition.Interactions.html
   commentId: N:CERV.MouvementRecognition.Interactions
   fullName: CERV.MouvementRecognition.Interactions
   nameWithType: CERV.MouvementRecognition.Interactions
-- uid: CERV.MouvementRecognition.Interactions.confirmState
-  name: confirmState
-  href: api/CERV.MouvementRecognition.Interactions.confirmState.html
-  commentId: T:CERV.MouvementRecognition.Interactions.confirmState
-  fullName: CERV.MouvementRecognition.Interactions.confirmState
-  nameWithType: confirmState
-- uid: CERV.MouvementRecognition.Interactions.confirmState.Click
-  name: Click
-  href: api/CERV.MouvementRecognition.Interactions.confirmState.html#CERV_MouvementRecognition_Interactions_confirmState_Click
-  commentId: F:CERV.MouvementRecognition.Interactions.confirmState.Click
-  fullName: CERV.MouvementRecognition.Interactions.confirmState.Click
-  nameWithType: confirmState.Click
-- uid: CERV.MouvementRecognition.Interactions.confirmState.Idle
-  name: Idle
-  href: api/CERV.MouvementRecognition.Interactions.confirmState.html#CERV_MouvementRecognition_Interactions_confirmState_Idle
-  commentId: F:CERV.MouvementRecognition.Interactions.confirmState.Idle
-  fullName: CERV.MouvementRecognition.Interactions.confirmState.Idle
-  nameWithType: confirmState.Idle
-- uid: CERV.MouvementRecognition.Interactions.confirmState.ReleaseClick
-  name: ReleaseClick
-  href: api/CERV.MouvementRecognition.Interactions.confirmState.html#CERV_MouvementRecognition_Interactions_confirmState_ReleaseClick
-  commentId: F:CERV.MouvementRecognition.Interactions.confirmState.ReleaseClick
-  fullName: CERV.MouvementRecognition.Interactions.confirmState.ReleaseClick
-  nameWithType: confirmState.ReleaseClick
 - uid: CERV.MouvementRecognition.Interactions.mocapInputModule
   name: mocapInputModule
   href: api/CERV.MouvementRecognition.Interactions.mocapInputModule.html
@@ -196,12 +275,12 @@ references:
   isSpec: "True"
   fullName: CERV.MouvementRecognition.Interactions.mocapInputModule.GetData
   nameWithType: mocapInputModule.GetData
-- uid: CERV.MouvementRecognition.Interactions.mocapInputModule.m_camera
-  name: m_camera
-  href: api/CERV.MouvementRecognition.Interactions.mocapInputModule.html#CERV_MouvementRecognition_Interactions_mocapInputModule_m_camera
-  commentId: F:CERV.MouvementRecognition.Interactions.mocapInputModule.m_camera
-  fullName: CERV.MouvementRecognition.Interactions.mocapInputModule.m_camera
-  nameWithType: mocapInputModule.m_camera
+- uid: CERV.MouvementRecognition.Interactions.mocapInputModule.Gm
+  name: Gm
+  href: api/CERV.MouvementRecognition.Interactions.mocapInputModule.html#CERV_MouvementRecognition_Interactions_mocapInputModule_Gm
+  commentId: F:CERV.MouvementRecognition.Interactions.mocapInputModule.Gm
+  fullName: CERV.MouvementRecognition.Interactions.mocapInputModule.Gm
+  nameWithType: mocapInputModule.Gm
 - uid: CERV.MouvementRecognition.Interactions.mocapInputModule.Process
   name: Process()
   href: api/CERV.MouvementRecognition.Interactions.mocapInputModule.html#CERV_MouvementRecognition_Interactions_mocapInputModule_Process
@@ -324,30 +403,30 @@ references:
   isSpec: "True"
   fullName: CERV.MouvementRecognition.Interactions.PointingHandler.UpdateUserInputs
   nameWithType: PointingHandler.UpdateUserInputs
-- uid: CERV.MouvementRecognition.Interactions.pointingState
-  name: pointingState
-  href: api/CERV.MouvementRecognition.Interactions.pointingState.html
-  commentId: T:CERV.MouvementRecognition.Interactions.pointingState
-  fullName: CERV.MouvementRecognition.Interactions.pointingState
-  nameWithType: pointingState
-- uid: CERV.MouvementRecognition.Interactions.pointingState.Idle
+- uid: CERV.MouvementRecognition.Interactions.simpleStateMachine
+  name: simpleStateMachine
+  href: api/CERV.MouvementRecognition.Interactions.simpleStateMachine.html
+  commentId: T:CERV.MouvementRecognition.Interactions.simpleStateMachine
+  fullName: CERV.MouvementRecognition.Interactions.simpleStateMachine
+  nameWithType: simpleStateMachine
+- uid: CERV.MouvementRecognition.Interactions.simpleStateMachine.Action
+  name: Action
+  href: api/CERV.MouvementRecognition.Interactions.simpleStateMachine.html#CERV_MouvementRecognition_Interactions_simpleStateMachine_Action
+  commentId: F:CERV.MouvementRecognition.Interactions.simpleStateMachine.Action
+  fullName: CERV.MouvementRecognition.Interactions.simpleStateMachine.Action
+  nameWithType: simpleStateMachine.Action
+- uid: CERV.MouvementRecognition.Interactions.simpleStateMachine.Idle
   name: Idle
-  href: api/CERV.MouvementRecognition.Interactions.pointingState.html#CERV_MouvementRecognition_Interactions_pointingState_Idle
-  commentId: F:CERV.MouvementRecognition.Interactions.pointingState.Idle
-  fullName: CERV.MouvementRecognition.Interactions.pointingState.Idle
-  nameWithType: pointingState.Idle
-- uid: CERV.MouvementRecognition.Interactions.pointingState.IdlePointing
-  name: IdlePointing
-  href: api/CERV.MouvementRecognition.Interactions.pointingState.html#CERV_MouvementRecognition_Interactions_pointingState_IdlePointing
-  commentId: F:CERV.MouvementRecognition.Interactions.pointingState.IdlePointing
-  fullName: CERV.MouvementRecognition.Interactions.pointingState.IdlePointing
-  nameWithType: pointingState.IdlePointing
-- uid: CERV.MouvementRecognition.Interactions.pointingState.Pointing
-  name: Pointing
-  href: api/CERV.MouvementRecognition.Interactions.pointingState.html#CERV_MouvementRecognition_Interactions_pointingState_Pointing
-  commentId: F:CERV.MouvementRecognition.Interactions.pointingState.Pointing
-  fullName: CERV.MouvementRecognition.Interactions.pointingState.Pointing
-  nameWithType: pointingState.Pointing
+  href: api/CERV.MouvementRecognition.Interactions.simpleStateMachine.html#CERV_MouvementRecognition_Interactions_simpleStateMachine_Idle
+  commentId: F:CERV.MouvementRecognition.Interactions.simpleStateMachine.Idle
+  fullName: CERV.MouvementRecognition.Interactions.simpleStateMachine.Idle
+  nameWithType: simpleStateMachine.Idle
+- uid: CERV.MouvementRecognition.Interactions.simpleStateMachine.IdleAction
+  name: IdleAction
+  href: api/CERV.MouvementRecognition.Interactions.simpleStateMachine.html#CERV_MouvementRecognition_Interactions_simpleStateMachine_IdleAction
+  commentId: F:CERV.MouvementRecognition.Interactions.simpleStateMachine.IdleAction
+  fullName: CERV.MouvementRecognition.Interactions.simpleStateMachine.IdleAction
+  nameWithType: simpleStateMachine.IdleAction
 - uid: CERV.MouvementRecognition.Interactions.SoundManager
   name: SoundManager
   href: api/CERV.MouvementRecognition.Interactions.SoundManager.html
@@ -646,6 +725,19 @@ references:
   commentId: F:CERV.MouvementRecognition.Recognition.MvtRecognition.degreeOfMargin
   fullName: CERV.MouvementRecognition.Recognition.MvtRecognition.degreeOfMargin
   nameWithType: MvtRecognition.degreeOfMargin
+- uid: CERV.MouvementRecognition.Recognition.MvtRecognition.InitActor
+  name: InitActor()
+  href: api/CERV.MouvementRecognition.Recognition.MvtRecognition.html#CERV_MouvementRecognition_Recognition_MvtRecognition_InitActor
+  commentId: M:CERV.MouvementRecognition.Recognition.MvtRecognition.InitActor
+  fullName: CERV.MouvementRecognition.Recognition.MvtRecognition.InitActor()
+  nameWithType: MvtRecognition.InitActor()
+- uid: CERV.MouvementRecognition.Recognition.MvtRecognition.InitActor*
+  name: InitActor
+  href: api/CERV.MouvementRecognition.Recognition.MvtRecognition.html#CERV_MouvementRecognition_Recognition_MvtRecognition_InitActor_
+  commentId: Overload:CERV.MouvementRecognition.Recognition.MvtRecognition.InitActor
+  isSpec: "True"
+  fullName: CERV.MouvementRecognition.Recognition.MvtRecognition.InitActor
+  nameWithType: MvtRecognition.InitActor
 - uid: CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparison(UniHumanoid.BvhNode,UniHumanoid.Bvh,System.Int32,System.String[],System.Int32)
   name: LaunchComparison(BvhNode, Bvh, Int32, String[], Int32)
   href: api/CERV.MouvementRecognition.Recognition.MvtRecognition.html#CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparison_UniHumanoid_BvhNode_UniHumanoid_Bvh_System_Int32_System_String___System_Int32_
@@ -671,6 +763,19 @@ references:
   isSpec: "True"
   fullName: CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparison
   nameWithType: MvtRecognition.LaunchComparison
+- uid: CERV.MouvementRecognition.Recognition.MvtRecognition.UpdateMvtRecognition
+  name: UpdateMvtRecognition()
+  href: api/CERV.MouvementRecognition.Recognition.MvtRecognition.html#CERV_MouvementRecognition_Recognition_MvtRecognition_UpdateMvtRecognition
+  commentId: M:CERV.MouvementRecognition.Recognition.MvtRecognition.UpdateMvtRecognition
+  fullName: CERV.MouvementRecognition.Recognition.MvtRecognition.UpdateMvtRecognition()
+  nameWithType: MvtRecognition.UpdateMvtRecognition()
+- uid: CERV.MouvementRecognition.Recognition.MvtRecognition.UpdateMvtRecognition*
+  name: UpdateMvtRecognition
+  href: api/CERV.MouvementRecognition.Recognition.MvtRecognition.html#CERV_MouvementRecognition_Recognition_MvtRecognition_UpdateMvtRecognition_
+  commentId: Overload:CERV.MouvementRecognition.Recognition.MvtRecognition.UpdateMvtRecognition
+  isSpec: "True"
+  fullName: CERV.MouvementRecognition.Recognition.MvtRecognition.UpdateMvtRecognition
+  nameWithType: MvtRecognition.UpdateMvtRecognition
 - uid: Neuron
   name: Neuron
   href: api/Neuron.html

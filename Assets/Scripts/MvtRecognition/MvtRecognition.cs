@@ -46,29 +46,24 @@ namespace CERV.MouvementRecognition.Recognition
         private NeuronActor actor = null;
         private int nbFrame = 0;
         private float timePassedBetweenFrame = 0;
-        public int degreeOfMargin = 0;
+        private int degreeOfMargin = 0;
 
         private float
             totalTime = 0; //Since this value does not change, and since it is used regularly, it is kept aside.
 
-        [SerializeField]
         // The gameObject of the character controlled by the player
         private GameObject player = null;
 
-        [SerializeField]
         //The gameObject of the character controlled by the bvh file
         private GameObject characterExample = null;
 
-        [SerializeField]
         //The gameObject of the hips of the
         private GameObject uiHips = null;
 
-        [SerializeField]
         //TODO
         private Store store = null;
 
         //Values used to check if a movement is launched
-        [SerializeField]
         //TODO
         private int nbFirstMvtToCheck = 0; //The number of frame needed to check if the movement is launched
 
@@ -77,14 +72,15 @@ namespace CERV.MouvementRecognition.Recognition
 
         private bool mvtChoosen = false;
 
-        public MvtRecognition(GameObject _player, GameObject _characterExample, GameObject _uiHips, Store _store,
-            int _nbFirstMvtToCheck)
+        public MvtRecognition(GameObject player, GameObject characterExample, GameObject uiHips, Store store,
+            int nbFirstMvtToCheck, int degreeOfMargin)
         {
-            player = _player;
-            characterExample = _characterExample;
-            uiHips = _uiHips;
-            store = _store;
-            nbFirstMvtToCheck = _nbFirstMvtToCheck;
+            this.player = player;
+            this.characterExample = characterExample;
+            this.uiHips = uiHips;
+            this.store = store;
+            this.nbFirstMvtToCheck = nbFirstMvtToCheck;
+            this.degreeOfMargin = degreeOfMargin;
         }
 
         /// <summary>
@@ -95,7 +91,6 @@ namespace CERV.MouvementRecognition.Recognition
             if (mvtChoosen)
             {
                 var deltaTime = Time.deltaTime;
-
                 if (mvtLaunched)
                 {
                     CheckIfMvtIsRight(deltaTime);
@@ -122,13 +117,19 @@ namespace CERV.MouvementRecognition.Recognition
         /// <summary>
         /// Initialize all the values of the MvtRecognition class to work as intended.
         /// </summary>
-        private void InitiateValuesBvh()
+        public void InitiateValuesBvh()
         {
             nbFrame = 0;
             timePassedBetweenFrame = 0;
             bvh = store.Bvh;
             InitActor();
             totalTime = (float) bvh.FrameTime.TotalSeconds * bvh.FrameCount;
+            mvtChoosen = true;
+        }
+
+        public void StopMvtRecognition()
+        {
+            mvtChoosen = false;
         }
 
         /// <summary>
@@ -158,7 +159,7 @@ namespace CERV.MouvementRecognition.Recognition
                 if (tabTimePassedBetweenFrame == null) tabTimePassedBetweenFrame = new List<float>();
                 tabTimePassedBetweenFrame.Add(0f); //It adds a new element to the tabTimePassedBetweenFrame list.
             }
-
+            
             if (tabTimePassedBetweenFrame != null) //If the list is not empty
             {
                 for (var i = 0; i < tabTimePassedBetweenFrame.Count; i++) //We go through it
@@ -233,7 +234,7 @@ namespace CERV.MouvementRecognition.Recognition
         public void LaunchComparison(BvhNode root, Bvh animationToCompare, int degOfMargin, string[] bodyPartsToIgnore,
             int frame, Func<BvhNode, bool, int> functionCalledAtEveryNode)
         {
-            if (degOfMargin <= 0) throw new ArgumentOutOfRangeException(nameof(degOfMargin));
+            if (degOfMargin < 0) throw new ArgumentOutOfRangeException(nameof(degOfMargin));
             foreach (var node in root.Traverse())
             {
                 var checkValidity = true;
@@ -279,7 +280,7 @@ namespace CERV.MouvementRecognition.Recognition
         public bool LaunchComparison(BvhNode root, Bvh animationToCompare, int degOfMargin, string[] bodyPartsToIgnore,
             int frame)
         {
-            if (degOfMargin <= 0) throw new ArgumentOutOfRangeException(nameof(degOfMargin));
+            if (degOfMargin < 0) throw new ArgumentOutOfRangeException(nameof(degOfMargin));
             foreach (var node in root.Traverse())
             {
                 var checkValidity = true;
@@ -293,6 +294,7 @@ namespace CERV.MouvementRecognition.Recognition
                          degOfMargin) checkValidity = false;
                 if (!checkValidity)
                 {
+                    
                     return false;
                 }
             }

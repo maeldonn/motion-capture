@@ -74,14 +74,14 @@ namespace CERV.MouvementRecognition.Animations
         public Animator
             PhysicalReferenceOverride; //use an already existing NeuronAnimatorInstance as the physical reference
 
-        public NeuronAnimatorPhysicalReference PhysicalReference = new NeuronAnimatorPhysicalReference();
-        private Vector3[] bonePositionOffsets = new Vector3[(int) HumanBodyBones.LastBone];
-        private Vector3[] boneRotationOffsets = new Vector3[(int) HumanBodyBones.LastBone];
+        public NeuronAnimatorPhysicalReference PhysicalReference;
+        private Vector3[] bonePositionOffsets;
+        private Vector3[] boneRotationOffsets;
 
         public float VelocityMagic = 3000.0f;
         public float AngularVelocityMagic = 20.0f;
-        private Quaternion[] orignalRot = new Quaternion[(int) HumanBodyBones.LastBone];
-        private Quaternion[] orignalParentRot = new Quaternion[(int) HumanBodyBones.LastBone];
+        private Quaternion[] orignalRot;
+        private Quaternion[] orignalParentRot;
 
         public NeuronAnimatorInstanceBVH(Animator animator, NeuronActor actor)
         {
@@ -108,6 +108,12 @@ namespace CERV.MouvementRecognition.Animations
                 BoundAnimator = GetComponent<Animator>();
             }
 
+            bonePositionOffsets = new Vector3[(int)HumanBodyBones.LastBone];
+            boneRotationOffsets = new Vector3[(int)HumanBodyBones.LastBone];
+
+            orignalRot = new Quaternion[(int)HumanBodyBones.LastBone];
+            orignalParentRot = new Quaternion[(int)HumanBodyBones.LastBone];
+            PhysicalReference = new NeuronAnimatorPhysicalReference();
             UpdateOffset();
             CalculateOriginalRot();
         }
@@ -120,8 +126,7 @@ namespace CERV.MouvementRecognition.Animations
                 {
                     ReleasePhysicalContext();
                 }
-
-                ApplyMotion(BoundAnimator, bonePositionOffsets, boneRotationOffsets);
+                if(bvh!=null) ApplyMotion(BoundAnimator, bonePositionOffsets, boneRotationOffsets);
             }
         }
 

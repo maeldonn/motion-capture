@@ -44,7 +44,7 @@ namespace CERV.MouvementRecognition.gameManager
         // Start is called before the first frame update
         void Start()
         {
-            mvtRecognition = new MvtRecognition(Player, CharacterExample, UiHips, Store, NbFirstMvtToCheck);
+            mvtRecognition = new MvtRecognition(Player, CharacterExample, UiHips, Store, NbFirstMvtToCheck, DegreeOfMargin);
             mvtRecognition.InitActor();
             pointingHandler = new PointingHandler(Player, DegreeOfMarginPointing, DegreeOfMarginValidating, LineMenu, LeftHand, ClipConfirm, ClipPointing, mvtRecognition);
             pointingHandler.InitPointingHandler();
