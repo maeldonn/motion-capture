@@ -1,0 +1,966 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Users/cerv/Documents/GitHub/motion-capture",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Conceptual",
+      "source_relative_path": "README.md",
+      "output": {
+        ".html": {
+          "relative_path": "README.html",
+          "hash": "CBEZm9v/CtbzZRA8gDJlJQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "4X50oAi7jhKNziX2WGuVjA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "PkSZ2RBPXiW+9XNsdBFOFw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "gB8AESyvNru97tzIZofEEg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "Ki+3nlST5Qc+x146OvEVrw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Animations.NeuronAnimatorInstanceBVH.html",
+          "hash": "GLnJyA4mi/CoMEA7qm/VGA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Animations.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Animations.html",
+          "hash": "iPrYtJ5DZhm2SZKhXq7w7A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Interactions.PointingHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Interactions.PointingHandler.html",
+          "hash": "8nbCNPVEBK/Aqee94u0TPQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Interactions.SoundManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Interactions.SoundManager.html",
+          "hash": "gNCZQ16nDq1aOVv21rgH0w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Interactions.confirmState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Interactions.confirmState.html",
+          "hash": "ezucTqzDiHfNp9e3hf89LA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Interactions.mocapInputModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Interactions.mocapInputModule.html",
+          "hash": "0ad7Bk44BsvR4AFIYPK3fg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Interactions.pointingState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Interactions.pointingState.html",
+          "hash": "tmWIT0+BB+ogO2SRlTtE/w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Interactions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Interactions.html",
+          "hash": "ykmdw4ajAxRcPkjHqwKu8Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Menus.ItemDetails.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Menus.ItemDetails.html",
+          "hash": "wGTcfEay6WlYeXnEYvmYmQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Menus.ListCreator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Menus.ListCreator.html",
+          "hash": "Ad8sHViEDIg7hlElOlolkw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Menus.MenuManager.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Menus.MenuManager.html",
+          "hash": "eQTcrV8P9VI1sccdYcd2Vg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Menus.Panel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Menus.Panel.html",
+          "hash": "tNIOWirZb7jfZVbtbWeXJw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Menus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Menus.html",
+          "hash": "utHIG3AkJ7Csr9k1xyTLmQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Models.Store.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Models.Store.html",
+          "hash": "dkJHqoITcq7MOdoVUrIHlw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Models.html",
+          "hash": "RfbYaNZ/VMlPhZBDFVa1kw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Recognition.MvtRecognition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Recognition.MvtRecognition.html",
+          "hash": "Z+7u17qlLQbfP/KLH382FA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/CERV.MouvementRecognition.Recognition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/CERV.MouvementRecognition.Recognition.html",
+          "hash": "W3NmJHKudy77zUod2J2+wg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.AliceMotionBindHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.AliceMotionBindHelper.html",
+          "hash": "/ghOMY5L1DZvYgvhU5x1iA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.BoneColliders.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.BoneColliders.html",
+          "hash": "2KBZF65Zm1yxBu9/+soUmA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.BoneLines.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.BoneLines.html",
+          "hash": "1M6iztgEU7EwKukmOcMBcg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.BoneRigidbodies.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.BoneRigidbodies.html",
+          "hash": "Y6Iflje8W8gwgH1IRECPSQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.FPSCounter.VSyncMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.FPSCounter.VSyncMode.html",
+          "hash": "fC1Ofko9VjGp5sIOIrQcyQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.FPSCounter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.FPSCounter.html",
+          "hash": "VNtAk3+ut1Y9Lxc7cUZptQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronActor.NoFrameDataDelegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronActor.NoFrameDataDelegate.html",
+          "hash": "Bxh/Ap/N6kjzjgPEqsk7/Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronActor.ResumeFrameDataDelegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronActor.ResumeFrameDataDelegate.html",
+          "hash": "3wheEWQVyocZz7IHwmSveQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronActor.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronActor.html",
+          "hash": "ExE65iarPU/llxl/le8pnQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronAnimatorPhysicalReference.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronAnimatorPhysicalReference.html",
+          "hash": "xAFxlnP5s5ngRlfKAHJjvA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronBoneVersion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronBoneVersion.html",
+          "hash": "2r8wPfEIeNBB4vLtG/SlXg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronBones.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronBones.html",
+          "hash": "oh/fUXkqFMF2rMrwCVUDgQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronBonesV2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronBonesV2.html",
+          "hash": "gXd+xI+im/C5rgBi2lIhyQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronConnection.SocketType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronConnection.SocketType.html",
+          "hash": "Om+6vOoJgxq7hya1uEA3zA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronConnection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronConnection.html",
+          "hash": "vtz9/D3ahYZmUyq3ftcA9w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronHelper.OnAddBoneComponent-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronHelper.OnAddBoneComponent-1.html",
+          "hash": "/2IS3RJ+a5uOjZytFOdnvw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronHelper.OnAddBoneComponentTransform-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronHelper.OnAddBoneComponentTransform-1.html",
+          "hash": "SgSwZ00Ypj3P6QgCK+eMJw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronHelper.OnRemoveBoneComponent-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronHelper.OnRemoveBoneComponent-1.html",
+          "hash": "k9YdJYljG96/iXRUvIGhPw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronHelper.OnRemoveBoneComponentTransform-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronHelper.OnRemoveBoneComponentTransform-1.html",
+          "hash": "qqbhSCvVrul8L+gIefOjvw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronHelper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronHelper.html",
+          "hash": "XOJM9qA63z671l1LIhVSxw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronInstance.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronInstance.html",
+          "hash": "PPvw9HISdNF0vnL+PP3Zmg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronSource.ResumeActorDelegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronSource.ResumeActorDelegate.html",
+          "hash": "ITMHZ7JIO/akT0p/1auBTQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronSource.SuspendActorDelegate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronSource.SuspendActorDelegate.html",
+          "hash": "HYvtIU9z2A4tC8nvNpp5ww=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronSource.html",
+          "hash": "AHZUk4jqGryFWgCpkY1w4A=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronTransformsInstance.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronTransformsInstance.html",
+          "hash": "IVoBtC9z0km30Ab5s579mg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.NeuronTransformsPhysicalReference.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.NeuronTransformsPhysicalReference.html",
+          "hash": "OwXAHTi1DtDoi1mUIUvZyw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.TranceTransformsInstance.InertialBones.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.TranceTransformsInstance.InertialBones.html",
+          "hash": "1jpEmOqascXOtbVKwcSJUw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.TranceTransformsInstance.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.TranceTransformsInstance.html",
+          "hash": "/833Y5MQumT5KzKPqpShWA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.UpdateMethod.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.UpdateMethod.html",
+          "hash": "505YlCL/StC73CBDZS3qgQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/Neuron.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Neuron.html",
+          "hash": "xUMVM8mb0fOo1pI6vBcf7g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/NeuronDataReaderManaged.BvhDataHeader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NeuronDataReaderManaged.BvhDataHeader.html",
+          "hash": "Pe2tfZm9qX0ajW/PPkx/eA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/NeuronDataReaderManaged.CmdId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NeuronDataReaderManaged.CmdId.html",
+          "hash": "xlN7GdWipgFMDz38I7zi3Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/NeuronDataReaderManaged.CmdResponseBoneSize.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NeuronDataReaderManaged.CmdResponseBoneSize.html",
+          "hash": "HZspTwrdpIWFt0LrVEOf7g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/NeuronDataReaderManaged.CommandDataReceived.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NeuronDataReaderManaged.CommandDataReceived.html",
+          "hash": "Wm82tLpCbV/nGkSUYpb/Yg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/NeuronDataReaderManaged.CommandPack.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NeuronDataReaderManaged.CommandPack.html",
+          "hash": "I0qWfXumu3MBJIoE9O8E3g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/NeuronDataReaderManaged.DataVersion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NeuronDataReaderManaged.DataVersion.html",
+          "hash": "TClfv6aeu75Gaio0YDoT3w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/NeuronDataReaderManaged.FrameDataReceived.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NeuronDataReaderManaged.FrameDataReceived.html",
+          "hash": "rAaHIUMVfGNouQJxd4ioEQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/NeuronDataReaderManaged.NeuronDataReader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NeuronDataReaderManaged.NeuronDataReader.html",
+          "hash": "SA+HOFz6c6UP6GkJs2gvhA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/NeuronDataReaderManaged.SensorCombinationModes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NeuronDataReaderManaged.SensorCombinationModes.html",
+          "hash": "kq63rO/UP0gKaZ1ecsc6pQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/NeuronDataReaderManaged.SocketStatus.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NeuronDataReaderManaged.SocketStatus.html",
+          "hash": "ZTU2avVi1yFPUwhXiKVp0g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/NeuronDataReaderManaged.SocketStatusChanged.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NeuronDataReaderManaged.SocketStatusChanged.html",
+          "hash": "odmxGedz8P4JQ8nWTR+PNw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/NeuronDataReaderManaged.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/NeuronDataReaderManaged.html",
+          "hash": "hxbXopixm6Ma4snmTiLUJw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/UniHumanoid.Bvh.PathWithProperty.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/UniHumanoid.Bvh.PathWithProperty.html",
+          "hash": "CsXnookOwCSA4p+aesl98g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/UniHumanoid.Bvh.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/UniHumanoid.Bvh.html",
+          "hash": "D2mBvwLa87iyQIjmoOx9HA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/UniHumanoid.BvhException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/UniHumanoid.BvhException.html",
+          "hash": "7NUzKVsCvX9vmOWYoRMlmQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/UniHumanoid.BvhNode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/UniHumanoid.BvhNode.html",
+          "hash": "BdxnuhDT+VheKNX+fIlLRg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/UniHumanoid.Channel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/UniHumanoid.Channel.html",
+          "hash": "xHY3D/oMEa+URRK7eHObmQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/UniHumanoid.ChannelCurve.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/UniHumanoid.ChannelCurve.html",
+          "hash": "sQ2kS6Q1mSD70PNdCN97Rg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/UniHumanoid.ChannelExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/UniHumanoid.ChannelExtensions.html",
+          "hash": "hymk142J2XtmVzpo8GYvcQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/UniHumanoid.EndSite.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/UniHumanoid.EndSite.html",
+          "hash": "KZt9t7Xpyj7rQjhz2zaWbg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/UniHumanoid.Single3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/UniHumanoid.Single3.html",
+          "hash": "t/s0dUXvoYXHQkwkQjznvg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/UniHumanoid.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/UniHumanoid.html",
+          "hash": "48BhEgHmGlsC6ZMrh0vLzg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "obj/api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "c3+peyFKT74Vwd/d/uCpeg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "G2AoE5T/2VarbHvzLEo4TQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 4,
+          "skipped_file_count": 4
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 69,
+          "skipped_file_count": 69
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

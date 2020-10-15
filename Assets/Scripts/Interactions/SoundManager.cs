@@ -1,27 +1,31 @@
 ﻿using UnityEngine;
 
-public static class SoundManager
+namespace CERV.MouvementRecognition.Interactions
 {
-    private static GameObject oneShotGameObject;
-    private static AudioSource oneShotAudioSource;
-
-    public static void PlaySound(AudioClip clip)
+    public static class SoundManager
     {
-        if (oneShotGameObject == null)
+        private static GameObject oneShotGameObject;
+        private static AudioSource oneShotAudioSource;
+
+        public static void PlaySound(AudioClip clip)
         {
-            oneShotGameObject = new GameObject("Sound");
-            oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
-        }
-        oneShotAudioSource.PlayOneShot(clip);
-    }
+            if (oneShotGameObject == null)
+            {
+                oneShotGameObject = new GameObject("Sound");
+                oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
+            }
 
-    public static void PlaySound(AudioClip clip, Vector3 position)
-    {
-        GameObject soundGameObject = new GameObject("Sound");
-        soundGameObject.transform.position = position;
-        AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
-        audioSource.clip = clip;
-        audioSource.Play();
-        Object.Destroy(soundGameObject, clip.length);
+            oneShotAudioSource.PlayOneShot(clip);
+        }
+
+        public static void PlaySound(AudioClip clip, Vector3 position)
+        {
+            GameObject soundGameObject = new GameObject("Sound");
+            soundGameObject.transform.position = position;
+            AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+            audioSource.clip = clip;
+            audioSource.Play();
+            Object.Destroy(soundGameObject, clip.length);
+        }
     }
 }

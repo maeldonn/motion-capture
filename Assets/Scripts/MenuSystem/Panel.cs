@@ -1,28 +1,31 @@
 ﻿using UnityEngine;
 
-public class Panel : MonoBehaviour
+namespace CERV.MouvementRecognition.Menus
 {
-    private Canvas canvas = null;
-    private MenuManager menuManager = null;
-
-    private void Awake()
+    public class Panel : MonoBehaviour
     {
-        canvas = GetComponent<Canvas>();
-    }
+        private Canvas canvas = null;
+        private MenuManager menuManager = null;
 
-    public void Setup(MenuManager menuManager)
-    {
-        this.menuManager = menuManager;
-        Hide();
-    }
+        private void Awake()
+        {
+            canvas = GetComponent<Canvas>();
+        }
 
-    public void Show()
-    {
-        canvas.enabled = true;
-    }
+        public void Setup(MenuManager menuManager)
+        {
+            this.menuManager = menuManager;
+            Hide();
+        }
 
-    public void Hide()
-    {
-        canvas.enabled = false;
+        public void Show()
+        {
+            canvas.enabled = true;
+        }
+
+        public void Hide()
+        {
+            canvas.enabled = false;
+        }
     }
 }
