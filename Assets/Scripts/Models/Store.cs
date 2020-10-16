@@ -1,45 +1,48 @@
 ﻿using UniHumanoid;
 using UnityEngine;
 
-public class Store : MonoBehaviour
+namespace CERV.MouvementRecognition.Models
 {
-    private bool m_usingArm = false;
-    private string m_path = null;
-    private Bvh m_bvh = null;
-
-    public bool UsingArm
+    public class Store : MonoBehaviour
     {
-        get { return m_usingArm; }
-        private set
+        private bool m_usingArm = false;
+        private string m_path = null;
+        private Bvh m_bvh = null;
+
+        public bool UsingArm
         {
-            if (m_usingArm == value) return;
-            m_usingArm = value;
+            get { return m_usingArm; }
+            private set
+            {
+                if (m_usingArm == value) return;
+                m_usingArm = value;
+            }
         }
-    }
 
-    public string Path
-    {
-        get { return m_path; }
-        set
+        public string Path
         {
-            if (m_path == value) return;
-            m_path = value;
-            Bvh = new Bvh().GetBvhFromPath(m_path);
+            get { return m_path; }
+            set
+            {
+                if (m_path == value) return;
+                m_path = value;
+                Bvh = new Bvh().GetBvhFromPath(m_path);
+            }
         }
-    }
 
-    public Bvh Bvh
-    {
-        get { return m_bvh; }
-        private set
+        public Bvh Bvh
         {
-            if (m_bvh == value) return;
-            m_bvh = value;
+            get { return m_bvh; }
+            private set
+            {
+                if (m_bvh == value) return;
+                m_bvh = value;
+            }
         }
-    }
 
-    public void toggleUsingArm()
-    {
-        UsingArm = !UsingArm;
+        public void toggleUsingArm()
+        {
+            UsingArm = !UsingArm;
+        }
     }
 }
