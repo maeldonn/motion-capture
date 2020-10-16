@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CERV.MouvementRecognition.Animations;
-using CERV.MouvementRecognition.Models;
+using CERV.MouvementRecognition.Main;
 using UniHumanoid;
 using UnityEngine;
 using UnityEngine.UI;
@@ -70,8 +70,6 @@ namespace CERV.MouvementRecognition.Recognition
         private List<float> tabTimePassedBetweenFrame;
         private bool mvtLaunched;
 
-        private bool mvtChoosen = false;
-
         public MvtRecognition(GameObject player, GameObject characterExample, GameObject uiHips, Store store,
             int nbFirstMvtToCheck, int degreeOfMargin)
         {
@@ -88,7 +86,7 @@ namespace CERV.MouvementRecognition.Recognition
         /// </summary>
         public void UpdateMvtRecognition()
         {
-            if (mvtChoosen)
+            if (store.Mode == Mode.Training)
             {
                 var deltaTime = Time.deltaTime;
                 if (mvtLaunched)
@@ -124,12 +122,6 @@ namespace CERV.MouvementRecognition.Recognition
             bvh = store.Bvh;
             InitActor();
             totalTime = (float) bvh.FrameTime.TotalSeconds * bvh.FrameCount;
-            mvtChoosen = true;
-        }
-
-        public void StopMvtRecognition()
-        {
-            mvtChoosen = false;
         }
 
         /// <summary>

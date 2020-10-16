@@ -1,13 +1,21 @@
 ﻿using UniHumanoid;
 using UnityEngine;
 
-namespace CERV.MouvementRecognition.Models
+namespace CERV.MouvementRecognition.Main
 {
+    public enum Mode
+    {
+        Empty,
+        Training,
+        Recognition
+    }
+
     public class Store : MonoBehaviour
     {
         private bool m_usingArm = false;
         private string m_path = null;
         private Bvh m_bvh = null;
+        private Mode m_mode = Mode.Empty;
 
         public bool UsingArm
         {
@@ -27,6 +35,7 @@ namespace CERV.MouvementRecognition.Models
                 if (m_path == value) return;
                 m_path = value;
                 Bvh = new Bvh().GetBvhFromPath(m_path);
+                Mode = Mode.Training;
             }
         }
 
@@ -37,6 +46,15 @@ namespace CERV.MouvementRecognition.Models
             {
                 if (m_bvh == value) return;
                 m_bvh = value;
+            }
+        }
+        public Mode Mode
+        {
+            get { return m_mode; }
+            set
+            {
+                if (m_mode == value) return;
+                m_mode = value;
             }
         }
 

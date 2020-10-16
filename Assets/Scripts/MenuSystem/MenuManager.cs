@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CERV.MouvementRecognition.gameManager;
+using CERV.MouvementRecognition.Main;
 using UnityEngine;
 
 namespace CERV.MouvementRecognition.Menus
@@ -11,6 +11,7 @@ namespace CERV.MouvementRecognition.Menus
         private List<Panel> panelHistory = new List<Panel>();
 
         [SerializeField] private GameManager Gm = null;
+        [SerializeField] private Store store = null;
 
         private void Start()
         {
@@ -61,7 +62,7 @@ namespace CERV.MouvementRecognition.Menus
         {
             SetCurrent(panelHistory[0]);
             panelHistory.RemoveRange(1, panelHistory.Count - 1);
-            Gm.mvtRecognition.StopMvtRecognition();
+            store.Mode = Mode.Empty;
         }
     }
 }

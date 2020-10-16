@@ -17,10 +17,11 @@
  limitations under the License.
 ************************************************************************************/
 
-using CERV.MouvementRecognition.Models;
 using Neuron;
 using UniHumanoid;
 using UnityEngine;
+
+using CERV.MouvementRecognition.Main;
 
 namespace CERV.MouvementRecognition.Animations
 {

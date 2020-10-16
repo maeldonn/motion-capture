@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using CERV.MouvementRecognition.Interactions;
-using CERV.MouvementRecognition.Models;
+﻿using CERV.MouvementRecognition.Interactions;
 using CERV.MouvementRecognition.Recognition;
-using JetBrains.Annotations;
 using UnityEngine;
 
-namespace CERV.MouvementRecognition.gameManager
+namespace CERV.MouvementRecognition.Main
 {
     public class GameManager : MonoBehaviour
     {
