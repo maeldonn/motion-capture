@@ -2858,7 +2858,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 30
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -3943,6 +3943,8 @@ MonoBehaviour:
   currentPanel: {fileID: 1821035854}
   Gm: {fileID: 2048113675}
   store: {fileID: 2048113673}
+  toggle: {fileID: 1473261420}
+  slider: {fileID: 1198935194}
 --- !u!114 &1821035854
 MonoBehaviour:
   m_ObjectHideFlags: 0

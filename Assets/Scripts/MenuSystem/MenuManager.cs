@@ -13,6 +13,8 @@ namespace CERV.MouvementRecognition.Menus
 
         [SerializeField] private GameManager Gm = null;
         [SerializeField] private Store store = null;
+        [SerializeField] private Toggle toggle = null;
+        [SerializeField] private Slider slider = null;
 
         private void Start()
         {
@@ -69,13 +71,13 @@ namespace CERV.MouvementRecognition.Menus
         {
             // TODO: Fix the bug
             store.toggleUsingArm();
-            GetComponent<Toggle>().isOn = store.UsingArm;
+            toggle.isOn = store.UsingArm;
         }
 
         public void ChangeMarginValueWithSlider()
         {
             // TODO: Fix the bug
-            store.Margin = (int)GetComponent<Slider>().value;
+            store.Margin = (int)slider.value;
             Debug.Log(store.Margin);
         }
     }
