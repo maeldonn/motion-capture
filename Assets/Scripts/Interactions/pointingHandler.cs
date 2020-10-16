@@ -53,7 +53,6 @@ namespace CERV.MouvementRecognition.Interactions
     {
         Bvh idlePointing = null;
         Bvh BVHactivating = null;
-        NeuronActor actor = null;
 
         [SerializeField] private GameObject player = null;
 
@@ -186,7 +185,6 @@ namespace CERV.MouvementRecognition.Interactions
         {
             idlePointing = new Bvh().GetBvhFromPath("Assets/BVH/Pointer/pointeur_3.bvh");
             BVHactivating = new Bvh().GetBvhFromPath("Assets/BVH/Pointer/pointeur_2.bvh");
-            actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
         }
 
         /// <summary>

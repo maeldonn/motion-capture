@@ -1,6 +1,5 @@
 ﻿using System.IO;
-using CERV.MouvementRecognition.gameManager;
-using CERV.MouvementRecognition.Models;
+using CERV.MouvementRecognition.Main;
 using UnityEngine;
 using UnityEngine.UI;
 
