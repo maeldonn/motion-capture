@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CERV.MouvementRecognition.Main;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CERV.MouvementRecognition.Menus
 {
@@ -63,6 +64,12 @@ namespace CERV.MouvementRecognition.Menus
             SetCurrent(panelHistory[0]);
             panelHistory.RemoveRange(1, panelHistory.Count - 1);
             store.Mode = Mode.Empty;
+        }
+
+        public void changeToggleValue()
+        {
+            store.toggleUsingArm();
+            GetComponent<Toggle>().isOn = store.UsingArm;
         }
     }
 }
