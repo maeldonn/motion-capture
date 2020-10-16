@@ -54,7 +54,6 @@ namespace CERV.MouvementRecognition.Menus
         private void SetCurrent(Panel newPanel)
         {
             currentPanel.Hide();
-
             currentPanel = newPanel;
             currentPanel.Show();
         }
@@ -66,10 +65,18 @@ namespace CERV.MouvementRecognition.Menus
             store.Mode = Mode.Empty;
         }
 
-        public void changeToggleValue()
+        public void ChangeToggleValue()
         {
+            // TODO: Fix the bug
             store.toggleUsingArm();
             GetComponent<Toggle>().isOn = store.UsingArm;
+        }
+
+        public void ChangeMarginValueWithSlider()
+        {
+            // TODO: Fix the bug
+            store.Margin = (int)GetComponent<Slider>().value;
+            Debug.Log(store.Margin);
         }
     }
 }

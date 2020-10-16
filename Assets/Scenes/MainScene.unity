@@ -2856,12 +2856,23 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2113966332}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1821035853}
+        m_MethodName: ChangeMarginValueWithSlider
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1256798670
 GameObject:
   m_ObjectHideFlags: 0
@@ -3528,7 +3539,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1821035853}
-        m_MethodName: changeToggleValue
+        m_MethodName: ChangeToggleValue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4837,7 +4848,6 @@ MonoBehaviour:
   CharacterExample: {fileID: 0}
   UiHips: {fileID: 6726494051009210618}
   NbFirstMvtToCheck: 100
-  DegreeOfMargin: 2
   DegreeOfMarginPointing: 40
   DegreeOfMarginValidating: 20
   LineMenu: {fileID: 991941095}
