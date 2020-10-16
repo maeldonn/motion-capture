@@ -4419,7 +4419,7 @@ MonoBehaviour:
   CharacterExample: {fileID: 2133640823}
   UiHips: {fileID: 6726494051009210618}
   NbFirstMvtToCheck: 100
-  DegreeOfMargin: 2
+  DegreeOfMargin: 40
   DegreeOfMarginPointing: 40
   DegreeOfMarginValidating: 20
   LineMenu: {fileID: 991941095}
