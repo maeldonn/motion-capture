@@ -10,7 +10,9 @@ namespace UniHumanoid
 {
     public class BvhException : Exception
     {
-        public BvhException(string msg) : base(msg) { }
+        public BvhException(string msg) : base(msg)
+        {
+        }
     }
 
     public enum Channel
@@ -22,6 +24,7 @@ namespace UniHumanoid
         Yrotation,
         Zrotation,
     }
+
     public static class ChannelExtensions
     {
         public static string ToProperty(this Channel ch)
@@ -34,8 +37,8 @@ namespace UniHumanoid
                 case Channel.Xrotation: return "localEulerAnglesBaked.x";
                 case Channel.Yrotation: return "localEulerAnglesBaked.y";
                 case Channel.Zrotation: return "localEulerAnglesBaked.z";
+                default: break;
             }
-
             throw new BvhException("no property for " + ch);
         }
 
@@ -50,18 +53,17 @@ namespace UniHumanoid
                 case Channel.Yrotation:
                 case Channel.Zrotation: return false;
             }
-
             throw new BvhException("no property for " + ch);
         }
     }
 
     public struct Single3
     {
-        public Single x;
-        public Single y;
-        public Single z;
+        public float x;
+        public float y;
+        public float z;
 
-        public Single3(Single _x, Single _y, Single _z)
+        public Single3(float _x, float _y, float _z)
         {
             x = _x;
             y = _y;
@@ -71,8 +73,7 @@ namespace UniHumanoid
 
     public class BvhNode
     {
-
-        public String Name
+        public string Name
         {
             get;
             private set;
@@ -105,33 +106,23 @@ namespace UniHumanoid
         public virtual void Parse(StringReader r)
         {
             Offset = ParseOffset(r.ReadLine());
-
             Channels = ParseChannel(r.ReadLine());
         }
 
-        static Single3 ParseOffset(string line)
+        private static Single3 ParseOffset(string line)
         {
             var splited = line.Trim().Split();
-            if (splited[0] != "OFFSET")
-            {
-                throw new BvhException("OFFSET is not found");
-            }
+            if (splited[0] != "OFFSET") throw new BvhException("OFFSET is not found");
             var offset = splited.Skip(1).Where(x => !string.IsNullOrEmpty(x)).Select(x => float.Parse(x, CultureInfo.InvariantCulture.NumberFormat)).ToArray();
             return new Single3(offset[0], offset[1], offset[2]);
         }
 
-        static Channel[] ParseChannel(string line)
+        private static Channel[] ParseChannel(string line)
         {
             var splited = line.Trim().Split();
-            if (splited[0] != "CHANNELS")
-            {
-                throw new BvhException("CHANNELS is not found");
-            }
+            if (splited[0] != "CHANNELS") throw new BvhException("CHANNELS is not found");
             var count = int.Parse(splited[1]);
-            if (count + 2 != splited.Length)
-            {
-                throw new BvhException("channel count is not match with splited count");
-            }
+            if (count + 2 != splited.Length) throw new BvhException("channel count is not match with splited count");
             return splited.Skip(2).Select(x => (Channel)Enum.Parse(typeof(Channel), x)).ToArray();
         }
 
@@ -153,11 +144,12 @@ namespace UniHumanoid
     {
         public EndSite() : base("")
         {
+            // Do nothing
         }
 
         public override void Parse(StringReader r)
         {
-            r.ReadLine(); // offset
+            r.ReadLine();
         }
     }
 
@@ -184,13 +176,10 @@ namespace UniHumanoid
     {
         public Bvh()
         {
-            // do nothing
+            // Do nothing
         }
 
-        public Bvh GetBvhFromPath(string path)
-        {
-            return Parse(File.ReadAllText(path, Encoding.UTF8));
-        }
+        public Bvh GetBvhFromPath(string path) => Parse(File.ReadAllText(path, Encoding.UTF8));
 
         public BvhNode Root
         {
@@ -210,11 +199,7 @@ namespace UniHumanoid
             private set;
         }
 
-        int m_frames;
-        public int FrameCount
-        {
-            get { return m_frames; }
-        }
+        public int FrameCount { get; }
 
         public struct PathWithProperty
         {
@@ -225,10 +210,11 @@ namespace UniHumanoid
 
         public Vector3 GetReceivedPosition(string boneName, int frame, bool rotation)
         {
-            float NeuronUnityLinearScale = 0.01f;
             Vector3 temp = new Vector3(0f, 0f, 0f);
+            float NeuronUnityLinearScale = 0.01f;
             var index = 0;
             bool boneFound = false;
+
             foreach (var node in Root.Traverse())
             {
                 for (int i = 0; i < node.Channels.Length; ++i, ++index)
@@ -236,6 +222,7 @@ namespace UniHumanoid
                     if (node.Name == boneName)
                     {
                         boneFound = true;
+
                         if (rotation)
                         {
                             switch (node.Channels[i])
@@ -243,11 +230,16 @@ namespace UniHumanoid
                                 case Channel.Xrotation:
                                     temp.x = Channels[index].Keys[frame];
                                     break;
+
                                 case Channel.Yrotation:
                                     temp.y = -Channels[index].Keys[frame];
                                     break;
+
                                 case Channel.Zrotation:
                                     temp.z = -Channels[index].Keys[frame];
+                                    break;
+
+                                default:
                                     break;
                             }
                         }
@@ -258,18 +250,25 @@ namespace UniHumanoid
                                 case Channel.Xposition:
                                     temp.x = -NeuronUnityLinearScale * Channels[index].Keys[frame];
                                     break;
+
                                 case Channel.Yposition:
                                     temp.y = NeuronUnityLinearScale * Channels[index].Keys[frame];
                                     break;
+
                                 case Channel.Zposition:
                                     temp.z = NeuronUnityLinearScale * Channels[index].Keys[frame];
+                                    break;
+
+                                default:
                                     break;
                             }
                         }
                     }
                 }
+
                 if (boneFound) break;
             }
+
             return temp;
         }
 
@@ -279,13 +278,13 @@ namespace UniHumanoid
             return bonePositionOffsets.ToArray();
         }
 
-
         public bool TryGetPathWithPropertyFromChannel(ChannelCurve channel, out PathWithProperty pathWithProp)
         {
             var index = Channels.ToList().IndexOf(channel);
+
             if (index == -1)
             {
-                pathWithProp = default(PathWithProperty);
+                pathWithProp = default;
                 return false;
             }
 
@@ -312,21 +311,22 @@ namespace UniHumanoid
         public string GetPath(BvhNode node)
         {
             var list = new List<string>() { node.Name };
-
             var current = node;
+
             while (current != null)
             {
                 current = GetParent(current);
+
                 if (current != null)
                 {
                     list.Insert(0, current.Name);
                 }
             }
 
-            return String.Join("/", list.ToArray());
+            return string.Join("/", list.ToArray());
         }
 
-        BvhNode GetParent(BvhNode node)
+        public BvhNode GetParent(BvhNode node)
         {
             foreach (var x in Root.Traverse())
             {
@@ -361,15 +361,15 @@ namespace UniHumanoid
             return string.Format("{0}nodes, {1}channels, {2}frames, {3:0.00}seconds"
                 , Root.Traverse().Count()
                 , Channels.Length
-                , m_frames
-                , m_frames * FrameTime.TotalSeconds);
+                , FrameCount
+                , FrameCount * FrameTime.TotalSeconds);
         }
 
         public Bvh(BvhNode root, int frames, float seconds)
         {
             Root = root;
             FrameTime = TimeSpan.FromSeconds(seconds);
-            m_frames = frames;
+            FrameCount = frames;
             var channelCount = Root.Traverse()
                 .Where(x => x.Channels != null)
                 .Select(x => x.Channels.Length)
@@ -383,6 +383,7 @@ namespace UniHumanoid
         public void ParseFrame(int frame, string line)
         {
             var splited = line.Trim().Split().Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
             if (splited.Length != Channels.Length)
             {
                 throw new BvhException("frame key count is not match channel count");
@@ -404,6 +405,7 @@ namespace UniHumanoid
                 }
 
                 var root = ParseNode(r);
+
                 if (root == null)
                 {
                     return null;
@@ -422,13 +424,16 @@ namespace UniHumanoid
                     {
                         throw new BvhException("Frames is not found");
                     }
+
                     frames = int.Parse(frameSplited[1]);
 
                     var frameTimeSplited = r.ReadLine().Split(':');
+
                     if (frameTimeSplited[0] != "Frame Time")
                     {
                         throw new BvhException("Frame Time is not found");
                     }
+
                     frameTime = float.Parse(frameTimeSplited[1], CultureInfo.InvariantCulture.NumberFormat);
                 }
 
@@ -444,10 +449,11 @@ namespace UniHumanoid
             }
         }
 
-        static BvhNode ParseNode(StringReader r, int level = 0)
+        private static BvhNode ParseNode(StringReader r, int level = 0)
         {
             var firstline = r.ReadLine().Trim();
             var splited = firstline.Split();
+
             if (splited.Length != 2)
             {
                 if (splited.Length == 1)
@@ -457,6 +463,7 @@ namespace UniHumanoid
                         return null;
                     }
                 }
+
                 throw new BvhException(String.Format("splited to {0}({1})", splited.Length, firstline));
             }
 
@@ -501,6 +508,7 @@ namespace UniHumanoid
             while (true)
             {
                 var child = ParseNode(r, level + 1);
+
                 if (child == null)
                 {
                     break;

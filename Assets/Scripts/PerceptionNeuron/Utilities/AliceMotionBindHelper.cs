@@ -1,30 +1,27 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Neuron
 {
-    public static class AliceMotionBindHelper 
+    public static class AliceMotionBindHelper
     {
-
         public static int Bind(Transform root, Transform[] bones, string prefix = "")
         {
             int foundCount = 0;
             bool shouldExactlyMatch = !string.IsNullOrEmpty(prefix);
-            for(int i = 0; i < (int)Neuron.TranceTransformsInstance.InertialBones.NumOfBones; i++)
+            for (int i = 0; i < (int)Neuron.TranceTransformsInstance.InertialBones.NumOfBones; i++)
             {
                 string enumName = Enum.GetName(typeof(Neuron.TranceTransformsInstance.InertialBones), (Neuron.TranceTransformsInstance.InertialBones)i);
                 if (shouldExactlyMatch)
                     enumName = prefix + enumName;
                 Transform foundTrans = FindChild(root, enumName, shouldExactlyMatch);
-                if(foundTrans == null)
+                if (foundTrans == null)
                 {
-                    if(enumName.StartsWith("RightInHand"))
+                    if (enumName.StartsWith("RightInHand"))
                     {
                         enumName = enumName.Replace("RightInHand", "RightHand");
                     }
-                    if ( enumName.StartsWith("LeftInHand"))
+                    if (enumName.StartsWith("LeftInHand"))
                     {
                         enumName = enumName.Replace("LeftInHand", "LeftHand");
                     }
@@ -47,8 +44,7 @@ namespace Neuron
             return foundCount;
         }
 
-
-        static Transform FindChild(Transform father, string name, bool shouldExactlyMatch)
+        private static Transform FindChild(Transform father, string name, bool shouldExactlyMatch)
         {
             Transform trans = null;
             int childCount = father.childCount;
@@ -59,8 +55,7 @@ namespace Neuron
                 {
                     trans = father;
                     return father;
-                } 
-
+                }
             }
             else
             {
@@ -70,7 +65,6 @@ namespace Neuron
                     return father;
                 }
             }
-
 
             for (int i = 0; i < childCount; i++)
             {

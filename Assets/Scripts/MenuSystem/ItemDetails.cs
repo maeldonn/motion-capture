@@ -1,8 +1,11 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class ItemDetails : MonoBehaviour
+namespace CERV.MouvementRecognition.Menus
 {
-    public TextMeshProUGUI text = null;
-    public string path = null;
+    public class ItemDetails : MonoBehaviour
+    {
+        public TextMeshProUGUI text = null;
+        public string path = null;
+    }
 }
