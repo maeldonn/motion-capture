@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using CERV.MouvementRecognition.Animations;
-using CERV.MouvementRecognition.Models;
+using CERV.MouvementRecognition.Main;
 using UniHumanoid;
 using UnityEngine;
 using UnityEngine.UI;
@@ -75,7 +75,6 @@ namespace CERV.MouvementRecognition.Recognition
         private NeuronActor actor = null;
         private int nbFrame = 0;
         private float timePassedBetweenFrame = 0;
-        private int degreeOfMargin = 0;
 
         private float
             totalTime = 0; //Since this value does not change, and since it is used regularly, it is kept aside.
@@ -99,19 +98,16 @@ namespace CERV.MouvementRecognition.Recognition
         private List<float> tabTimePassedBetweenFrame;
         private bool mvtLaunched;
 
-        private bool mvtChoosen = false;
-
         private List<MovementProperties> listOfMvts = null;
 
         public MvtRecognition(GameObject player, GameObject characterExample, GameObject uiHips, Store store,
-            int nbFirstMvtToCheck, int degreeOfMargin)
+            int nbFirstMvtToCheck)
         {
             this.player = player;
             this.characterExample = characterExample;
             this.uiHips = uiHips;
             this.store = store;
             this.nbFirstMvtToCheck = nbFirstMvtToCheck;
-            this.degreeOfMargin = degreeOfMargin;
         }
 
         /// <summary>
@@ -120,7 +116,8 @@ namespace CERV.MouvementRecognition.Recognition
         public void UpdateMvtRecognition()
         {
             var deltaTime = Time.deltaTime;
-            if (mvtChoosen)
+
+            if (store.Mode == Mode.Training)
             {
                 
                 if (mvtLaunched)
@@ -171,12 +168,6 @@ namespace CERV.MouvementRecognition.Recognition
             bvh = store.Bvh;
             InitActor();
             totalTime = (float) bvh.FrameTime.TotalSeconds * bvh.FrameCount;
-            mvtChoosen = true;
-        }
-
-        public void StopMvtRecognition()
-        {
-            mvtChoosen = false;
         }
 
         /// <summary>
@@ -185,12 +176,13 @@ namespace CERV.MouvementRecognition.Recognition
         /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
         private bool CheckIfMvtIsRight(float deltaTime)
         {
+            int margin = store.Margin;
             timePassedBetweenFrame += deltaTime;
             timePassedBetweenFrame %= totalTime;
             nbFrame = (int) ((timePassedBetweenFrame - timePassedBetweenFrame % bvh.FrameTime.TotalSeconds) /
                              bvh.FrameTime.TotalSeconds);
-            LaunchComparison(bvh.Root, bvh, degreeOfMargin, new[] {"Hips"}, nbFrame, ChangeColorUiCharacter);
-            return LaunchComparison(bvh.Root, bvh, degreeOfMargin, new[] {"Hips"}, nbFrame);
+            LaunchComparison(bvh.Root, bvh, margin, new[] {"Hips"}, nbFrame, ChangeColorUiCharacter);
+            return LaunchComparison(bvh.Root, bvh, margin, new[] {"Hips"}, nbFrame);
         }
 
         /// <summary>
@@ -200,7 +192,8 @@ namespace CERV.MouvementRecognition.Recognition
         /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
         private void CheckBeginningMvt(float deltaTime)
         {
-            if (LaunchComparison(bvh.Root, bvh, degreeOfMargin, new[] {"Hips"}, 0)
+            int margin = store.Margin;
+            if (LaunchComparison(bvh.Root, bvh, margin, new[] {"Hips"}, 0)
             ) //If the user have a position corresponding to the first frame of the movement
             {
                 if (tabTimePassedBetweenFrame == null) tabTimePassedBetweenFrame = new List<float>();
@@ -225,7 +218,7 @@ namespace CERV.MouvementRecognition.Recognition
                     nbFrame = (int) ((tabTimePassedBetweenFrame[i] -
                                       tabTimePassedBetweenFrame[i] % bvh.FrameTime.TotalSeconds) /
                                      bvh.FrameTime.TotalSeconds);
-                    if (!LaunchComparison(bvh.Root, bvh, degreeOfMargin, new[] {"Hips"}, nbFrame)
+                    if (!LaunchComparison(bvh.Root, bvh, margin, new[] {"Hips"}, nbFrame)
                     ) //If the position of the user does not correspond to that of the frame
                     {
                         tabTimePassedBetweenFrame

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using CERV.MouvementRecognition.gameManager;
+using CERV.MouvementRecognition.Main;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CERV.MouvementRecognition.Menus
 {
@@ -11,6 +12,9 @@ namespace CERV.MouvementRecognition.Menus
         private List<Panel> panelHistory = new List<Panel>();
 
         [SerializeField] private GameManager Gm = null;
+        [SerializeField] private Store store = null;
+        [SerializeField] private Toggle toggle = null;
+        [SerializeField] private Slider slider = null;
 
         private void Start()
         {
@@ -52,7 +56,6 @@ namespace CERV.MouvementRecognition.Menus
         private void SetCurrent(Panel newPanel)
         {
             currentPanel.Hide();
-
             currentPanel = newPanel;
             currentPanel.Show();
         }
@@ -61,7 +64,21 @@ namespace CERV.MouvementRecognition.Menus
         {
             SetCurrent(panelHistory[0]);
             panelHistory.RemoveRange(1, panelHistory.Count - 1);
-            Gm.mvtRecognition.StopMvtRecognition();
+            store.Mode = Mode.Empty;
+        }
+
+        public void ChangeToggleValue()
+        {
+            // TODO: Fix the bug
+            store.toggleUsingArm();
+            toggle.isOn = store.UsingArm;
+        }
+
+        public void ChangeMarginValueWithSlider()
+        {
+            // TODO: Fix the bug
+            store.Margin = (int)slider.value;
+            Debug.Log(store.Margin);
         }
     }
 }

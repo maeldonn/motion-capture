@@ -1,4 +1,4 @@
-﻿using CERV.MouvementRecognition.gameManager;
+﻿using CERV.MouvementRecognition.Main;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
