@@ -1,6 +1,7 @@
 ﻿using Neuron;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using CERV.MouvementRecognition.Animations;
 using CERV.MouvementRecognition.Main;
@@ -11,6 +12,34 @@ using UnityEngine.UI;
 
 namespace CERV.MouvementRecognition.Recognition
 {
+    public class MovementProperties
+    {
+        public Bvh Bvh = null;
+        public string Name = null;
+        public List<float> TabTimePassedBetweenFrame;
+        public List<float> scoreSeq;
+        public List<int> oldNbFrame;
+        public float Score;
+
+
+        public MovementProperties(string path,string name)
+        {
+            this.Bvh = new Bvh().GetBvhFromPath(path);
+            this.Name = name;
+            Score = 0;
+        }
+
+        public void NewMvt()
+        {
+            if(TabTimePassedBetweenFrame == null) TabTimePassedBetweenFrame = new List<float>();
+            if (scoreSeq == null) scoreSeq = new List<float>();
+            if (oldNbFrame == null) oldNbFrame = new List<int>();
+            TabTimePassedBetweenFrame.Add(0f); //It adds a new element to the tabTimePassedBetweenFrame list.
+            scoreSeq.Add(0f); //TODO commentaires
+            oldNbFrame.Add(0); //TODO commentaires
+        }
+    }
+
     /// <summary>
     /// The <c>MvtRecognition</c> class.
     /// Contains all the methods to detect and analyze movements.
@@ -69,6 +98,8 @@ namespace CERV.MouvementRecognition.Recognition
         private List<float> tabTimePassedBetweenFrame;
         private bool mvtLaunched;
 
+        private List<MovementProperties> listOfMvts = null;
+
         public MvtRecognition(GameObject player, GameObject characterExample, GameObject uiHips, Store store,
             int nbFirstMvtToCheck)
         {
@@ -84,9 +115,11 @@ namespace CERV.MouvementRecognition.Recognition
         /// </summary>
         public void UpdateMvtRecognition()
         {
+            var deltaTime = Time.deltaTime;
+
             if (store.Mode == Mode.Training)
             {
-                var deltaTime = Time.deltaTime;
+                
                 if (mvtLaunched)
                 {
                     CheckIfMvtIsRight(deltaTime);
@@ -100,6 +133,8 @@ namespace CERV.MouvementRecognition.Recognition
                     characterExample.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame =
                         nbFrame; //If a character is set, then animate him.
             }
+
+            CheckMultipleMovementsMethode4(deltaTime);
         }
 
         /// <summary>
@@ -108,6 +143,19 @@ namespace CERV.MouvementRecognition.Recognition
         public void InitActor()
         {
             actor = player.GetComponent<NeuronAnimatorInstance>().GetActor();
+
+            //TODO: à rendre propre, j'ai mis ça ici pour pouvoir tester vite
+            listOfMvts = new List<MovementProperties>();
+            string directoryPath = "/BVH/MovementSet/";
+            var itemPaths = Directory.GetFiles(Application.dataPath + directoryPath, "*.bvh");
+            var itemNames = new string[itemPaths.Length];
+            for (int i = 0; i < itemNames.Length; i++)
+            {
+                string[] splittedPath = itemPaths[i].Split('/');
+                itemNames[i] = splittedPath[splittedPath.Length - 1].Split('.')[0];
+            }
+            for(var i =0; i<itemPaths.Length; i++)
+                listOfMvts.Add(new MovementProperties(itemPaths[i], itemNames[i]));
         }
 
         /// <summary>
@@ -178,6 +226,240 @@ namespace CERV.MouvementRecognition.Recognition
                         i--;
                     }
                 }
+            }
+        }
+
+        //TODO: changer les commentaires, pour l'instant j'ai juste copié collé la fonction CheckBeginningMvt
+        /// <summary>
+        /// Tries to recognize the movements made by the user from multiple bvh.
+        /// </summary>
+        /// <returns>Return true if a movement is detected. Debug the movement made.</returns>
+        /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
+        private void CheckMultipleMovementsMethode1(float deltaTime)
+        {
+            foreach (var mvt in listOfMvts)
+            {
+                if (LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] {"Hips"}, 0)
+                ) //If the user have a position corresponding to the first frame of the movement
+                {
+                    if (mvt.TabTimePassedBetweenFrame == null) mvt.TabTimePassedBetweenFrame = new List<float>();
+                    mvt.TabTimePassedBetweenFrame.Add(0f); //It adds a new element to the tabTimePassedBetweenFrame list.
+                }
+
+                if (mvt.TabTimePassedBetweenFrame != null) //If the list is not empty
+                {
+                    for (var i = mvt.TabTimePassedBetweenFrame.Count-1; i >=0 ; i--) //We go through it
+                    {
+                        mvt.TabTimePassedBetweenFrame[i] +=
+                            deltaTime; //Updating the time since the first frame was detected
+                        if (mvt.TabTimePassedBetweenFrame[i] >= (float)mvt.Bvh.FrameTime.TotalSeconds * mvt.Bvh.FrameCount
+                        ) //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
+                        {
+                            //The first X frames have been detected, we start the movement recognition
+                            
+                            Debug.Log(mvt.Name);  //TODO: le remettre dans le code
+                            mvt.TabTimePassedBetweenFrame
+                                .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
+                            continue;
+                        }
+
+                        nbFrame = (int) ((mvt.TabTimePassedBetweenFrame[i] -
+                                          mvt.TabTimePassedBetweenFrame[i] % mvt.Bvh.FrameTime.TotalSeconds) /
+                                         mvt.Bvh.FrameTime.TotalSeconds);
+                        if (!LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] {"Hips"}, nbFrame)
+                        ) //If the position of the user does not correspond to that of the frame
+                        {
+                            mvt.TabTimePassedBetweenFrame
+                                .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
+                        }
+                    }
+                }
+            }
+        }
+
+        //TODO: changer les commentaires, pour l'instant j'ai juste copié collé la fonction CheckBeginningMvt
+        /// <summary>
+        /// Tries to recognize the movements made by the user from multiple bvh.
+        /// </summary>
+        /// <returns>Return true if a movement is detected. Debug the movement made.</returns>
+        /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
+        private void CheckMultipleMovementsMethode2(float deltaTime)
+        {
+            foreach (var mvt in listOfMvts)
+            {
+                mvt.Score = 0;
+                if (LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] { "Hips" }, 0)
+                ) //If the user have a position corresponding to the first frame of the movement
+                {
+                    if (mvt.TabTimePassedBetweenFrame == null) mvt.TabTimePassedBetweenFrame = new List<float>();
+                    if (mvt.scoreSeq == null) mvt.scoreSeq = new List<float>();
+                    mvt.TabTimePassedBetweenFrame.Add(0f); //It adds a new element to the tabTimePassedBetweenFrame list.
+                    mvt.scoreSeq.Add(0f); //TODO commentaires
+                }
+
+                if (mvt.TabTimePassedBetweenFrame != null) //If the list is not empty
+                {
+                    for (var i = mvt.TabTimePassedBetweenFrame.Count - 1; i >= 0; i--) //We go through it
+                    {
+                        mvt.TabTimePassedBetweenFrame[i] +=
+                            deltaTime; //Updating the time since the first frame was detected
+                        if (mvt.TabTimePassedBetweenFrame[i] >= (float)mvt.Bvh.FrameTime.TotalSeconds * mvt.Bvh.FrameCount
+                        ) //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
+                        {
+                            //The first X frames have been detected, we start the movement recognition
+                            mvt.TabTimePassedBetweenFrame
+                                .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
+                            mvt.scoreSeq
+                                .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
+                            continue;
+                        }
+                        nbFrame = (int)((mvt.TabTimePassedBetweenFrame[i] -
+                                         mvt.TabTimePassedBetweenFrame[i] % mvt.Bvh.FrameTime.TotalSeconds) /
+                                        mvt.Bvh.FrameTime.TotalSeconds);
+                        if (!LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] { "Hips" }, nbFrame)
+                        ) //If the position of the user does not correspond to that of the frame
+                        {
+                            mvt.TabTimePassedBetweenFrame
+                                .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
+                            mvt.scoreSeq
+                                .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
+                            continue;
+                        }
+
+                        mvt.scoreSeq[i] = LaunchComparison(mvt.Bvh.Root, mvt.Bvh, new[] {"Hips"}, nbFrame);
+                    }
+                    if (mvt.scoreSeq.Count>0) mvt.Score = (float) Math.Round(mvt.scoreSeq.Min(), 1);
+                    else mvt.Score = -1f;
+                }
+                else
+                {
+                    mvt.Score = -1f;
+                }
+                Debug.Log(mvt.Name+" score: "+mvt.Score);
+            }
+        }
+
+        //TODO: changer les commentaires, pour l'instant j'ai juste copié collé la fonction CheckBeginningMvt
+        /// <summary>
+        /// Tries to recognize the movements made by the user from multiple bvh.
+        /// </summary>
+        /// <returns>Return true if a movement is detected. Debug the movement made.</returns>
+        /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
+        private void CheckMultipleMovementsMethode3(float deltaTime)
+        {
+            foreach (var mvt in listOfMvts)
+            {
+                mvt.Score = 0;
+                if (LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] { "Hips" }, 0)
+                ) //If the user have a position corresponding to the first frame of the movement
+                {
+                    mvt.NewMvt();
+                }
+
+                if (mvt.TabTimePassedBetweenFrame != null) //If the list is not empty
+                {
+                    for (var i = mvt.TabTimePassedBetweenFrame.Count - 1; i >= 0; i--) //We go through it
+                    {
+                        mvt.TabTimePassedBetweenFrame[i] +=
+                            deltaTime; //Updating the time since the first frame was detected
+                        if (mvt.TabTimePassedBetweenFrame[i] >= (float)mvt.Bvh.FrameTime.TotalSeconds * mvt.Bvh.FrameCount
+                        ) //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
+                        {
+                            //The first X frames have been detected, we start the movement recognition
+                            mvt.TabTimePassedBetweenFrame
+                                .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
+                            mvt.scoreSeq
+                                .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
+                            mvt.oldNbFrame.RemoveAt(i);
+                            continue;
+                        }
+                        nbFrame = (int)((mvt.TabTimePassedBetweenFrame[i] -
+                                         mvt.TabTimePassedBetweenFrame[i] % mvt.Bvh.FrameTime.TotalSeconds) /
+                                        mvt.Bvh.FrameTime.TotalSeconds);
+                        if (nbFrame% mvt.Bvh.FrameCount < (mvt.oldNbFrame[i] + 30)%mvt.Bvh.FrameCount) continue;
+                        if (!LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] { "Hips" }, nbFrame)
+                        ) //If the position of the user does not correspond to that of the frame
+                        {
+                            mvt.TabTimePassedBetweenFrame
+                                .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
+                            mvt.scoreSeq
+                                .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
+                            mvt.oldNbFrame.RemoveAt(i);
+                            continue;
+                        }
+                        mvt.oldNbFrame[i] = nbFrame;
+                        mvt.scoreSeq[i] = LaunchComparison(mvt.Bvh.Root, mvt.Bvh, new[] { "Hips" }, nbFrame);
+                    }
+                    if (mvt.scoreSeq.Count > 0) mvt.Score = (float)Math.Round(mvt.scoreSeq.Min(), 1);
+                    else mvt.Score = -1f;
+                }
+                else
+                {
+                    mvt.Score = -1f;
+                }
+                if(mvt.Score >-1) Debug.Log(mvt.Name + " score: " + mvt.Score);
+            }
+        }
+
+        //TODO: changer les commentaires, pour l'instant j'ai juste copié collé la fonction CheckBeginningMvt
+        /// <summary>
+        /// Tries to recognize the movements made by the user from multiple bvh.
+        /// </summary>
+        /// <returns>Return true if a movement is detected. Debug the movement made.</returns>
+        /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
+        private void CheckMultipleMovementsMethode4(float deltaTime)
+        {
+            foreach (var mvt in listOfMvts)
+            {
+                mvt.Score = 0;
+                if (LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] { "Hips" }, 0)
+                ) //If the user have a position corresponding to the first frame of the movement
+                {
+                    mvt.NewMvt();
+                }
+
+                if (mvt.TabTimePassedBetweenFrame != null) //If the list is not empty
+                {
+                    for (var i = mvt.TabTimePassedBetweenFrame.Count - 1; i >= 0; i--) //We go through it
+                    {
+                        mvt.TabTimePassedBetweenFrame[i] +=
+                            deltaTime; //Updating the time since the first frame was detected
+                        if (mvt.TabTimePassedBetweenFrame[i] >= (float)mvt.Bvh.FrameTime.TotalSeconds * mvt.Bvh.FrameCount
+                        ) //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
+                        {
+                            //The first X frames have been detected, we start the movement recognition
+                            mvt.TabTimePassedBetweenFrame
+                                .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
+                            mvt.scoreSeq
+                                .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
+                            mvt.oldNbFrame.RemoveAt(i);
+                            continue;
+                        }
+                        nbFrame = (int)((mvt.TabTimePassedBetweenFrame[i] -
+                                         mvt.TabTimePassedBetweenFrame[i] % mvt.Bvh.FrameTime.TotalSeconds) /
+                                        mvt.Bvh.FrameTime.TotalSeconds);
+                        if (nbFrame % mvt.Bvh.FrameCount < (mvt.oldNbFrame[i] + 30) % mvt.Bvh.FrameCount) continue;
+                        if (!LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] { "Hips" }, nbFrame)
+                        ) //If the position of the user does not correspond to that of the frame
+                        {
+                            mvt.TabTimePassedBetweenFrame
+                                .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
+                            mvt.scoreSeq
+                                .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
+                            mvt.oldNbFrame.RemoveAt(i);
+                            continue;
+                        }
+                        mvt.oldNbFrame[i] = nbFrame;
+                        mvt.scoreSeq[i] = LaunchComparisonUpdated(mvt.Bvh.Root, mvt.Bvh, new[] { "Hips" }, nbFrame);
+                    }
+                    if (mvt.scoreSeq.Count > 0) mvt.Score = (float)Math.Round(mvt.scoreSeq.Max(), 3);
+                    else mvt.Score = -10f;
+                }
+                else
+                {
+                    mvt.Score = -10f;
+                }
+                if(mvt.Score>=0.5) Debug.Log(mvt.Name + " score: " + mvt.Score);
             }
         }
 
@@ -293,5 +575,96 @@ namespace CERV.MouvementRecognition.Recognition
 
             return true;
         }
+
+        /// <summary>
+        /// Compare the position of the actor and a frame of <paramref name="animationToCompare"/>.
+        /// </summary>
+        /// <returns>
+        /// The result of the comparison (true or false)
+        /// </returns>
+        /// <example>
+        /// <code>
+        /// if(launchComparison(bvhHand, bvh, 40, new []{ "Leg","Spine2" },23))
+        /// {
+        ///     Debug.Log("The movements of the hand are corresponding.");
+        /// }
+        /// </code>
+        /// </example>
+        /// <param name="root">The <c>BvhNode</c> from which we want to compare the movement.</param>
+        /// <param name="animationToCompare">The bvh which contain the movement to compare.</param>
+        /// <param name="degOfMargin">The margin angle with which the user can make the movement.</param>
+        /// <param name="bodyPartsToIgnore">An array of strings containing the names of the parts of the body that we do not want to compare in the movement. The following list show some valid examples:
+        /// <list type="bullet">
+        /// <item><term></term>Hips</item>
+        /// <item><term></term>Arm</item>
+        /// <item><term></term>Hand</item>
+        /// <item><term></term>LeftHandIndex</item>
+        /// <item><term></term>...</item>
+        /// </list>
+        /// </param>
+        /// <param name="frame">The index of the frame to look.</param>
+        public float LaunchComparison(BvhNode root, Bvh animationToCompare, string[] bodyPartsToIgnore,
+            int frame)
+        {
+            var checkValidity = 0f;
+            var i = 0f;
+            var adjustor = 4 / degreeOfMargin;
+            foreach (var node in root.Traverse())
+            {
+                i++;
+                if (bodyPartsToIgnore.Any(node.Name.Contains)) continue;
+                var actorRotation = actor.GetReceivedRotation((NeuronBones)Enum.Parse(typeof(NeuronBones), node.Name));
+                checkValidity += (float)Math.Pow(adjustor*Math.Abs(actorRotation.x - animationToCompare.GetReceivedPosition(node.Name, frame, true).x), 2);
+                checkValidity += (float)Math.Pow(adjustor * Math.Abs(actorRotation.y - animationToCompare.GetReceivedPosition(node.Name, frame, true).y), 2);
+                checkValidity += (float)Math.Pow(adjustor * Math.Abs(actorRotation.z - animationToCompare.GetReceivedPosition(node.Name, frame, true).z), 2);
+            }
+            return checkValidity;
+        }
+
+        //TODO: changer les commentaires
+        /// <summary>
+        /// Compare the position of the actor and a frame of <paramref name="animationToCompare"/>.
+        /// </summary>
+        /// <returns>
+        /// The result of the comparison (true or false)
+        /// </returns>
+        /// <example>
+        /// <code>
+        /// if(launchComparison(bvhHand, bvh, 40, new []{ "Leg","Spine2" },23))
+        /// {
+        ///     Debug.Log("The movements of the hand are corresponding.");
+        /// }
+        /// </code>
+        /// </example>
+        /// <param name="root">The <c>BvhNode</c> from which we want to compare the movement.</param>
+        /// <param name="animationToCompare">The bvh which contain the movement to compare.</param>
+        /// <param name="degOfMargin">The margin angle with which the user can make the movement.</param>
+        /// <param name="bodyPartsToIgnore">An array of strings containing the names of the parts of the body that we do not want to compare in the movement. The following list show some valid examples:
+        /// <list type="bullet">
+        /// <item><term></term>Hips</item>
+        /// <item><term></term>Arm</item>
+        /// <item><term></term>Hand</item>
+        /// <item><term></term>LeftHandIndex</item>
+        /// <item><term></term>...</item>
+        /// </list>
+        /// </param>
+        /// <param name="frame">The index of the frame to look.</param>
+        public float LaunchComparisonUpdated(BvhNode root, Bvh animationToCompare, string[] bodyPartsToIgnore,
+            int frame)
+        {
+            var checkValidity = 0f;
+            var i = 0f;
+            foreach (var node in root.Traverse())
+            {
+                i++;
+                if (bodyPartsToIgnore.Any(node.Name.Contains)) continue;
+                var actorRotation = actor.GetReceivedRotation((NeuronBones)Enum.Parse(typeof(NeuronBones), node.Name));
+                checkValidity += (1 - Math.Abs(actorRotation.x - animationToCompare.GetReceivedPosition(node.Name, frame, true).x) / 90f);
+                checkValidity += (1 - Math.Abs(actorRotation.y - animationToCompare.GetReceivedPosition(node.Name, frame, true).y) / 90f);
+                checkValidity += (1 - Math.Abs(actorRotation.z - animationToCompare.GetReceivedPosition(node.Name, frame, true).z) / 90f);
+            }
+            return checkValidity/(3f*i);
+        }
+
     }
 }
