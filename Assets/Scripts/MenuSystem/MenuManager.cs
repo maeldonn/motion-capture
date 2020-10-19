@@ -11,7 +11,6 @@ namespace CERV.MouvementRecognition.Menus
 
         private List<Panel> panelHistory = new List<Panel>();
 
-        [SerializeField] private GameManager Gm = null;
         [SerializeField] private Store store = null;
         [SerializeField] private Toggle toggle = null;
         [SerializeField] private Slider slider = null;
@@ -69,14 +68,12 @@ namespace CERV.MouvementRecognition.Menus
 
         public void ChangeToggleValue()
         {
-            // TODO: Fix the bug
             store.toggleUsingArm();
             toggle.isOn = store.UsingArm;
         }
 
         public void ChangeMarginValueWithSlider()
         {
-            // TODO: Fix the bug
             store.Margin = (int)slider.value;
             Debug.Log(store.Margin);
         }

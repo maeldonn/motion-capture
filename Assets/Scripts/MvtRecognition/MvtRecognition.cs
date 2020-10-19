@@ -237,9 +237,10 @@ namespace CERV.MouvementRecognition.Recognition
         /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
         private void CheckMultipleMovementsMethode1(float deltaTime)
         {
+            int margin = store.Margin;
             foreach (var mvt in listOfMvts)
             {
-                if (LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] {"Hips"}, 0)
+                if (LaunchComparison(mvt.Bvh.Root, mvt.Bvh, margin, new[] {"Hips"}, 0)
                 ) //If the user have a position corresponding to the first frame of the movement
                 {
                     if (mvt.TabTimePassedBetweenFrame == null) mvt.TabTimePassedBetweenFrame = new List<float>();
@@ -266,7 +267,7 @@ namespace CERV.MouvementRecognition.Recognition
                         nbFrame = (int) ((mvt.TabTimePassedBetweenFrame[i] -
                                           mvt.TabTimePassedBetweenFrame[i] % mvt.Bvh.FrameTime.TotalSeconds) /
                                          mvt.Bvh.FrameTime.TotalSeconds);
-                        if (!LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] {"Hips"}, nbFrame)
+                        if (!LaunchComparison(mvt.Bvh.Root, mvt.Bvh, margin, new[] {"Hips"}, nbFrame)
                         ) //If the position of the user does not correspond to that of the frame
                         {
                             mvt.TabTimePassedBetweenFrame
@@ -285,10 +286,11 @@ namespace CERV.MouvementRecognition.Recognition
         /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
         private void CheckMultipleMovementsMethode2(float deltaTime)
         {
+            int margin = store.Margin;
             foreach (var mvt in listOfMvts)
             {
                 mvt.Score = 0;
-                if (LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] { "Hips" }, 0)
+                if (LaunchComparison(mvt.Bvh.Root, mvt.Bvh, margin, new[] { "Hips" }, 0)
                 ) //If the user have a position corresponding to the first frame of the movement
                 {
                     if (mvt.TabTimePassedBetweenFrame == null) mvt.TabTimePassedBetweenFrame = new List<float>();
@@ -316,7 +318,7 @@ namespace CERV.MouvementRecognition.Recognition
                         nbFrame = (int)((mvt.TabTimePassedBetweenFrame[i] -
                                          mvt.TabTimePassedBetweenFrame[i] % mvt.Bvh.FrameTime.TotalSeconds) /
                                         mvt.Bvh.FrameTime.TotalSeconds);
-                        if (!LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] { "Hips" }, nbFrame)
+                        if (!LaunchComparison(mvt.Bvh.Root, mvt.Bvh, margin, new[] { "Hips" }, nbFrame)
                         ) //If the position of the user does not correspond to that of the frame
                         {
                             mvt.TabTimePassedBetweenFrame
@@ -347,10 +349,11 @@ namespace CERV.MouvementRecognition.Recognition
         /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
         private void CheckMultipleMovementsMethode3(float deltaTime)
         {
+            int margin = store.Margin;
             foreach (var mvt in listOfMvts)
             {
                 mvt.Score = 0;
-                if (LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] { "Hips" }, 0)
+                if (LaunchComparison(mvt.Bvh.Root, mvt.Bvh, margin, new[] { "Hips" }, 0)
                 ) //If the user have a position corresponding to the first frame of the movement
                 {
                     mvt.NewMvt();
@@ -377,7 +380,7 @@ namespace CERV.MouvementRecognition.Recognition
                                          mvt.TabTimePassedBetweenFrame[i] % mvt.Bvh.FrameTime.TotalSeconds) /
                                         mvt.Bvh.FrameTime.TotalSeconds);
                         if (nbFrame% mvt.Bvh.FrameCount < (mvt.oldNbFrame[i] + 30)%mvt.Bvh.FrameCount) continue;
-                        if (!LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] { "Hips" }, nbFrame)
+                        if (!LaunchComparison(mvt.Bvh.Root, mvt.Bvh, margin, new[] { "Hips" }, nbFrame)
                         ) //If the position of the user does not correspond to that of the frame
                         {
                             mvt.TabTimePassedBetweenFrame
@@ -409,10 +412,11 @@ namespace CERV.MouvementRecognition.Recognition
         /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
         private void CheckMultipleMovementsMethode4(float deltaTime)
         {
+            int margin = store.Margin;
             foreach (var mvt in listOfMvts)
             {
                 mvt.Score = 0;
-                if (LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] { "Hips" }, 0)
+                if (LaunchComparison(mvt.Bvh.Root, mvt.Bvh, margin, new[] { "Hips" }, 0)
                 ) //If the user have a position corresponding to the first frame of the movement
                 {
                     mvt.NewMvt();
@@ -439,7 +443,7 @@ namespace CERV.MouvementRecognition.Recognition
                                          mvt.TabTimePassedBetweenFrame[i] % mvt.Bvh.FrameTime.TotalSeconds) /
                                         mvt.Bvh.FrameTime.TotalSeconds);
                         if (nbFrame % mvt.Bvh.FrameCount < (mvt.oldNbFrame[i] + 30) % mvt.Bvh.FrameCount) continue;
-                        if (!LaunchComparison(mvt.Bvh.Root, mvt.Bvh, degreeOfMargin, new[] { "Hips" }, nbFrame)
+                        if (!LaunchComparison(mvt.Bvh.Root, mvt.Bvh, margin, new[] { "Hips" }, nbFrame)
                         ) //If the position of the user does not correspond to that of the frame
                         {
                             mvt.TabTimePassedBetweenFrame
@@ -608,7 +612,7 @@ namespace CERV.MouvementRecognition.Recognition
         {
             var checkValidity = 0f;
             var i = 0f;
-            var adjustor = 4 / degreeOfMargin;
+            var adjustor = 4 / store.Margin;
             foreach (var node in root.Traverse())
             {
                 i++;
