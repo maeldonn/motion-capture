@@ -24,8 +24,8 @@ namespace CERV.MouvementRecognition.Recognition
 
         public MovementProperties(string path,string name)
         {
-            this.Bvh = new Bvh().GetBvhFromPath(path);
-            this.Name = name;
+            Bvh = new Bvh().GetBvhFromPath(path);
+            Name = name;
             Score = 0;
         }
 
@@ -130,11 +130,10 @@ namespace CERV.MouvementRecognition.Recognition
                 }
 
                 if (characterExample != null)
-                    characterExample.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame =
-                        nbFrame; //If a character is set, then animate him.
+                    characterExample.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame = nbFrame; //If a character is set, then animate him.
             }
 
-            CheckMultipleMovementsMethode4(deltaTime);
+            // CheckMultipleMovementsMethode4(deltaTime);
         }
 
         /// <summary>
@@ -166,7 +165,6 @@ namespace CERV.MouvementRecognition.Recognition
             nbFrame = 0;
             timePassedBetweenFrame = 0;
             bvh = store.Bvh;
-            InitActor();
             totalTime = (float) bvh.FrameTime.TotalSeconds * bvh.FrameCount;
         }
 

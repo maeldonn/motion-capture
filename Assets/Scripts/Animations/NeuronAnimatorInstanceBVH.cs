@@ -132,22 +132,22 @@ namespace CERV.MouvementRecognition.Animations
         }
 
         public bool applyPosition;
-        private int nbFrame;
+        private int m_nbFrame;
         private Bvh bvh;
 
         public int NbFrame
         {
-            get => nbFrame;
+            get => m_nbFrame;
             set
             {
-                if (nbFrame == value) return;
-                nbFrame = value;
+                if (m_nbFrame == value) return;
+                m_nbFrame = value;
             }
         }
 
         private void Start()
         {
-            nbFrame = 0;
+            NbFrame = 0;
             bvh = store.Bvh;
         }
 
@@ -204,8 +204,8 @@ namespace CERV.MouvementRecognition.Animations
             {
                 //Debug.Log(bvh);
                 SetPosition(animator, HumanBodyBones.Hips,
-                    bvh.GetReceivedPosition("Hips", nbFrame, false) + positionOffsets[(int) HumanBodyBones.Hips]);
-                SetRotation(animator, HumanBodyBones.Hips, bvh.GetReceivedPosition("Hips", nbFrame, true));
+                    bvh.GetReceivedPosition("Hips", NbFrame, false) + positionOffsets[(int) HumanBodyBones.Hips]);
+                SetRotation(animator, HumanBodyBones.Hips, bvh.GetReceivedPosition("Hips", NbFrame, true));
             }
 
             // apply positions
@@ -213,279 +213,279 @@ namespace CERV.MouvementRecognition.Animations
             {
                 // legs
                 SetPosition(animator, HumanBodyBones.RightUpperLeg,
-                    bvh.GetReceivedPosition("RightUpLeg", nbFrame, false) +
+                    bvh.GetReceivedPosition("RightUpLeg", NbFrame, false) +
                     positionOffsets[(int) HumanBodyBones.RightUpperLeg]);
                 SetPosition(animator, HumanBodyBones.RightLowerLeg,
-                    bvh.GetReceivedPosition("RightLeg", nbFrame, false));
-                SetPosition(animator, HumanBodyBones.RightFoot, bvh.GetReceivedPosition("RightFoot", nbFrame, false));
+                    bvh.GetReceivedPosition("RightLeg", NbFrame, false));
+                SetPosition(animator, HumanBodyBones.RightFoot, bvh.GetReceivedPosition("RightFoot", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftUpperLeg,
-                    bvh.GetReceivedPosition("LeftUpLeg", nbFrame, false) +
+                    bvh.GetReceivedPosition("LeftUpLeg", NbFrame, false) +
                     positionOffsets[(int) HumanBodyBones.LeftUpperLeg]);
-                SetPosition(animator, HumanBodyBones.LeftLowerLeg, bvh.GetReceivedPosition("LeftLeg", nbFrame, false));
-                SetPosition(animator, HumanBodyBones.LeftFoot, bvh.GetReceivedPosition("LeftFoot", nbFrame, false));
+                SetPosition(animator, HumanBodyBones.LeftLowerLeg, bvh.GetReceivedPosition("LeftLeg", NbFrame, false));
+                SetPosition(animator, HumanBodyBones.LeftFoot, bvh.GetReceivedPosition("LeftFoot", NbFrame, false));
 
                 // spine
-                SetPosition(animator, HumanBodyBones.Spine, bvh.GetReceivedPosition("Spine", nbFrame, false));
+                SetPosition(animator, HumanBodyBones.Spine, bvh.GetReceivedPosition("Spine", NbFrame, false));
                 if (UseNewRig)
                 {
                     SetPosition(animator, HumanBodyBones.Chest,
-                        bvh.GetReceivedPosition("Spine1", nbFrame, false)
+                        bvh.GetReceivedPosition("Spine1", NbFrame, false)
                     );
 #if UNITY_2018_2_OR_NEWER
                     SetPosition(animator, HumanBodyBones.UpperChest,
-                        bvh.GetReceivedPosition("Spine2", nbFrame, false)
+                        bvh.GetReceivedPosition("Spine2", NbFrame, false)
                     );
 #endif
                     SetPosition(animator, HumanBodyBones.Neck,
-                        bvh.GetReceivedPosition("Neck", nbFrame, false) +
-                        (EulerToQuaternion(bvh.GetReceivedPosition("Neck", nbFrame, false)) *
-                         bvh.GetReceivedPosition("Neck1", nbFrame, false))
+                        bvh.GetReceivedPosition("Neck", NbFrame, false) +
+                        (EulerToQuaternion(bvh.GetReceivedPosition("Neck", NbFrame, false)) *
+                         bvh.GetReceivedPosition("Neck1", NbFrame, false))
                     );
                 }
                 else
                 {
-                    SetPosition(animator, HumanBodyBones.Chest, bvh.GetReceivedPosition("Spin3", nbFrame, false));
-                    SetPosition(animator, HumanBodyBones.Neck, bvh.GetReceivedPosition("Neck", nbFrame, false));
+                    SetPosition(animator, HumanBodyBones.Chest, bvh.GetReceivedPosition("Spin3", NbFrame, false));
+                    SetPosition(animator, HumanBodyBones.Neck, bvh.GetReceivedPosition("Neck", NbFrame, false));
                 }
 
-                SetPosition(animator, HumanBodyBones.Head, bvh.GetReceivedPosition("Head", nbFrame, false));
+                SetPosition(animator, HumanBodyBones.Head, bvh.GetReceivedPosition("Head", NbFrame, false));
 
                 // right arm
                 SetPosition(animator, HumanBodyBones.RightShoulder,
-                    bvh.GetReceivedPosition("RightShoulder", nbFrame, false));
+                    bvh.GetReceivedPosition("RightShoulder", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.RightUpperArm,
-                    bvh.GetReceivedPosition("RightArm", nbFrame, false));
+                    bvh.GetReceivedPosition("RightArm", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.RightLowerArm,
-                    bvh.GetReceivedPosition("RightForeArm", nbFrame, false));
+                    bvh.GetReceivedPosition("RightForeArm", NbFrame, false));
 
                 // right hand
-                SetPosition(animator, HumanBodyBones.RightHand, bvh.GetReceivedPosition("RightHand", nbFrame, false));
+                SetPosition(animator, HumanBodyBones.RightHand, bvh.GetReceivedPosition("RightHand", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.RightThumbProximal,
-                    bvh.GetReceivedPosition("RightHandThumb1", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandThumb1", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.RightThumbIntermediate,
-                    bvh.GetReceivedPosition("RightHandThumb2", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandThumb2", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.RightThumbDistal,
-                    bvh.GetReceivedPosition("RightHandThumb3", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandThumb3", NbFrame, false));
 
                 SetPosition(animator, HumanBodyBones.RightIndexProximal,
-                    bvh.GetReceivedPosition("RightHandIndex1", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandIndex1", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.RightIndexIntermediate,
-                    bvh.GetReceivedPosition("RightHandIndex2", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandIndex2", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.RightIndexDistal,
-                    bvh.GetReceivedPosition("RightHandIndex3", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandIndex3", NbFrame, false));
 
                 SetPosition(animator, HumanBodyBones.RightMiddleProximal,
-                    bvh.GetReceivedPosition("RightHandMiddle1", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandMiddle1", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.RightMiddleIntermediate,
-                    bvh.GetReceivedPosition("RightHandMiddle2", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandMiddle2", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.RightMiddleDistal,
-                    bvh.GetReceivedPosition("RightHandMiddle3", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandMiddle3", NbFrame, false));
 
                 SetPosition(animator, HumanBodyBones.RightRingProximal,
-                    bvh.GetReceivedPosition("RightHandRing1", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandRing1", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.RightRingIntermediate,
-                    bvh.GetReceivedPosition("RightHandRing2", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandRing2", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.RightRingDistal,
-                    bvh.GetReceivedPosition("RightHandRing3", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandRing3", NbFrame, false));
 
                 SetPosition(animator, HumanBodyBones.RightLittleProximal,
-                    bvh.GetReceivedPosition("RightHandPinky1", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandPinky1", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.RightLittleIntermediate,
-                    bvh.GetReceivedPosition("RightHandPinky2", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandPinky2", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.RightLittleDistal,
-                    bvh.GetReceivedPosition("RightHandPinky3", nbFrame, false));
+                    bvh.GetReceivedPosition("RightHandPinky3", NbFrame, false));
 
                 // left arm
                 SetPosition(animator, HumanBodyBones.LeftShoulder,
-                    bvh.GetReceivedPosition("LeftShoulder", nbFrame, false));
-                SetPosition(animator, HumanBodyBones.LeftUpperArm, bvh.GetReceivedPosition("LeftArm", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftShoulder", NbFrame, false));
+                SetPosition(animator, HumanBodyBones.LeftUpperArm, bvh.GetReceivedPosition("LeftArm", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftLowerArm,
-                    bvh.GetReceivedPosition("LeftForeArm", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftForeArm", NbFrame, false));
 
                 // left hand
-                SetPosition(animator, HumanBodyBones.LeftHand, bvh.GetReceivedPosition("LeftHand", nbFrame, false));
+                SetPosition(animator, HumanBodyBones.LeftHand, bvh.GetReceivedPosition("LeftHand", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftThumbProximal,
-                    bvh.GetReceivedPosition("LeftHandThumb1", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandThumb1", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftThumbIntermediate,
-                    bvh.GetReceivedPosition("LeftHandThumb2", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandThumb2", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftThumbDistal,
-                    bvh.GetReceivedPosition("LeftHandThumb3", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandThumb3", NbFrame, false));
 
                 SetPosition(animator, HumanBodyBones.LeftIndexProximal,
-                    bvh.GetReceivedPosition("LeftHandIndex1", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandIndex1", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftIndexIntermediate,
-                    bvh.GetReceivedPosition("LeftHandIndex2", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandIndex2", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftIndexDistal,
-                    bvh.GetReceivedPosition("LeftHandIndex3", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandIndex3", NbFrame, false));
 
                 SetPosition(animator, HumanBodyBones.LeftMiddleProximal,
-                    bvh.GetReceivedPosition("LeftHandMiddle1", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandMiddle1", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftMiddleIntermediate,
-                    bvh.GetReceivedPosition("LeftHandMiddle2", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandMiddle2", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftMiddleDistal,
-                    bvh.GetReceivedPosition("LeftHandMiddle3", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandMiddle3", NbFrame, false));
 
                 SetPosition(animator, HumanBodyBones.LeftRingProximal,
-                    bvh.GetReceivedPosition("LeftHandRing1", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandRing1", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftRingIntermediate,
-                    bvh.GetReceivedPosition("LeftHandRing2", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandRing2", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftRingDistal,
-                    bvh.GetReceivedPosition("LeftHandRing3", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandRing3", NbFrame, false));
 
                 SetPosition(animator, HumanBodyBones.LeftLittleProximal,
-                    bvh.GetReceivedPosition("LeftHandPinky1", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandPinky1", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftLittleIntermediate,
-                    bvh.GetReceivedPosition("LeftHandPinky2", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandPinky2", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftLittleDistal,
-                    bvh.GetReceivedPosition("LeftHandPinky3", nbFrame, false));
+                    bvh.GetReceivedPosition("LeftHandPinky3", NbFrame, false));
             }
 
             // apply rotations
 
             // legs
-            SetRotation(animator, HumanBodyBones.RightUpperLeg, bvh.GetReceivedPosition("RightUpLeg", nbFrame, true));
-            SetRotation(animator, HumanBodyBones.RightLowerLeg, bvh.GetReceivedPosition("RightLeg", nbFrame, true));
-            SetRotation(animator, HumanBodyBones.RightFoot, bvh.GetReceivedPosition("RightFoot", nbFrame, true));
-            SetRotation(animator, HumanBodyBones.LeftUpperLeg, bvh.GetReceivedPosition("LeftUpLeg", nbFrame, true));
-            SetRotation(animator, HumanBodyBones.LeftLowerLeg, bvh.GetReceivedPosition("LeftLeg", nbFrame, true));
-            SetRotation(animator, HumanBodyBones.LeftFoot, bvh.GetReceivedPosition("LeftFoot", nbFrame, true));
+            SetRotation(animator, HumanBodyBones.RightUpperLeg, bvh.GetReceivedPosition("RightUpLeg", NbFrame, true));
+            SetRotation(animator, HumanBodyBones.RightLowerLeg, bvh.GetReceivedPosition("RightLeg", NbFrame, true));
+            SetRotation(animator, HumanBodyBones.RightFoot, bvh.GetReceivedPosition("RightFoot", NbFrame, true));
+            SetRotation(animator, HumanBodyBones.LeftUpperLeg, bvh.GetReceivedPosition("LeftUpLeg", NbFrame, true));
+            SetRotation(animator, HumanBodyBones.LeftLowerLeg, bvh.GetReceivedPosition("LeftLeg", NbFrame, true));
+            SetRotation(animator, HumanBodyBones.LeftFoot, bvh.GetReceivedPosition("LeftFoot", NbFrame, true));
 
             // spine
-            SetRotation(animator, HumanBodyBones.Spine, bvh.GetReceivedPosition("Spine", nbFrame, true));
+            SetRotation(animator, HumanBodyBones.Spine, bvh.GetReceivedPosition("Spine", NbFrame, true));
             //SetRotation( animator, HumanBodyBones.Chest,					actor.GetReceivedRotation( NeuronBones.Spine1 ) + actor.GetReceivedRotation( NeuronBones.Spine2 ) + actor.GetReceivedRotation( NeuronBones.Spine3 ) );
             if (UseNewRig)
             {
                 SetRotation(animator, HumanBodyBones.Chest,
-                    (EulerToQuaternion(bvh.GetReceivedPosition("Spine1", nbFrame, true)) *
-                     EulerToQuaternion(bvh.GetReceivedPosition("Spine2", nbFrame, true))).eulerAngles
+                    (EulerToQuaternion(bvh.GetReceivedPosition("Spine1", NbFrame, true)) *
+                     EulerToQuaternion(bvh.GetReceivedPosition("Spine2", NbFrame, true))).eulerAngles
                 );
 
                 SetRotation(animator, HumanBodyBones.Neck,
-                    (EulerToQuaternion(bvh.GetReceivedPosition("Neck", nbFrame, true)) *
-                     EulerToQuaternion(bvh.GetReceivedPosition("Neck1", nbFrame, true))).eulerAngles
+                    (EulerToQuaternion(bvh.GetReceivedPosition("Neck", NbFrame, true)) *
+                     EulerToQuaternion(bvh.GetReceivedPosition("Neck1", NbFrame, true))).eulerAngles
                 );
             }
             else
             {
                 SetRotation(animator, HumanBodyBones.Chest,
-                    (EulerToQuaternion(bvh.GetReceivedPosition("Spine1", nbFrame, true)) *
-                     EulerToQuaternion(bvh.GetReceivedPosition("Spine2", nbFrame, true)) *
-                     EulerToQuaternion(bvh.GetReceivedPosition("Spine3", nbFrame, true))).eulerAngles
+                    (EulerToQuaternion(bvh.GetReceivedPosition("Spine1", NbFrame, true)) *
+                     EulerToQuaternion(bvh.GetReceivedPosition("Spine2", NbFrame, true)) *
+                     EulerToQuaternion(bvh.GetReceivedPosition("Spine3", NbFrame, true))).eulerAngles
                 );
-                SetRotation(animator, HumanBodyBones.Neck, bvh.GetReceivedPosition("Neck", nbFrame, true));
+                SetRotation(animator, HumanBodyBones.Neck, bvh.GetReceivedPosition("Neck", NbFrame, true));
             }
 
-            SetRotation(animator, HumanBodyBones.Head, bvh.GetReceivedPosition("Head", nbFrame, true));
+            SetRotation(animator, HumanBodyBones.Head, bvh.GetReceivedPosition("Head", NbFrame, true));
 
             // right arm
             SetRotation(animator, HumanBodyBones.RightShoulder,
-                bvh.GetReceivedPosition("RightShoulder", nbFrame, true));
-            SetRotation(animator, HumanBodyBones.RightUpperArm, bvh.GetReceivedPosition("RightArm", nbFrame, true));
-            SetRotation(animator, HumanBodyBones.RightLowerArm, bvh.GetReceivedPosition("RightForeArm", nbFrame, true));
+                bvh.GetReceivedPosition("RightShoulder", NbFrame, true));
+            SetRotation(animator, HumanBodyBones.RightUpperArm, bvh.GetReceivedPosition("RightArm", NbFrame, true));
+            SetRotation(animator, HumanBodyBones.RightLowerArm, bvh.GetReceivedPosition("RightForeArm", NbFrame, true));
 
             // right hand
-            SetRotation(animator, HumanBodyBones.RightHand, bvh.GetReceivedPosition("RightHand", nbFrame, true));
+            SetRotation(animator, HumanBodyBones.RightHand, bvh.GetReceivedPosition("RightHand", NbFrame, true));
             SetRotation(animator, HumanBodyBones.RightThumbProximal,
-                bvh.GetReceivedPosition("RightHandThumb1", nbFrame, true));
+                bvh.GetReceivedPosition("RightHandThumb1", NbFrame, true));
             SetRotation(animator, HumanBodyBones.RightThumbIntermediate,
-                bvh.GetReceivedPosition("RightHandThumb2", nbFrame, true));
+                bvh.GetReceivedPosition("RightHandThumb2", NbFrame, true));
             SetRotation(animator, HumanBodyBones.RightThumbDistal,
-                bvh.GetReceivedPosition("RightHandThumb3", nbFrame, true));
+                bvh.GetReceivedPosition("RightHandThumb3", NbFrame, true));
 
             //SetRotation( animator, HumanBodyBones.RightIndexProximal,		actor.GetReceivedRotation( NeuronBones.RightHandIndex1 ) + actor.GetReceivedRotation( NeuronBones.RightInHandIndex ) );
             SetRotation(animator, HumanBodyBones.RightIndexProximal,
-                (EulerToQuaternion(bvh.GetReceivedPosition("RightInHandIndex", nbFrame, true)) * //
-                 EulerToQuaternion(bvh.GetReceivedPosition("RightHandIndex1", nbFrame, true))).eulerAngles //
+                (EulerToQuaternion(bvh.GetReceivedPosition("RightInHandIndex", NbFrame, true)) * //
+                 EulerToQuaternion(bvh.GetReceivedPosition("RightHandIndex1", NbFrame, true))).eulerAngles //
             );
             SetRotation(animator, HumanBodyBones.RightIndexIntermediate,
-                bvh.GetReceivedPosition("RightHandIndex2", nbFrame, true));
+                bvh.GetReceivedPosition("RightHandIndex2", NbFrame, true));
             SetRotation(animator, HumanBodyBones.RightIndexDistal,
-                bvh.GetReceivedPosition("RightHandIndex3", nbFrame, true));
+                bvh.GetReceivedPosition("RightHandIndex3", NbFrame, true));
 
             //SetRotation( animator, HumanBodyBones.RightMiddleProximal,		actor.GetReceivedRotation( NeuronBones.RightHandMiddle1 ) + actor.GetReceivedRotation( NeuronBones.RightInHandMiddle ) );
             SetRotation(animator, HumanBodyBones.RightMiddleProximal,
-                (EulerToQuaternion(bvh.GetReceivedPosition("RightInHandMiddle", nbFrame, true)) * //
-                 EulerToQuaternion(bvh.GetReceivedPosition("RightHandMiddle1", nbFrame, true))).eulerAngles //
+                (EulerToQuaternion(bvh.GetReceivedPosition("RightInHandMiddle", NbFrame, true)) * //
+                 EulerToQuaternion(bvh.GetReceivedPosition("RightHandMiddle1", NbFrame, true))).eulerAngles //
             );
             SetRotation(animator, HumanBodyBones.RightMiddleIntermediate,
-                bvh.GetReceivedPosition("RightHandMiddle2", nbFrame, true));
+                bvh.GetReceivedPosition("RightHandMiddle2", NbFrame, true));
             SetRotation(animator, HumanBodyBones.RightMiddleDistal,
-                bvh.GetReceivedPosition("RightHandMiddle3", nbFrame, true));
+                bvh.GetReceivedPosition("RightHandMiddle3", NbFrame, true));
 
             //SetRotation( animator, HumanBodyBones.RightRingProximal,		actor.GetReceivedRotation( NeuronBones.RightHandRing1 ) + actor.GetReceivedRotation( NeuronBones.RightInHandRing ) );
             SetRotation(animator, HumanBodyBones.RightRingProximal,
-                (EulerToQuaternion(bvh.GetReceivedPosition("RightInHandRing", nbFrame, true)) * //
-                 EulerToQuaternion(bvh.GetReceivedPosition("RightHandRing1", nbFrame, true))).eulerAngles //
+                (EulerToQuaternion(bvh.GetReceivedPosition("RightInHandRing", NbFrame, true)) * //
+                 EulerToQuaternion(bvh.GetReceivedPosition("RightHandRing1", NbFrame, true))).eulerAngles //
             );
             SetRotation(animator, HumanBodyBones.RightRingIntermediate,
-                bvh.GetReceivedPosition("RightHandRing2", nbFrame, true));
+                bvh.GetReceivedPosition("RightHandRing2", NbFrame, true));
             SetRotation(animator, HumanBodyBones.RightRingDistal,
-                bvh.GetReceivedPosition("RightHandRing3", nbFrame, true));
+                bvh.GetReceivedPosition("RightHandRing3", NbFrame, true));
 
             //SetRotation( animator, HumanBodyBones.RightLittleProximal,		actor.GetReceivedRotation( NeuronBones.RightHandPinky1 ) + actor.GetReceivedRotation( NeuronBones.RightInHandPinky ) );
             SetRotation(animator, HumanBodyBones.RightLittleProximal,
-                (EulerToQuaternion(bvh.GetReceivedPosition("RightInHandPinky", nbFrame, true)) * //
-                 EulerToQuaternion(bvh.GetReceivedPosition("RightHandPinky1", nbFrame, true))).eulerAngles //
+                (EulerToQuaternion(bvh.GetReceivedPosition("RightInHandPinky", NbFrame, true)) * //
+                 EulerToQuaternion(bvh.GetReceivedPosition("RightHandPinky1", NbFrame, true))).eulerAngles //
             );
             SetRotation(animator, HumanBodyBones.RightLittleIntermediate,
-                bvh.GetReceivedPosition("RightHandPinky2", nbFrame, true));
+                bvh.GetReceivedPosition("RightHandPinky2", NbFrame, true));
             SetRotation(animator, HumanBodyBones.RightLittleDistal,
-                bvh.GetReceivedPosition("RightHandPinky3", nbFrame, true));
+                bvh.GetReceivedPosition("RightHandPinky3", NbFrame, true));
 
             // left arm
-            SetRotation(animator, HumanBodyBones.LeftShoulder, bvh.GetReceivedPosition("LeftShoulder", nbFrame, true));
-            SetRotation(animator, HumanBodyBones.LeftUpperArm, bvh.GetReceivedPosition("LeftArm", nbFrame, true)); //
+            SetRotation(animator, HumanBodyBones.LeftShoulder, bvh.GetReceivedPosition("LeftShoulder", NbFrame, true));
+            SetRotation(animator, HumanBodyBones.LeftUpperArm, bvh.GetReceivedPosition("LeftArm", NbFrame, true)); //
             SetRotation(animator, HumanBodyBones.LeftLowerArm,
-                bvh.GetReceivedPosition("LeftForeArm", nbFrame, true)); //
+                bvh.GetReceivedPosition("LeftForeArm", NbFrame, true)); //
 
             // left hand
-            SetRotation(animator, HumanBodyBones.LeftHand, bvh.GetReceivedPosition("LeftHand", nbFrame, true));
+            SetRotation(animator, HumanBodyBones.LeftHand, bvh.GetReceivedPosition("LeftHand", NbFrame, true));
             SetRotation(animator, HumanBodyBones.LeftThumbProximal,
-                bvh.GetReceivedPosition("LeftHandThumb1", nbFrame, true)); //
+                bvh.GetReceivedPosition("LeftHandThumb1", NbFrame, true)); //
             SetRotation(animator, HumanBodyBones.LeftThumbIntermediate,
-                bvh.GetReceivedPosition("LeftHandThumb2", nbFrame, true));
+                bvh.GetReceivedPosition("LeftHandThumb2", NbFrame, true));
             SetRotation(animator, HumanBodyBones.LeftThumbDistal,
-                bvh.GetReceivedPosition("LeftHandThumb3", nbFrame, true));
+                bvh.GetReceivedPosition("LeftHandThumb3", NbFrame, true));
 
             //SetRotation( animator, HumanBodyBones.LeftIndexProximal,		actor.GetReceivedRotation( NeuronBones.LeftHandIndex1 ) + actor.GetReceivedRotation( NeuronBones.LeftInHandIndex ) );
             SetRotation(animator, HumanBodyBones.LeftIndexProximal,
-                (EulerToQuaternion(bvh.GetReceivedPosition("LeftInHandIndex", nbFrame, true)) * //
-                 EulerToQuaternion(bvh.GetReceivedPosition("LeftHandIndex1", nbFrame, true))).eulerAngles //
+                (EulerToQuaternion(bvh.GetReceivedPosition("LeftInHandIndex", NbFrame, true)) * //
+                 EulerToQuaternion(bvh.GetReceivedPosition("LeftHandIndex1", NbFrame, true))).eulerAngles //
             );
             SetRotation(animator, HumanBodyBones.LeftIndexIntermediate,
-                bvh.GetReceivedPosition("LeftHandIndex2", nbFrame, true));
+                bvh.GetReceivedPosition("LeftHandIndex2", NbFrame, true));
             SetRotation(animator, HumanBodyBones.LeftIndexDistal,
-                bvh.GetReceivedPosition("LeftHandIndex3", nbFrame, true));
+                bvh.GetReceivedPosition("LeftHandIndex3", NbFrame, true));
 
             //SetRotation( animator, HumanBodyBones.LeftMiddleProximal,		actor.GetReceivedRotation( NeuronBones.LeftHandMiddle1 ) + actor.GetReceivedRotation( NeuronBones.LeftInHandMiddle ) );
             SetRotation(animator, HumanBodyBones.LeftMiddleProximal,
-                (EulerToQuaternion(bvh.GetReceivedPosition("LeftInHandMiddle", nbFrame, true)) * //
-                 EulerToQuaternion(bvh.GetReceivedPosition("LeftHandMiddle1", nbFrame, true))).eulerAngles //
+                (EulerToQuaternion(bvh.GetReceivedPosition("LeftInHandMiddle", NbFrame, true)) * //
+                 EulerToQuaternion(bvh.GetReceivedPosition("LeftHandMiddle1", NbFrame, true))).eulerAngles //
             );
             SetRotation(animator, HumanBodyBones.LeftMiddleIntermediate,
-                bvh.GetReceivedPosition("LeftHandMiddle2", nbFrame, true));
+                bvh.GetReceivedPosition("LeftHandMiddle2", NbFrame, true));
             SetRotation(animator, HumanBodyBones.LeftMiddleDistal,
-                bvh.GetReceivedPosition("LeftHandMiddle3", nbFrame, true));
+                bvh.GetReceivedPosition("LeftHandMiddle3", NbFrame, true));
 
             //SetRotation( animator, HumanBodyBones.LeftRingProximal,			actor.GetReceivedRotation( NeuronBones.LeftHandRing1 ) + actor.GetReceivedRotation( NeuronBones.LeftInHandRing ) );
             SetRotation(animator, HumanBodyBones.LeftRingProximal,
-                (EulerToQuaternion(bvh.GetReceivedPosition("LeftInHandRing", nbFrame, true)) * //
-                 EulerToQuaternion(bvh.GetReceivedPosition("LeftHandRing1", nbFrame, true))).eulerAngles //
+                (EulerToQuaternion(bvh.GetReceivedPosition("LeftInHandRing", NbFrame, true)) * //
+                 EulerToQuaternion(bvh.GetReceivedPosition("LeftHandRing1", NbFrame, true))).eulerAngles //
             );
             SetRotation(animator, HumanBodyBones.LeftRingIntermediate,
-                bvh.GetReceivedPosition("LeftHandRing2", nbFrame, true));
+                bvh.GetReceivedPosition("LeftHandRing2", NbFrame, true));
             SetRotation(animator, HumanBodyBones.LeftRingDistal,
-                bvh.GetReceivedPosition("LeftHandRing3", nbFrame, true));
+                bvh.GetReceivedPosition("LeftHandRing3", NbFrame, true));
 
             //SetRotation( animator, HumanBodyBones.LeftLittleProximal,		actor.GetReceivedRotation( NeuronBones.LeftHandPinky1 ) + actor.GetReceivedRotation( NeuronBones.LeftInHandPinky ) );
             SetRotation(animator, HumanBodyBones.LeftLittleProximal,
-                (EulerToQuaternion(bvh.GetReceivedPosition("LeftInHandPinky", nbFrame, true)) * //
-                 EulerToQuaternion(bvh.GetReceivedPosition("LeftHandPinky1", nbFrame, true))).eulerAngles //
+                (EulerToQuaternion(bvh.GetReceivedPosition("LeftInHandPinky", NbFrame, true)) * //
+                 EulerToQuaternion(bvh.GetReceivedPosition("LeftHandPinky1", NbFrame, true))).eulerAngles //
             );
             SetRotation(animator, HumanBodyBones.LeftLittleIntermediate,
-                bvh.GetReceivedPosition("LeftHandPinky2", nbFrame, true));
+                bvh.GetReceivedPosition("LeftHandPinky2", NbFrame, true));
             SetRotation(animator, HumanBodyBones.LeftLittleDistal,
-                bvh.GetReceivedPosition("LeftHandPinky3", nbFrame, true));
+                bvh.GetReceivedPosition("LeftHandPinky3", NbFrame, true));
         }
 
         private static Quaternion EulerToQuaternion(Vector3 euler)
