@@ -2534,7 +2534,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 446666175}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.015, y: 0.96619004, z: -0.143}
+  m_LocalPosition: {x: 0, y: 0.96619004, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 446171613}
@@ -3704,7 +3704,7 @@ MonoBehaviour:
   UseNewRig: 1
   BoundAnimator: {fileID: 0}
   MotionUpdateMethod: 0
-  EnableHipsMovement: 1
+  EnableHipsMovement: 0
   PhysicalReferenceOverride: {fileID: 0}
   VelocityMagic: 3000
   AngularVelocityMagic: 20
@@ -9553,7 +9553,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2113966332}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 90
   m_WholeNumbers: 0
   m_Value: 30
   m_OnValueChanged:
@@ -14660,7 +14660,7 @@ MonoBehaviour:
   useNewRig: 1
   boundAnimator: {fileID: 0}
   motionUpdateMethod: 0
-  enableHipsMovement: 1
+  enableHipsMovement: 0
   physicalReferenceOverride: {fileID: 0}
   velocityMagic: 3000
   angularVelocityMagic: 20
@@ -15906,7 +15906,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1341300156}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.01, y: 0.000000007450581, z: 4.76}
+  m_LocalPosition: {x: 5.186, y: 0.000000007450581, z: 4.744}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1341456396}

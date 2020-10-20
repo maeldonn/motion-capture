@@ -121,18 +121,21 @@ namespace CERV.MouvementRecognition.Recognition
             {
                 if (mvtLaunched)
                 {
-                    CheckIfMvtIsRight(deltaTime);
+                    // Ghost au même endroit que character
+                    characterExample.transform.position = player.transform.position;
+                    characterExample.transform.rotation = player.transform.rotation;
+
+                    if (characterExample.activeSelf == false) characterExample.SetActive(true);
+                    mvtLaunched = CheckIfMvtIsRight(deltaTime);
+                    if (characterExample != null)
+                        characterExample.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame = nbFrame; //If a character is set, then animate him.
                 }
                 else
                 {
                     CheckBeginningMvt(deltaTime);
+                    if (characterExample.activeSelf == true) characterExample.SetActive(false);
                 }
-
-                if (characterExample != null)
-                    characterExample.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame = nbFrame; //If a character is set, then animate him.
             }
-
-            // CheckMultipleMovementsMethode4(deltaTime);
         }
 
         /// <summary>
