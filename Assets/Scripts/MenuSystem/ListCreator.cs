@@ -19,7 +19,7 @@ namespace CERV.MouvementRecognition.Menus
 
         [SerializeField] private Store store = null;
 
-        [SerializeField] private GameManager Gm = null;
+        [SerializeField] private GameManager gameManager = null;
 
         private string[] itemNames = null;
         private string[] itemPaths = null;
@@ -72,7 +72,7 @@ namespace CERV.MouvementRecognition.Menus
         {
             menu.GetComponent<MenuManager>().SetCurrentWithHistory(panel);
             store.Path = path;
-            Gm.mvtRecognition.InitiateValuesBvh();
+            gameManager.mvtRecognition.InitiateValuesBvh();
         }
 
         public void removeItems()

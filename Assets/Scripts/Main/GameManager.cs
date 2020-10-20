@@ -38,6 +38,7 @@ namespace CERV.MouvementRecognition.Main
         // Start is called before the first frame update
         void Start()
         {
+            // TODO: Supprimer ça
             mvtRecognition = new MvtRecognition(Player, CharacterExample, UiHips, Store, NbFirstMvtToCheck);
             mvtRecognition.InitActor();
             mvtRecognition.InitMvtSet();
@@ -48,6 +49,7 @@ namespace CERV.MouvementRecognition.Main
         // Update is called once per frame
         void Update()
         {
+            // TODO: Supprimer ça
             pointingHandler.UpdateUserInputs();
             mvtRecognition.UpdateMvtRecognition();
         }
