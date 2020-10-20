@@ -75,7 +75,6 @@ namespace CERV.MouvementRecognition.Menus
         public void ChangeMarginValueWithSlider()
         {
             store.Margin = (int)slider.value;
-            Debug.Log(store.Margin);
         }
     }
 }

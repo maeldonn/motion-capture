@@ -121,13 +121,16 @@ namespace CERV.MouvementRecognition.Animations
 
         private void Update()
         {
+            // TODO: Update this line
+            bvh = store.Bvh;
+
             if (BoundAnimator != null && MotionUpdateMethod == UpdateMethod.Normal)
             {
                 if (PhysicalReference.Initiated())
                 {
                     ReleasePhysicalContext();
                 }
-                if(bvh!=null) ApplyMotion(BoundAnimator, bonePositionOffsets, boneRotationOffsets);
+                if (bvh != null) ApplyMotion(BoundAnimator, bonePositionOffsets, boneRotationOffsets);
             }
         }
 
@@ -148,7 +151,6 @@ namespace CERV.MouvementRecognition.Animations
         private void Start()
         {
             NbFrame = 0;
-            bvh = store.Bvh;
         }
 
         // set position for bone in animator
