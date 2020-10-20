@@ -41,6 +41,7 @@ namespace CERV.MouvementRecognition.Main
             // TODO: Supprimer ça
             mvtRecognition = new MvtRecognition(Player, CharacterExample, UiHips, Store, NbFirstMvtToCheck);
             mvtRecognition.InitActor();
+            mvtRecognition.InitMvtSet();
             pointingHandler = new PointingHandler(Player, DegreeOfMarginPointing, DegreeOfMarginValidating, LineMenu, LeftHand, ClipConfirm, ClipPointing, mvtRecognition);
             pointingHandler.InitPointingHandler();
         }
