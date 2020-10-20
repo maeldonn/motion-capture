@@ -51,8 +51,8 @@ namespace CERV.MouvementRecognition.Interactions
     /// </remarks>
     public class PointingHandler
     {
-        Bvh idlePointing = null;
-        Bvh BVHactivating = null;
+        BvhProperties idlePointing = null;
+        BvhProperties BVHactivating = null;
 
         [SerializeField] private GameObject player = null;
 
@@ -103,8 +103,8 @@ namespace CERV.MouvementRecognition.Interactions
             }
 
             if (mvtRecognition.LaunchComparison(
-                idlePointing.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0]
-                    .Children[0], idlePointing, degreeOfMarginPointing, new[] {"Thumb"}, 0))
+                idlePointing.Bvh.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0].Children[0]
+                    .Children[0], idlePointing, degreeOfMarginPointing, 0))
             {
                 if (statePointing == simpleStateMachine.Idle)
                 {
@@ -145,9 +145,9 @@ namespace CERV.MouvementRecognition.Interactions
             {
                 case simpleStateMachine.Idle:
                     if (mvtRecognition.LaunchComparison(
-                        BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0]
+                        BVHactivating.Bvh.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0]
                             .Children[0].Children[0].Children[0], BVHactivating, degreeOfMarginValidating,
-                        new string[0], 1))
+                        1))
                     {
                         SoundManager.PlaySound(clipConfirm,
                             leftHand.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform
@@ -164,9 +164,9 @@ namespace CERV.MouvementRecognition.Interactions
 
                 case simpleStateMachine.IdleAction:
                     if (mvtRecognition.LaunchComparison(
-                        BVHactivating.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0]
+                        BVHactivating.Bvh.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0]
                             .Children[0].Children[0].Children[0], BVHactivating, degreeOfMarginValidating,
-                        new string[0], 0))
+                         0))
                     {
                         stateConfirm = simpleStateMachine.Idle;
                         lineMenu.endColor = Color.white;
@@ -183,8 +183,8 @@ namespace CERV.MouvementRecognition.Interactions
         /// </summary>
         public void InitPointingHandler()
         {
-            idlePointing = new Bvh().GetBvhFromPath("Assets/BVH/Pointer/pointeur_3.bvh");
-            BVHactivating = new Bvh().GetBvhFromPath("Assets/BVH/Pointer/pointeur_2.bvh");
+            idlePointing = new BvhProperties("Assets/BVH/Pointer/pointeur_3.bvh", "pointeur_3");
+            BVHactivating = new BvhProperties("Assets/BVH/Pointer/pointeur_2.bvh", "pointeur_2");
         }
 
         /// <summary>

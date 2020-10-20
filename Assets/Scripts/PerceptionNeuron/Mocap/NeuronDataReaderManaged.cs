@@ -161,7 +161,7 @@ namespace NeuronDataReaderManaged
                 }
                 catch (Exception ex)
                 {
-                    Debug.Log("thread will stop in next fame: \r\n" + ex.StackTrace);
+                    Debug.LogError("thread will stop in next fame: \r\n" + ex.StackTrace);
                 }
 
                 if (reserveBuffer == null)
