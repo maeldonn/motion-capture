@@ -13,6 +13,7 @@ namespace CERV.MouvementRecognition.Main
         public GameObject CharacterExample = null;
         public GameObject UiHips = null;
         public int NbFirstMvtToCheck = 0;
+        public int PercentageVarianceAccepted = 0;
         [Space(2)]
         [Header("Interactions:")]
         public int DegreeOfMarginPointing = 0;
@@ -39,7 +40,7 @@ namespace CERV.MouvementRecognition.Main
         void Start()
         {
             // TODO: Supprimer ça
-            mvtRecognition = new MvtRecognition(Player, CharacterExample, UiHips, Store, NbFirstMvtToCheck);
+            mvtRecognition = new MvtRecognition(Player, CharacterExample, UiHips, Store, NbFirstMvtToCheck, PercentageVarianceAccepted);
             mvtRecognition.InitActor();
             mvtRecognition.InitMvtSet();
             pointingHandler = new PointingHandler(Player, DegreeOfMarginPointing, DegreeOfMarginValidating, LineMenu, LeftHand, ClipConfirm, ClipPointing, mvtRecognition);

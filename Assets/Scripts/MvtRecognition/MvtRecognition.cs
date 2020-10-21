@@ -22,14 +22,14 @@ namespace CERV.MouvementRecognition.Recognition
         public string Name = null;
         public Dictionary<string, bool[]> ValuesToIgnore;
 
-        public BvhProperties(string path,string name)
+        public BvhProperties(string path,string name, int percentageVarianceAccepted)
         {
             this.Bvh = new Bvh().GetBvhFromPath(path);
             this.Name = name;
-            ValuesToIgnore = DetermineValuesToIgnore(Bvh);
+            ValuesToIgnore = DetermineValuesToIgnore(Bvh, percentageVarianceAccepted);
         }
 
-        public Dictionary<string, bool[]> DetermineValuesToIgnore(Bvh Bvh)
+        public Dictionary<string, bool[]> DetermineValuesToIgnore(Bvh Bvh, int percentageVarianceAccepted)
         {
             var variance = new System.Collections.Generic.List<double>();
             foreach (var node in Bvh.Root.Traverse())       //We go through all the nodes, and we calculate the variance for each angle.
@@ -58,7 +58,7 @@ namespace CERV.MouvementRecognition.Recognition
                 if (node.Name == "Hips") continue;
                 for (var i = 0; i < 3; i++)
                 {
-                    if (variance[i + tmpIndex * 3] < 0.01 * variance.Max()) returnValue[node.Name][i] = false;
+                    if (variance[i + tmpIndex * 3] < (percentageVarianceAccepted/100f) * variance.Max()) returnValue[node.Name][i] = false;
                     else returnValue[node.Name][i] = true;
                 }
 
@@ -75,7 +75,7 @@ namespace CERV.MouvementRecognition.Recognition
         public System.Collections.Generic.List<int> OldNbFrame;
         public float Score;
         
-        public MovementProperties(string path, string name) : base (path, name)
+        public MovementProperties(string path, string name, int percentageVarianceAccepted) : base (path, name, percentageVarianceAccepted)
         {
             Score = 0;
         }
@@ -147,6 +147,8 @@ namespace CERV.MouvementRecognition.Recognition
         //TODO
         private int nbFirstMvtToCheck = 0; //The number of frame needed to check if the movement is launched
 
+        private int percentageVarianceAccepted = 0;
+
         private System.Collections.Generic.List<float> tabTimePassedBetweenFrame;
         private bool mvtLaunched;
 
@@ -155,13 +157,14 @@ namespace CERV.MouvementRecognition.Recognition
         
 
         public MvtRecognition(GameObject player, GameObject characterExample, GameObject uiHips, Store store,
-            int nbFirstMvtToCheck)
+            int nbFirstMvtToCheck, int percentageVarianceAccepted)
         {
             this.player = player;
             this.characterExample = characterExample;
             this.uiHips = uiHips;
             this.store = store;
             this.nbFirstMvtToCheck = nbFirstMvtToCheck;
+            this.percentageVarianceAccepted = percentageVarianceAccepted;
         }
 
         /// <summary>
@@ -170,7 +173,6 @@ namespace CERV.MouvementRecognition.Recognition
         public void UpdateMvtRecognition()
         {
             var deltaTime = Time.deltaTime;
-            
             if (store.Mode == Mode.Training)
             {
                 if (mvtLaunched)
@@ -179,7 +181,7 @@ namespace CERV.MouvementRecognition.Recognition
                     characterExample.transform.position = player.transform.position;
                     characterExample.transform.rotation = player.transform.rotation;
 
-                    if (characterExample.activeSelf == false) characterExample.SetActive(true);
+                    if (!characterExample.activeSelf) characterExample.SetActive(true);
                     mvtLaunched = CheckIfMvtIsRight(deltaTime);
                     if (characterExample != null)
                         characterExample.GetComponent<NeuronAnimatorInstanceBVH>().NbFrame = nbFrame; //If a character is set, then animate him.
@@ -187,9 +189,17 @@ namespace CERV.MouvementRecognition.Recognition
                 else
                 {
                     CheckBeginningMvt(deltaTime);
-                    if (characterExample.activeSelf == true) characterExample.SetActive(false);
+                    if (characterExample.activeSelf) characterExample.SetActive(false);
                 }
+            }else if (store.Mode == Mode.Recognition)
+            {
+                CheckMultipleMovementsMethode4(deltaTime);
             }
+            else
+            {
+                characterExample.SetActive(false);
+            }
+
         }
 
         /// <summary>
@@ -215,7 +225,7 @@ namespace CERV.MouvementRecognition.Recognition
                 itemNames[i] = splittedPath[splittedPath.Length - 1].Split('.')[0];
             }
             for (var i = 0; i < itemPaths.Length; i++)
-                listOfMvts.Add(new MovementProperties(itemPaths[i], itemNames[i]));
+                listOfMvts.Add(new MovementProperties(itemPaths[i], itemNames[i], percentageVarianceAccepted));
         }
 
 
@@ -229,7 +239,7 @@ namespace CERV.MouvementRecognition.Recognition
             timePassedBetweenFrame = 0;
             string[] splittedPath = store.Path.Split('/');
             var nameOfBvh = splittedPath[splittedPath.Length - 1].Split('.')[0];
-            bvhProp = new BvhProperties(store.Path, nameOfBvh);
+            bvhProp = new BvhProperties(store.Path, nameOfBvh, percentageVarianceAccepted);
             InitActor();
             totalTime = (float) bvhProp.Bvh.FrameTime.TotalSeconds * bvhProp.Bvh.FrameCount;
         }
@@ -502,7 +512,8 @@ namespace CERV.MouvementRecognition.Recognition
                                         mvt.Bvh.FrameTime.TotalSeconds);
 
                         if (nbFrame % mvt.Bvh.FrameCount < (mvt.OldNbFrame[i] + 30) % mvt.Bvh.FrameCount) continue;
-                        if (!LaunchComparison(mvt.Bvh.Root, mvt, margin, nbFrame)
+                        var score = LaunchComparisonUpdated(mvt.Bvh.Root, mvt, nbFrame);
+                        if (score<0.7
                         ) //If the position of the user does not correspond to that of the frame
                         {
                             mvt.TabTimePassedBetweenFrame
@@ -513,7 +524,7 @@ namespace CERV.MouvementRecognition.Recognition
                             continue;
                         }
                         mvt.OldNbFrame[i] = nbFrame;
-                        mvt.ScoreSeq[i] = LaunchComparisonUpdated(mvt.Bvh.Root, mvt, nbFrame);
+                        mvt.ScoreSeq[i] = score;
                     }
                     if (mvt.ScoreSeq.Count > 0) mvt.Score = (float)Math.Round(mvt.ScoreSeq.Max(), 3);
                     else mvt.Score = -10f;
@@ -714,5 +725,42 @@ namespace CERV.MouvementRecognition.Recognition
             return checkValidity/(3f*i-nbIgnoredValue);
         }
 
+        /// <summary>
+        /// Compare the position of the actor and a frame of <paramref name="animationToCompare"/>. Old function, could be better idk.
+        /// </summary>
+        /// <returns>
+        /// The result of the comparison (true or false)
+        /// </returns>
+        /// <example>
+        /// <code>
+        /// if(launchComparison(bvhHand, bvh, new String[] {"Thumb"},40,23))
+        /// {
+        ///     Debug.Log("The movements of the hand are corresponding.");
+        /// }
+        /// </code>
+        /// </example>
+        /// <param name="root">The <c>BvhNode</c> from which we want to compare the movement.</param>
+        /// <param name="inputBvh">The <c>Bvh</c> which contain the movement to compare.</param>
+        /// <param name="partsToIgnore">The name of the nodes to ignore.</param>
+        /// <param name="degOfMargin">The margin angle with which the user can make the movement.</param>
+        /// <param name="frame">The index of the frame to look.</param>
+        public bool LaunchComparisonPointing(BvhNode root, Bvh inputBvh, string[] partsToIgnore, int degOfMargin,
+            int frame)
+        {
+            var bvh = inputBvh;
+            if (degOfMargin < 0) throw new ArgumentOutOfRangeException(nameof(degOfMargin));
+            foreach (var node in root.Traverse())
+            {
+                if (partsToIgnore.Any(node.Name.Contains)) continue;
+                var actorRotation = actor.GetReceivedRotation((NeuronBones) Enum.Parse(typeof(NeuronBones), node.Name));
+                for (var j = 0; j < 3; j++)
+                {
+                    if (Math.Abs(actorRotation[j] - bvh.GetReceivedPosition(node.Name, frame, true)[j]) >=
+                        degOfMargin) return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

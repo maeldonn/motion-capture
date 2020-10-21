@@ -312,7 +312,7 @@ RectTransform:
   m_GameObject: {fileID: 82684283}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 1, z: 1}
   m_Children:
   - {fileID: 6586216}
   m_Father: {fileID: 13792144}
@@ -320,7 +320,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 60.7, y: 0}
   m_SizeDelta: {x: 20, y: -17}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &82684285
@@ -3687,7 +3687,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &446665776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9496,7 +9496,7 @@ RectTransform:
   m_GameObject: {fileID: 1198935192}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 10, z: 1}
   m_Children:
   - {fileID: 1536828457}
   - {fileID: 1337076752}
@@ -14660,7 +14660,7 @@ MonoBehaviour:
   useNewRig: 1
   boundAnimator: {fileID: 0}
   motionUpdateMethod: 0
-  enableHipsMovement: 0
+  enableHipsMovement: 1
   physicalReferenceOverride: {fileID: 0}
   velocityMagic: 3000
   angularVelocityMagic: 20
@@ -18161,7 +18161,7 @@ MonoBehaviour:
   UiHips: {fileID: 6726494051009210618}
   NbFirstMvtToCheck: 100
   DegreeOfMarginPointing: 40
-  DegreeOfMarginValidating: 20
+  DegreeOfMarginValidating: 10
   LineMenu: {fileID: 991941095}
   LeftHand: {fileID: 1341299748}
   ClipConfirm: {fileID: 8300000, guid: a267526f38dfca445934f840bac7e69c, type: 3}

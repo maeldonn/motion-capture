@@ -72,6 +72,7 @@ namespace CERV.MouvementRecognition.Menus
         {
             menu.GetComponent<MenuManager>().SetCurrentWithHistory(panel);
             store.Path = path;
+            Debug.Log(store.Path);
             gameManager.mvtRecognition.InitiateValuesBvh();
         }
 
