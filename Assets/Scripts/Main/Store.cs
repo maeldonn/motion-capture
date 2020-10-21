@@ -73,5 +73,10 @@ namespace CERV.MouvementRecognition.Main
         {
             UsingArm = !UsingArm;
         }
+
+        public void changeModeToRecognition()
+        {
+            Mode = Mode.Recognition;
+        }
     }
 }
