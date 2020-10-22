@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Text;
 using Neuron;
 using UniHumanoid;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using CERV.MouvementRecognition.Recognition;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace CERV.MouvementRecognition.Interactions
 {
@@ -54,24 +59,24 @@ namespace CERV.MouvementRecognition.Interactions
         BvhProperties idlePointing = null;
         BvhProperties BVHactivating = null;
 
-        [SerializeField] private GameObject player = null;
+        private GameObject player = null;
 
-        [SerializeField] int degreeOfMarginPointing = 0;
+        int degreeOfMarginPointing = 0;
 
-        [SerializeField] int degreeOfMarginValidating = 0;
+        int degreeOfMarginValidating = 0;
 
-        [SerializeField] LineRenderer lineMenu = null;
+        LineRenderer lineMenu = null;
 
-        [SerializeField] GameObject leftHand = null;
+        GameObject leftHand = null;
 
         simpleStateMachine stateConfirm;
         simpleStateMachine statePointing;
 
-        [SerializeField] public AudioClip clipConfirm = null;
+        public AudioClip clipConfirm = null;
 
-        [SerializeField] public AudioClip clipPointing = null;
+        public AudioClip clipPointing = null;
 
-        [SerializeField] MvtRecognition mvtRecognition = null;
+        MvtRecognition mvtRecognition = null;
 
         public PointingHandler(GameObject player, int degreeOfMarginPointing, int degreeOfMarginValidating,
             LineRenderer lineMenu, GameObject leftHand, AudioClip clipConfirm, AudioClip clipPointing,
@@ -123,6 +128,87 @@ namespace CERV.MouvementRecognition.Interactions
                 statePointing = simpleStateMachine.Idle;
                 lineMenu.gameObject.SetActive(false);
             }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (mvtRecognition.RecordingScore)
+                {
+                    //ScoreContainer scoreContainer = new ScoreContainer();
+                    //foreach (var mvt in mvtRecognition.listOfMvts)
+                    //{
+                    //    scoreContainer.scoreMouvement.Add(new ScoreMvt(mvt.Name,mvt.ScoreRecorded));
+                    //}
+                    Debug.Log("XML file created at the following location: "+Path.Combine(Application.persistentDataPath, "scores.xml"));
+
+
+                    exportToCsv(mvtRecognition.listOfMvts);
+                    //scoreContainer.Save(Path.Combine(Application.persistentDataPath, "scores.xml"));
+                }
+                else
+                {
+                    foreach (var mvt in mvtRecognition.listOfMvts)
+                    {
+
+                        mvt.ClrScoreRecord();
+                    }
+                }
+                mvtRecognition.RecordingScore = !mvtRecognition.RecordingScore;
+            }
+        }
+
+        private void exportToCsv(List<MovementProperties> listMvt)
+        {
+            if (listMvt==null || listMvt.Count == 0)
+            {
+                throw new ArgumentException("There are no movement to detect!");
+            }
+            if (listMvt[0].ScoreRecorded==null || listMvt[0].ScoreRecorded.Count == 0)
+            {
+                throw new ArgumentException("Recording session too short!");
+            }
+
+            List<string[]> rowData = new List<string[]>();
+
+            // Creating First row of titles manually..
+            string[] rowDataTemp = new string[listMvt.Count];
+            for(int i=0; i<rowDataTemp.Length; i++)
+            {
+                rowDataTemp[i] = listMvt[i].Name;
+            }
+            rowData.Add(rowDataTemp);
+
+            // You can add up the values in as many cells as you want.
+            for (int i = 0; i < listMvt[0].ScoreRecorded.Count; i++)
+            {
+                rowDataTemp = new string[listMvt.Count];
+                for(int j = 0; j<listMvt.Count; j++)
+                {
+                    rowDataTemp[j] = listMvt[j].ScoreRecorded[i].ToString(CultureInfo.InvariantCulture);
+                }
+                rowData.Add(rowDataTemp);
+            }
+
+            string[][] output = new string[rowData.Count][];
+
+            for (int i = 0; i < output.Length; i++)
+            {
+                output[i] = rowData[i];
+            }
+
+            int length = output.GetLength(0);
+            string delimiter = ",";
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int index = 0; index < length; index++)
+                sb.AppendLine(string.Join(delimiter, output[index]));
+
+
+            string filePath = Path.Combine(Application.persistentDataPath, "scores.csv");
+
+            StreamWriter outStream = System.IO.File.CreateText(filePath);
+            outStream.WriteLine(sb);
+            outStream.Close();
         }
 
         /// <summary>

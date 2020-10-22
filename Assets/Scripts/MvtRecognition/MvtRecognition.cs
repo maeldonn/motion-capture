@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 using Boo.Lang;
 using CERV.MouvementRecognition.Animations;
 using CERV.MouvementRecognition.Main;
 using UniHumanoid;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
@@ -55,7 +57,11 @@ namespace CERV.MouvementRecognition.Recognition
             foreach (var node in Bvh.Root.Traverse())   //We go through all the node and angle again, this time to check if the variance of each angle is superior to 1% of the maximum variance. If not, we consider it useless in the movement recognition process.
             {
                 returnValue.Add(node.Name,new bool[3]);
-                if (node.Name == "Hips") continue;
+                if (node.Name == "Hips")
+                {
+                    //returnValue[node.Name] = new bool[3]{ false, false, false };
+                    continue;
+                }
                 for (var i = 0; i < 3; i++)
                 {
                     if (variance[i + tmpIndex * 3] < (percentageVarianceAccepted/100f) * variance.Max()) returnValue[node.Name][i] = false;
@@ -74,6 +80,7 @@ namespace CERV.MouvementRecognition.Recognition
         public System.Collections.Generic.List<float> ScoreSeq;
         public System.Collections.Generic.List<int> OldNbFrame;
         public float Score;
+        public System.Collections.Generic.List<float> ScoreRecorded;
         
         public MovementProperties(string path, string name, int percentageVarianceAccepted) : base (path, name, percentageVarianceAccepted)
         {
@@ -89,6 +96,17 @@ namespace CERV.MouvementRecognition.Recognition
             TabTimePassedBetweenFrame.Add(0f); //It adds a new element to the tabTimePassedBetweenFrame list.
             ScoreSeq.Add(0f); //TODO commentaires
             OldNbFrame.Add(0); //TODO commentaires
+        }
+
+        public void AddScoreToRecord()
+        {
+            if(ScoreRecorded==null) ScoreRecorded = new System.Collections.Generic.List<float>();
+            ScoreRecorded.Add(Score);
+        }
+
+        public void ClrScoreRecord()
+        {
+            ScoreRecorded = null;
         }
     }
 
@@ -151,8 +169,9 @@ namespace CERV.MouvementRecognition.Recognition
 
         private System.Collections.Generic.List<float> tabTimePassedBetweenFrame;
         private bool mvtLaunched;
+        public bool RecordingScore { get; set; }
 
-        private System.Collections.Generic.List<MovementProperties> listOfMvts = null;
+        public System.Collections.Generic.List<MovementProperties> listOfMvts { get; private set; }
 
         
 
@@ -172,6 +191,7 @@ namespace CERV.MouvementRecognition.Recognition
         /// </summary>
         public void UpdateMvtRecognition()
         {
+            store.Mode = Mode.Recognition;
             var deltaTime = Time.deltaTime;
             if (store.Mode == Mode.Training)
             {
@@ -482,7 +502,6 @@ namespace CERV.MouvementRecognition.Recognition
             foreach (var mvt in listOfMvts)
             {
                 var margin = store.Margin;
-                mvt.Score = 0;
 
                 if (LaunchComparison(mvt.Bvh.Root, mvt, margin, 0)
                 ) //If the user have a position corresponding to the first frame of the movement
@@ -511,11 +530,15 @@ namespace CERV.MouvementRecognition.Recognition
                                          mvt.TabTimePassedBetweenFrame[i] % mvt.Bvh.FrameTime.TotalSeconds) /
                                         mvt.Bvh.FrameTime.TotalSeconds);
 
-                        if (nbFrame % mvt.Bvh.FrameCount < (mvt.OldNbFrame[i] + 30) % mvt.Bvh.FrameCount) continue;
+                        if (nbFrame % mvt.Bvh.FrameCount < (mvt.OldNbFrame[i] + 30) % mvt.Bvh.FrameCount)
+                        {
+                            continue;
+                        }
                         var score = LaunchComparisonUpdated(mvt.Bvh.Root, mvt, nbFrame);
                         if (score<1-margin/90f
                         ) //If the position of the user does not correspond to that of the frame
                         {
+                            Debug.Log(score);
                             mvt.TabTimePassedBetweenFrame
                                 .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
                             mvt.ScoreSeq
@@ -533,7 +556,12 @@ namespace CERV.MouvementRecognition.Recognition
                 {
                     mvt.Score = 0f;
                 }
-                if(mvt.Score>=0.5) Debug.Log(mvt.Name + " score: " + mvt.Score);
+
+                if (RecordingScore)
+                {
+                    mvt.AddScoreToRecord();
+                }
+                //if(mvt.Score>=0.5) Debug.Log(mvt.Name + " score: " + mvt.Score);
             }
         }
 
