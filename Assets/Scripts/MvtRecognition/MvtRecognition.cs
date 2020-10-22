@@ -513,7 +513,7 @@ namespace CERV.MouvementRecognition.Recognition
 
                         if (nbFrame % mvt.Bvh.FrameCount < (mvt.OldNbFrame[i] + 30) % mvt.Bvh.FrameCount) continue;
                         var score = LaunchComparisonUpdated(mvt.Bvh.Root, mvt, nbFrame);
-                        if (score<0.7
+                        if (score<1-margin/90f
                         ) //If the position of the user does not correspond to that of the frame
                         {
                             mvt.TabTimePassedBetweenFrame
@@ -527,11 +527,11 @@ namespace CERV.MouvementRecognition.Recognition
                         mvt.ScoreSeq[i] = score;
                     }
                     if (mvt.ScoreSeq.Count > 0) mvt.Score = (float)Math.Round(mvt.ScoreSeq.Max(), 3);
-                    else mvt.Score = -10f;
+                    else mvt.Score = 0f;
                 }
                 else
                 {
-                    mvt.Score = -10f;
+                    mvt.Score = 0f;
                 }
                 if(mvt.Score>=0.5) Debug.Log(mvt.Name + " score: " + mvt.Score);
             }
