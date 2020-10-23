@@ -20,16 +20,30 @@ Finally, another important note about the organisation of the program is our foc
 
 ## Schematic
 
+//TODO: the script organization might still change, will do later
+
 ## Role of each classes
 
 ### GameManager
 
+The GameManger is the entry point of our program. It contains all the variables the developer must specify, takes care of the initialization of the different scripts and their updates. 
+
 ### Store
+
+The Store contains some of the general variables.
 
 ### Menu Manager
 
+Manage the menu on the UI.
+
 ### Mvt Recognition
+
+Contains the methods to recognize movements. Also manage the different states of the program ("Entrainement", "Reconnaissance de mouvement").
 
 ### Pointing Handler
 
+Manage the inputs that are related to the menu or the keyboard. Handle the pointing and the selecting actions.
+
 ### Neuron Animator
+
+Exist in two version: the basic version of Perception Neuron, which allow the program to communicate with the Axis Neuron software, and the tweaked one, which can be used to make a dummy play an animation from a bvh file.
