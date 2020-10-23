@@ -59,7 +59,7 @@ namespace CERV.MouvementRecognition.Recognition
                 returnValue.Add(node.Name,new bool[3]);
                 if (node.Name == "Hips")
                 {
-                    //returnValue[node.Name] = new bool[3]{ false, false, false };
+                    returnValue[node.Name] = new bool[3]{ false, false, false };
                     continue;
                 }
                 for (var i = 0; i < 3; i++)
@@ -538,7 +538,6 @@ namespace CERV.MouvementRecognition.Recognition
                         if (score<1-margin/90f
                         ) //If the position of the user does not correspond to that of the frame
                         {
-                            Debug.Log(score);
                             mvt.TabTimePassedBetweenFrame
                                 .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
                             mvt.ScoreSeq
@@ -561,7 +560,7 @@ namespace CERV.MouvementRecognition.Recognition
                 {
                     mvt.AddScoreToRecord();
                 }
-                //if(mvt.Score>=0.5) Debug.Log(mvt.Name + " score: " + mvt.Score);
+                if(mvt.Score>=0.5) Debug.Log(mvt.Name + " score: " + mvt.Score);
             }
         }
 
@@ -746,7 +745,6 @@ namespace CERV.MouvementRecognition.Recognition
                         nbIgnoredValue++;
                         continue;
                     }
-
                     checkValidity += (1 - Math.Abs(actorRotation[j] - bvh.GetReceivedPosition(node.Name, frame, true)[j]) / 90f);
                 }
             }

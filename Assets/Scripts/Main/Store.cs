@@ -16,7 +16,7 @@ namespace CERV.MouvementRecognition.Main
         private string m_path = null;
         private Bvh m_bvh = null;
         private Mode m_mode = Mode.Empty;
-        private int m_margin = 20;
+        private int m_margin = 50;
 
         public bool UsingArm
         {

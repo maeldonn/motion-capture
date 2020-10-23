@@ -17805,7 +17805,7 @@ MonoBehaviour:
   CharacterExample: {fileID: 446665775}
   UiHips: {fileID: 6726494051009210618}
   NbFirstMvtToCheck: 100
-  PercentageVarianceAccepted: 0
+  PercentageVarianceAccepted: 1
   DegreeOfMarginPointing: 40
   DegreeOfMarginValidating: 10
   LineMenu: {fileID: 991941095}
