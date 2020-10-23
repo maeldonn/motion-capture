@@ -174,10 +174,8 @@ namespace NeuronDataReaderManaged
                 {
                     Buffer.BlockCopy(recvBuffer, 0, reserveBuffer, reserveSize, recvSize);
                 }
-                catch(Exception ex)
+                catch
                 {
-                    // TODO: Handle error here
-                    Debug.LogError(ex);
                     continue;
                 }
 

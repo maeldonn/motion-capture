@@ -3602,7 +3602,7 @@ MonoBehaviour:
   UseNewRig: 1
   BoundAnimator: {fileID: 0}
   MotionUpdateMethod: 0
-  EnableHipsMovement: 0
+  EnableHipsMovement: 1
   PhysicalReferenceOverride: {fileID: 0}
   VelocityMagic: 3000
   AngularVelocityMagic: 20
