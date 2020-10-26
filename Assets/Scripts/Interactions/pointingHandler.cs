@@ -269,8 +269,8 @@ namespace CERV.MouvementRecognition.Interactions
         /// </summary>
         public void InitPointingHandler()
         {
-            idlePointing = new BvhProperties("Assets/BVH/Pointer/pointeur_3.bvh", "pointeur_3",0);
-            BVHactivating = new BvhProperties("Assets/BVH/Pointer/pouce.bvh", "pouce",0);
+            idlePointing = new BvhProperties("Assets/BVH/Pointer/pouce.bvh", "pouce", 0);
+            BVHactivating = new BvhProperties("Assets/BVH/Pointer/pouce.bvh", "pouce", 0);
         }
 
         /// <summary>
