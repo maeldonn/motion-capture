@@ -169,7 +169,16 @@ namespace NeuronDataReaderManaged
                     reserveBuffer = new byte[reserveBufferSize];
                 }
 
-                Buffer.BlockCopy(recvBuffer, 0, reserveBuffer, reserveSize, recvSize);      //C'est recvSize qui fait bugger tout ça, mais jsp pourquoi
+                // Buffer.BlockCopy(recvBuffer, 0, reserveBuffer, reserveSize, recvSize); // This line bug sometimes
+                try
+                {
+                    Buffer.BlockCopy(recvBuffer, 0, reserveBuffer, reserveSize, recvSize);
+                }
+                catch
+                {
+                    continue;
+                }
+
                 reserveSize += recvSize;
 
                 bool exitParseFlag = false;

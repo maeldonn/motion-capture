@@ -44,7 +44,9 @@ namespace Neuron
                 }
 
                 line_renderer.material = material;
-                line_renderer.SetWidth(parent_width, child_width);
+                // line_renderer.SetWidth(parent_width, child_width); // This line is deprecated
+                line_renderer.startWidth = parent_width;
+                line_renderer.endWidth = child_width;
                 line_renderer.useWorldSpace = true;
 
 #if UNITY_4_6_1
