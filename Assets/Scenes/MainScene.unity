@@ -17794,6 +17794,7 @@ MonoBehaviour:
   UiHips: {fileID: 6726494051009210618}
   NbFirstMvtToCheck: 100
   PercentageVarianceAccepted: 1
+  canvas: {fileID: 6726494050961180744}
   DegreeOfMarginPointing: 40
   DegreeOfMarginValidating: 10
   LineMenu: {fileID: 991941095}

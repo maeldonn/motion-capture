@@ -1,17 +1,12 @@
 ﻿using Neuron;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Xml.Serialization;
-using Boo.Lang;
 using CERV.MouvementRecognition.Animations;
 using CERV.MouvementRecognition.Main;
 using UniHumanoid;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
@@ -22,12 +17,12 @@ namespace CERV.MouvementRecognition.Recognition
     {
         public Bvh Bvh = null;
         public string Name = null;
-        public Dictionary<string, bool[]> ValuesToIgnore;
+        public Dictionary<string, bool[]> ValuesToIgnore = null;
 
         public BvhProperties(string path,string name, int percentageVarianceAccepted)
         {
-            this.Bvh = new Bvh().GetBvhFromPath(path);
-            this.Name = name;
+            Bvh = new Bvh().GetBvhFromPath(path);
+            Name = name;
             ValuesToIgnore = DetermineValuesToIgnore(Bvh, percentageVarianceAccepted);
         }
 
@@ -158,6 +153,9 @@ namespace CERV.MouvementRecognition.Recognition
         //The gameObject of the hips of the
         private GameObject uiHips = null;
 
+        // TODO
+        private Canvas canvas = null;
+
         //TODO
         private Store store = null;
 
@@ -176,7 +174,7 @@ namespace CERV.MouvementRecognition.Recognition
         
 
         public MvtRecognition(GameObject player, GameObject characterExample, GameObject uiHips, Store store,
-            int nbFirstMvtToCheck, int percentageVarianceAccepted)
+            int nbFirstMvtToCheck, int percentageVarianceAccepted, Canvas canvas)
         {
             this.player = player;
             this.characterExample = characterExample;
@@ -184,6 +182,7 @@ namespace CERV.MouvementRecognition.Recognition
             this.store = store;
             this.nbFirstMvtToCheck = nbFirstMvtToCheck;
             this.percentageVarianceAccepted = percentageVarianceAccepted;
+            this.canvas = canvas;
         }
 
         /// <summary>
@@ -194,6 +193,8 @@ namespace CERV.MouvementRecognition.Recognition
             var deltaTime = Time.deltaTime;
             if (store.Mode == Mode.Training)
             {
+                // Canvas on
+                canvas.enabled = true;
                 if (mvtLaunched)
                 {
                     // Ghost au même endroit que character
@@ -216,6 +217,7 @@ namespace CERV.MouvementRecognition.Recognition
             }
             else
             {
+                canvas.enabled = false;
                 characterExample.SetActive(false);
             }
 
