@@ -39,14 +39,22 @@ The second approach is to give each node studied a score, and then averaging all
 #### First score system
 
 At first, we calculated the score by doing the average of the differences of rotation between the actor position and the saved position.
-<img src="https://render.githubusercontent.com/render/math?math=\frac{\sum_{j=0}^{N}(\sum_{i=x}^{z} \Delta\theta\ij)}{N\times360\times3}\times100">
-With:
+<br><img src="https://render.githubusercontent.com/render/math?math=score\=\frac{\sum_{i=0}^{N}(\sum_{j=x}^{z} \Delta\theta\ij)}{N\times360\times3}\times100">
+<br>With:
 * _N_: the number of nodes
 * _∆θij_: the difference beteween the user's rotation and the saved rotation
-This means that the higher the score, the farther away the user is.
-But it came with a big inconvenient: we would 
+<br>This means that the higher the score, the farther away the user is.
+But at the time, it came with a big inconvenient. Indeed, we didn't properly excluded the useless nodes, and so even with a big difference in an angle the score wasn't very impacted.
 
 #### Second score system
+
+Another approach is to weight high outliers. We did it this way:
+<br><img src="https://render.githubusercontent.com/render/math?math=score\=\sum_{i=0}^{N}(\sum_{j=x}^{z} (a\times\Delta\theta\ij)^2)">
+<br>With:
+* _N_: the number of nodes.
+* _∆θij_: the difference beteween the user's rotation and the saved rotation.
+* a: an adjuster, that allow us to choose from which angle the difference becomes important in the calculation of the score.
+<br>This method work well, but is less precise and tend to diminish considerably the performances.
 
 #### Final score system
 
