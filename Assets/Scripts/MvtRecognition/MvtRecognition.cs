@@ -560,7 +560,7 @@ namespace CERV.MouvementRecognition.Recognition
                 {
                     mvt.AddScoreToRecord();
                 }
-                if(mvt.Score>=0.5) Debug.Log(mvt.Name + " score: " + mvt.Score);
+                //if(mvt.Score>=0.5) Debug.Log(mvt.Name + " score: " + mvt.Score);
             }
         }
 
@@ -689,11 +689,9 @@ namespace CERV.MouvementRecognition.Recognition
             var valToIgnore = animationToCompare.ValuesToIgnore;
             var bvh = animationToCompare.Bvh;
             var checkValidity = 0f;
-            var i = 0f;
             var adjustor = 4 / store.Margin;
             foreach (var node in root.Traverse())
             {
-                i++;
                 var actorRotation = actor.GetReceivedRotation((NeuronBones)Enum.Parse(typeof(NeuronBones), node.Name));
                 for (var j = 0; j < 3; j++)
                 {

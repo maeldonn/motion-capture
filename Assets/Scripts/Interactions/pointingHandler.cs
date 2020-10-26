@@ -133,16 +133,8 @@ namespace CERV.MouvementRecognition.Interactions
             {
                 if (mvtRecognition.RecordingScore)
                 {
-                    //ScoreContainer scoreContainer = new ScoreContainer();
-                    //foreach (var mvt in mvtRecognition.listOfMvts)
-                    //{
-                    //    scoreContainer.scoreMouvement.Add(new ScoreMvt(mvt.Name,mvt.ScoreRecorded));
-                    //}
-                    Debug.Log("XML file created at the following location: "+Path.Combine(Application.persistentDataPath, "scores.xml"));
-
-
+                    Debug.Log("CSV file created at the following location: "+Path.Combine(Application.persistentDataPath, "scores.csv"));
                     exportToCsv(mvtRecognition.listOfMvts);
-                    //scoreContainer.Save(Path.Combine(Application.persistentDataPath, "scores.xml"));
                 }
                 else
                 {
