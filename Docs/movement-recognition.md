@@ -103,7 +103,7 @@ Here's how we did it. Each movement saved also have a list of float attached to 
         
         for (var i = movement.listOfTimesPassedSinceFirstFrame.Count-1; i >=0 ; i--)
         {
-            movement.listOfTimesPassedSinceFirstFrame[i] = timeSinceLastFrame;
+            movement.listOfTimesPassedSinceFirstFrame[i] += timeSinceLastFrame;
             
             if(movement.listOfTimesPassedSinceFirstFrame[i] >= movement.TotalTime)
             {
