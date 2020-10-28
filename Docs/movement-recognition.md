@@ -1,5 +1,21 @@
 # Mouvement Recognition
 
+## Table of contents
+
+* [Introduction](#introduction)
+* [Limiting the amount of work](#limiting-the-amount-of-work)
+* [Position recognition](#position-recognition)
+    * [Position recognition: Approach 1](#position-recognition-approach-1)
+    * [Position recognition: Approach 2](#position-recognition-approach-2)
+        * [First score system](#first-score-system)
+        * [Second score system](#second-score-system)
+        * [Final score system](#final-score-system)
+* [Mouvement recognition](#mouvement-recognition)
+    * [Mouvement recognition: Approach 1](#mouvement-recognition-approach-1)
+    * [Mouvement recognition: Approach 2](#mouvement-recognition-approach-2)
+    * [Mouvement recognition: Approach 3](#mouvement-recognition-approach-3)
+    * [Mouvement recognition: Approach 4](#mouvement-recognition-approach-4)
+
 ## Introduction
 
 There are two main approaches to the problem of motion recognition: we could use motion comparison with a set of pre-recorded movements, or we could use machine learning and neural networks trained to recognize movements.
@@ -70,7 +86,6 @@ This method return an easy to read result ranging from 0 to 1 (considering that 
 
 ## Mouvement recognition
 
-//TODO: dire en quoi consiste l'approche générale de la reconnaissance de mouvement
 There are two main elements to detect when trying to recognize a movement: the beginning and the end. 
 To recognize the beginning, we have chosen to try, at each frame, to recognize the first frame of the saved position. 
 To detect the end, we check if the time elapsed since the detection of the first frame is greater than the total time of the animation.
