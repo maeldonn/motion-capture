@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<!--[if IE]> <![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Getting started</title>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="title" content="Getting started" />
+    <meta name="generator" content="docfx 2.56.3.0" />
+
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../styles/docfx.vendor.css" />
+    <link rel="stylesheet" href="../styles/docfx.css" />
+    <link rel="stylesheet" href="../styles/main.css" />
+    <meta property="docfx:navrel" content="../toc.html" />
+    <meta property="docfx:tocrel" content="toc.html" />
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        <nav
+          id="autocollapse"
+          class="navbar navbar-inverse ng-scope"
+          role="navigation"
+        >
+          <div class="container">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle"
+                data-toggle="collapse"
+                data-target="#navbar"
+              >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="" />
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="search-query"
+                    placeholder="Search"
+                    autocomplete="off"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a
+            class="btn toc-toggle collapse"
+            data-toggle="collapse"
+            href="#sidetoggle"
+            aria-expanded="false"
+            aria-controls="sidetoggle"
+            >Show / Hide Table of Contents</a
+          >
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+              <h1 id="prise-en-main-de-perception-neuron">
+                <strong> Prise en main de Perception Neuron </strong>
+              </h1>
+              <h2 id="pr-paration-du-mat-riel">Préparation du matériel</h2>
+              <p>
+                Il existe trois modes d&#39;utilisation du matériel de
+                Perception Neuron :
+              </p>
+              <ul>
+                <li>
+                  <strong>Le &quot;Single arm mode&quot;</strong> : 9 à 11
+                  capteurs.
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  <p>
+                    <strong>Le &quot;Upper body mode&quot;</strong> : 11 à 25
+                    capteurs.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <strong>Le &quot;Fullbody mode&quot;</strong> : 18 à 32
+                    capteurs.
+                  </p>
+                </li>
+              </ul>
+              <p>
+                On pourra connecter l&#39;équipement en filaire ou sans-fil.
+              </p>
+              <h2 id="installation-de-axis-neuron">
+                Installation de Axis Neuron
+              </h2>
+              <p>
+                On commence par installer le logiciel Axis Neuron disponible
+                <a href="https://neuronmocap.com/software/unity-sdk">ici</a>.
+              </p>
+              <p>
+                PERCEPTION NEURON va se connecter au logiciel AXIS Neuron pour
+                l’étalonnage et la gestion du système, ainsi que
+                l’enregistrement et l’exportation de fichiers de données pour
+                une manipulation dans Unity.
+              </p>
+              <h2 id="configuration-de-axis-neuron">
+                Configuration de Axis Neuron
+              </h2>
+              <p>
+                Tout d&#39;abord quand on lance l&#39;application, un pop-up
+                apparait nous demandant de connecter un équipement. On peut
+                connecter de façon filaire ou sans-fil.
+              </p>
+              <p><strong>Filaire</strong></p>
+              <p>// TODO : Détailler</p>
+              <p><strong>Sans-fil</strong></p>
+              <p>// TODO : Détailler</p>
+              <hr />
+              <p>
+                Une fois l&#39;équipement connecté, il va falloir calibrer
+                l&#39;équipement de motion capture. Pour cela il suffit de
+                cliquer sur l&#39;icon &quot;Calibrate&quot; à droite de
+                l&#39;écran et il suffit de suivre les instructions.
+              </p>
+              <p>
+                Il est aussi possible de choisir la taille du corps de
+                l&#39;utilisateur dans le même menu.
+              </p>
+              <p>
+                Ensuite il va falloir se rendre dans les paramètres puis dans
+                l&#39;onglet &quot;Broadcasting&quot;, on activera &quot;Enable
+                BVH&quot; et on cochera &quot;Binary&quot;.
+              </p>
+              <p>
+                Les autres paramètres par défaut n&#39;ont pas besoin d&#39;être
+                modifiés.
+              </p>
+              <h2 id="installation-de-la-librairie-de-perception-neuron">
+                Installation de la librairie de Perception Neuron
+              </h2>
+              <p>
+                Une fois sur Unity, on importe la librairie de Perception Neuron
+                disponible
+                <a href="https://neuronmocap.com/content/axis-neuron">ici</a> .
+              </p>
+              <p>
+                Choisissez Ressources&gt; Importer le package&gt; Packages
+                personnalisés pour importer le SDK PerceptionNeuron pour Unity.
+              </p>
+              <p>De nombreux exemples basiques sont disponible.</p>
+              <p>La librairie est composé de plusieurs scripts :</p>
+              <ol>
+                <li>
+                  <p>
+                    Assets/Neuron/Scripts/Mocap/NeuronDataReaderManaged.cs
+                    Version gérée en C# pour la réception des données BVH de
+                    Axis Neuron.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Assets/Neuron/Scripts/Mocap/NeuronConnection.cs<br />NeuronConnection
+                    gère les connexions avec Axis Neuron en utilisant
+                    NeuronDataReaderManaged.cs. Vous pouvez vous connecter à
+                    plusieurs instances d&#39;Axis Neuron et chaque connexion
+                    sera mappée à une instance de NeuronSource.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Assets/Neuron/Scripts/Mocap/NeuronSource.cs<br />NeuronSource
+                    gère des instances de NeuronActor avec deux dictionnaires
+                    appelés ActiveActors et SuspendedActors. NeuronSource
+                    surveille la dernière mise à jour de l&#39;horodatage dans
+                    NeuronActor par la méthode OnUpdate et utilise un seuil pour
+                    juger si un acteur est perdu (le nombre d&#39;acteurs dans
+                    Axis Neuron a changé ou la connexion a été complètement
+                    perdue). Lorsque cela se produit, NeuronSource ajoute ou
+                    supprime des acteurs entre les deux dictionnaires et en
+                    informe NeuronActor.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Assets/Neuron/Scripts/Mocap/NeuronActor.cs<br />Classe de
+                    données qui permet de ne stocker que la trame de données de
+                    mouvement la plus récente, fournit également des méthodes
+                    pour analyser les données de mouvement reçues qui sont
+                    reçues comme valeurs flottantes du réseau. NeuronActor
+                    sauvegarde également les informations de la mocap et fournit
+                    des méthodes pour enregistrer les rappels lorsqu&#39;ils ont
+                    été repris ou suspendus par NeuronSource.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Assets/Neuron/Scripts/Mocap/NeuronInstance.cs<br />Classe de
+                    base pour toutes sortes d&#39;instances pour la réception de
+                    données de mouvement. Héritage de UnityEngine.MonoBehaviour.
+                    NeuronInstance fournit des callbacks pour les changements
+                    d&#39;état et la réception d&#39;informations mocap
+                    d&#39;une instance NeuronActor qui était liée à cette
+                    instance par des méthodes de connexion ou autres. Cette
+                    classe n&#39;est pas destinée à être utilisée directement
+                    mais peut être héritée pour fournir des méthodes
+                    personnalisées pour appliquer des données de mouvement,
+                    gérer les changements d&#39;état et les informations mocap.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Assets/Neuron/Scripts/Mocap/NeuronAnimatorInstance.cs<br />Inherited
+                    from NeuronInstance. Provides custom methods to apply Neuron
+                    motion data to the transform components of the bones bound
+                    in the Unity animator component. Needs a humanoid skeleton
+                    setup to work properly.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Assets/Neuron/Scripts/Mocap/NeuronAnimatorPhysicalReference.cs<br />Data
+                    class for initialization and cleanup of a reference skeleton
+                    used for motions based upon Unity’s rigidbody component.
+                    Used by NeuronAnimatorInstance if physics toggle is enabled.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Assets/Neuron/Scripts/Mocap/NeuronTransformsInstance.cs<br />Inherited
+                    from NeuronInstance. Provides custom methods to apply Neuron
+                    motion data directly to transform components. Use this for
+                    non-humanoid skeletons or skeletons with more bones then the
+                    default setup used in Unity.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Assets/Neuron/Scripts/Mocap/NeuronTransformsPhysicalReference.cs<br />Classe
+                    de données pour l&#39;initialisation et le nettoyage
+                    d&#39;un squelette de référence utilisé pour les mouvements
+                    basés sur le composant de corps rigide de Unity. Utilisée
+                    par NeuronTransformsInstance si le basculement physique est
+                    activé.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Assets/Neuron/Scripts/Mocap/NeuronInstancesManager.cs<br />Pour
+                    chaque NeuronActeur, le NeuronInstancesManager conserve
+                    exactement une NeuronAnimatorInstance. Utilisé dans
+                    NeuronDebugViewer.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Assets/Neuron/Scripts/Utilities/BoneLine.cs<br />Classe
+                    d&#39;utilité utilisant un logiciel de rendu de lignes pour
+                    dessiner des lignes osseuses.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Assets/Neuron/Scripts/Utilities/BoneLines.cs<br />Classe
+                    d&#39;utilité pour l&#39;éditeur Neuron permettant
+                    d&#39;ajouter ou de supprimer des BoneLines.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Assets/Neuron/Scripts/Utilities/BoneRigidbodies.cs<br />Classe
+                    d&#39;utilitaire pour l&#39;éditeur Neuron permettant
+                    d&#39;ajouter ou de supprimer des corps rigides.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    Assets/Neuron/Scripts/Utilities/FPSCounter.cs Classe
+                    d&#39;utilité pour calculer le FPS (Frames-Per-Second).
+                  </p>
+                </li>
+              </ol>
+              <h2 id="configuration-de-unity">Configuration de Unity</h2>
+              <p>
+                Une fois la librairie importée, il faut configurer le script
+                NeuronConnection.cs et modifier les paramètres de connexion. La
+                configuration est différente en fonction de type de connexion à
+                l&#39;équipement Perception Neuron.
+              </p>
+              <p><strong>Filaire</strong></p>
+              <p>// TODO : Détailler</p>
+              <p><strong>Sans-fil</strong></p>
+              <p>// TODO : Détailler</p>
+              <h2 id="obtention-d-un-fichier-bvh-sur-axis-neuron">
+                Obtention d’un fichier BVH sur Axis Neuron
+              </h2>
+              <p>
+                Les animations dans Axis Neuron peuvent être obtenues de deux
+                façon: soit un utilisateur utilise la tenue Perception Neuron,
+                soit un fichier RAW est lu par le logiciel. A noter que pour
+                enregistrer une animation effectuée par l’utilisateur, il faut
+                appuyer sur le bouton “record” situé à droite de la fenêtre de
+                visualisation.
+              </p>
+            </article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav"></ul>
+              </div>
+              <nav
+                class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix"
+                id="affix"
+              >
+                <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

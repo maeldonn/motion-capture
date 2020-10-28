@@ -4,9 +4,9 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Add your introductions here!</title>
+    <title>How to import bvh</title>
     <meta name="viewport" content="width=device-width" />
-    <meta name="title" content="Add your introductions here! " />
+    <meta name="title" content="Getting started" />
     <meta name="generator" content="docfx 2.56.3.0" />
 
     <link rel="shortcut icon" href="../favicon.ico" />
@@ -83,17 +83,36 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-              <h1 id="placeholder"><strong>Motion-capture</strong></h1>
-
+              <h1 id="prise-en-main-de-perception-neuron">
+                <strong> Importer un fichier BVH </strong>
+              </h1>
+              <h2 id="manipulation">Manipulation</h2>
               <p>
-                L'utilisation de dispositif mobile de captation de mouvements et
-                de bras haptique pour la détection d'activités humaines dans un
-                contexte de patrimoine et d'assistance de vie.
+                Il suffit d&#39;avoir un fichier au format bvh et de le déplacer
+                dans le dossier BVH/ à la racine du projet. Ensuite il faut
+                attacher le script BvhImporter.cs à un gameobject et remplir le
+                champ Path avec le nom du fichier ainsi que son extension.
               </p>
-
-              <br />
-
-              <p>Please choose a document to read.</p>
+              <h2 id="principe">Principe</h2>
+              <p>
+                Des scripts vont traiter le fichier et l&#39;importer. Pas de
+                soucis, le fichier sera bien traité, avec beaucoup de tendresse.
+              </p>
+              <ul>
+                <li>
+                  <p><strong>BvhImporter.cs</strong></p>
+                  <p>
+                    Ce script se charge de récupérer le fichier dans une string.
+                  </p>
+                </li>
+                <li>
+                  <p><strong>Bvh.cs</strong></p>
+                  <p>
+                    Ce script se charge de traiter des données BVH à partir
+                    d&#39;un fichier et de retourner un objet BVH.
+                  </p>
+                </li>
+              </ul>
             </article>
           </div>
 

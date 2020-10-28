@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<!--[if IE]> <![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Movement recognition</title>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="title" content="Getting started" />
+    <meta name="generator" content="docfx 2.56.3.0" />
+
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../styles/docfx.vendor.css" />
+    <link rel="stylesheet" href="../styles/docfx.css" />
+    <link rel="stylesheet" href="../styles/main.css" />
+    <meta property="docfx:navrel" content="../toc.html" />
+    <meta property="docfx:tocrel" content="toc.html" />
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        <nav
+          id="autocollapse"
+          class="navbar navbar-inverse ng-scope"
+          role="navigation"
+        >
+          <div class="container">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle"
+                data-toggle="collapse"
+                data-target="#navbar"
+              >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="" />
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="search-query"
+                    placeholder="Search"
+                    autocomplete="off"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a
+            class="btn toc-toggle collapse"
+            data-toggle="collapse"
+            href="#sidetoggle"
+            aria-expanded="false"
+            aria-controls="sidetoggle"
+            >Show / Hide Table of Contents</a
+          >
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+              <h1 id="prise-en-main-de-perception-neuron">
+                <strong> Movement recognition </strong>
+              </h1>
+              <h2 id="introduction">Introduction</h2>
+              <p>
+                There are two main approaches to the problem of motion
+                recognition: we could use motion comparison with a set of
+                pre-recorded movements, or we could use machine learning and
+                neural networks trained to recognize movements. Having no
+                experience at all with machine learning, we&#39;ve decided to
+                develop the first solution.
+              </p>
+              <p>
+                Movement recognition, or more accurately movement comparison, is
+                an expensive solution in terms of computing power. So, the first
+                step is to limit to the maximum the data actually computed. The
+                second step is to accuratly compare two positions at any given
+                moments, and finally the third step is to get make sense of the
+                results of step 2 to recognize movements in a flux.
+              </p>
+              <h2 id="limiting-the-amount-of-work">
+                Limiting the amount of work
+              </h2>
+              <p>
+                When comparing positions and movements, some data are not very
+                useful. The bvh files we get from Axis Neuron have 59 nodes,
+                with each a position (composed of three values) and a rotation
+                (idem). So, when we compare the posture of the user with this
+                bvh file, we should have a total of 354 calculations.
+              </p>
+              <p>
+                This can easily be reduced by firstly removing the comparison of
+                the positions (of the nodes): depending of the body size of the
+                user, these data may not match with the stored data.
+                Furthermore, the rotation of each nodes seem to be enough to
+                recognize a position.
+              </p>
+              <p>
+                We can also remove all the nodes which are mostly irrelevent in
+                a position: the hips, the torso and the chest.
+              </p>
+              <p>
+                Finally, if we want to study a movement, the importants nodes
+                are those who are in movement. We can therfore remove those who
+                are mostly immobile. To achieve that, we firstly calculate the
+                variance of each node. Then, we compare these variances with the
+                highest variance, and if these are superior or equal to a
+                certain percentage then we consider this angle as interesting.
+              </p>
+              <h2 id="position-recognition">Position recognition</h2>
+              <p>
+                To recognise a position, we have no choice but to iterate
+                through all of the selected nodes (in step 1), and compare their
+                values with those saved. It will allow us to tell if the
+                position of the user is roughly the same as the one saved. There
+                are two way to interpret the results: a binary one and a
+                continuous one (in the form of a score).
+              </p>
+              <h3 id="position-recognition-approach-1">
+                Position recognition: Approach 1
+              </h3>
+              <p>
+                We go through all the nodes and every axes of rotation that have
+                been considered interesting in step 1, and we make the following
+                test:
+              </p>
+              <pre><code><span class="hljs-keyword">if</span>( absolute value <span class="hljs-keyword">of</span> (the user<span class="hljs-comment">'s rotation along an axis - the saved rotation along the same axis) &gt;= a degree of margin selected by the user)</span>
+<span class="hljs-keyword">then</span> <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+</code></pre>
+              <h3 id="position-recognition-approach-2">
+                Position recognition: Approach 2
+              </h3>
+              <p>
+                The second approach is to give each node studied a score, and
+                then averaging all of these: it will allow use to get a general
+                score for the position. But how do we calculate it? Initially,
+                we tested some custom made calculations, but we finally settled
+                with a score system used in
+                <a
+                  href="https://www.researchgate.net/publication/226380251_A_Method_for_Comparing_Human_Postures_from_Motion_Capture_Data"
+                  >this study</a
+                >
+                by Wei-Ting Yang, Zhiqiang Luo, I-Ming Chen, and Song Huat Yeo.
+              </p>
+              <h4 id="first-score-system">First score system</h4>
+              <p>
+                At first, we calculated the score by doing the average of the
+                differences of rotation between the actor position and the saved
+                position. <br /><img
+                  src="https://render.githubusercontent.com/render/math?math=score\=\frac{\sum_{i=0}^{N}(\sum_{j=x}^{z} \Delta\theta\ij)}{N\times360\times3}\times100"
+                />
+                <br />With:
+              </p>
+              <ul>
+                <li><em>N</em>: the number of nodes.</li>
+                <li>
+                  <em>∆θij</em>: the difference beteween the user&#39;s rotation
+                  and the saved rotation.
+                </li>
+              </ul>
+              <p>
+                This means that the higher the score, the farther away the user
+                is. But at the time, it came with a big inconvenient. Indeed, we
+                didn&#39;t properly excluded the useless nodes, and so even with
+                a big difference in an angle the score wasn&#39;t very impacted.
+              </p>
+              <h4 id="second-score-system">Second score system</h4>
+              <p>
+                Another approach is to weight high outliers. We did it this way:
+                <br /><img
+                  src="https://render.githubusercontent.com/render/math?math=score\=\sum_{i=0}^{N}(\sum_{j=x}^{z} (a\times\Delta\theta\ij)^2)"
+                />
+                <br />With:
+              </p>
+              <ul>
+                <li><em>N</em>: the number of nodes.</li>
+                <li>
+                  <em>∆θij</em>: the difference beteween the user&#39;s rotation
+                  and the saved rotation.
+                </li>
+                <li>
+                  a: an adjuster, that allow us to choose from which angle the
+                  difference becomes important in the calculation of the score.
+                </li>
+              </ul>
+              <p>
+                This method work well, but is less precise and tend to diminish
+                considerably the performances.
+              </p>
+              <h4 id="final-score-system">Final score system</h4>
+              <p>
+                The final score system is from the study mentioned above. It
+                work somewhat like the first one. It is calculated like this:
+                <br /><img
+                  src="https://render.githubusercontent.com/render/math?math=score\=\frac{\sum_{i=0}^{N}[\sum_{j=x}^{z} (1-\frac{\Delta\theta\ij}{90})]/3}{N}"
+                />
+                <br />With:
+              </p>
+              <ul>
+                <li><em>N</em>: the number of nodes.</li>
+                <li>
+                  <em>∆θij</em>: the difference beteween the user&#39;s rotation
+                  and the saved rotation.
+                </li>
+              </ul>
+              <p>
+                This method return an easy to read result ranging from 0 to 1
+                (considering that due to biological limitation, ∆θij can hardly
+                be higher than 90°).
+              </p>
+              <h2 id="mouvement-recognition">Mouvement recognition</h2>
+              <p>
+                //TODO: dire en quoi consiste l&#39;approche générale de la
+                reconnaissance de mouvement There are two main elements to
+                detect when trying to recognize a movement: the beginning and
+                the end. To recognize the beginning, we have chosen to try, at
+                each frame, to recognize the first frame of the saved position.
+                To detect the end, we check if the time elapsed since the
+                detection of the first frame is greater than the total time of
+                the animation. The next step is to find out if during all this
+                time the user was doing the movement or not.
+              </p>
+              <p>
+                Here&#39;s how we did it. Each movement saved also have a list
+                of float attached to it. These lists are used to store the time
+                passed since a first frame have been detected. We do someting
+                like that:
+              </p>
+              <pre><code>foreach(mouvement in allMouvementsToDetect)
+{
+    if(mouvement.frame[<span class="hljs-number">0</span>].position = user.position)
+    {
+        <span class="hljs-built_in">Debug</span>(<span class="hljs-string">"Beginning of a movement detected!"</span>)<span class="hljs-comment">;</span>
+        mouvement.listOfTimesPassedSinceFirstFrame.<span class="hljs-keyword">Add(0);
+</span>    }
+
+    for (var i = mouvement.listOfTimesPassedSinceFirstFrame.Count-1<span class="hljs-comment">; i &gt;=0 ; i--)</span>
+    {
+        mouvement.listOfTimesPassedSinceFirstFrame[i] = timeSinceLastFrame<span class="hljs-comment">;</span>
+
+        if(mouvement.listOfTimesPassedSinceFirstFrame[i] &gt;= mouvement.TotalTime)
+        {
+            <span class="hljs-built_in">Debug</span>(<span class="hljs-string">"End of a movement detected!"</span>)<span class="hljs-comment">;</span>
+            mouvement.listOfTimesPassedSinceFirstFrame.RemoveAt(i)<span class="hljs-comment">;</span>
+            continue<span class="hljs-comment">;</span>
+        }
+
+        nbFrame = calculateFrame(listOfTimesPassedSinceFirstFrame[i])
+
+        if(mouvement.frame[nbFrame].position != user.position)
+        {
+            <span class="hljs-built_in">Debug</span>(<span class="hljs-string">"Movement interrupted before the end!"</span>)<span class="hljs-comment">;</span>
+            mouvement.listOfTimesPassedSinceFirstFrame.RemoveAt(i)<span class="hljs-comment">;</span>
+            continue<span class="hljs-comment">;</span>
+        }
+
+        <span class="hljs-built_in">Debug</span>(<span class="hljs-string">"Movement in progress!"</span>)<span class="hljs-comment">;</span>
+    }
+}
+</code></pre>
+              <p>
+                <em
+                  >This is pseudo code; the variables names are different and
+                  some details are missing</em
+                >
+              </p>
+              <p>
+                Depending of the approach with movement recognition, we will do
+                different things when we detect the
+                beginning/end/interruption/progress of a movement. It will also
+                use the differents position recognition approach.
+              </p>
+              <h3 id="mouvement-recognition-approach-1">
+                Mouvement recognition: Approach 1
+              </h3>
+              <p>
+                This method will simply debug the name of the movement when his
+                end has been detected. Can only be adjusted with the degree of
+                margin. It is using only the first method to position
+                recognition. It has two inconvenient: it is binary, meaning that
+                it lack precision, and it will inform the user only after the
+                end of his movement.
+              </p>
+              <h3 id="mouvement-recognition-approach-2">
+                Mouvement recognition: Approach 2
+              </h3>
+              <p>
+                This second approach is a first attempt to answer the issues
+                raised above. It implement a system of score, that will be
+                attributed to every movements at every frames. It use the first
+                score system and the first approach to position recognition in
+                order to limit the amount computing power used. A new list is
+                implemented, with each index corresponding to the index of the
+                listOfTimesPassedSinceFirstFrame. It allow us to store the score
+                associated with each instances of movement detected. When every
+                instances have a score computed, we take the lowest
+                (corresponding to the best one), and it become the general score
+                of the movement. This approach of movement recognition have the
+                same problems that the first score system of the position
+                detection (before we were removing useless nodes).
+              </p>
+              <h3 id="mouvement-recognition-approach-3">
+                Mouvement recognition: Approach 3
+              </h3>
+              <p>
+                This approach is almost the same as the second one, but with the
+                second score system for position recognition. The other
+                difference is that, in a concern of optimization, we only
+                compute the score every 30 frames.
+              </p>
+              <h3 id="mouvement-recognition-approach-4">
+                Mouvement recognition: Approach 4
+              </h3>
+              <p>
+                This last approach uses all the improvements made in the
+                previous methods, and use the last score system.
+              </p>
+              <p>
+                //TODO: rajouter des graph chiffrés pour comparer les
+                performances (en terme de detection) des différentes méthodes.
+              </p>
+            </article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav"></ul>
+              </div>
+              <nav
+                class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix"
+                id="affix"
+              >
+                <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!--[if IE]> <![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>General Organization Of The Program</title>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="title" content="Getting started" />
+    <meta name="generator" content="docfx 2.56.3.0" />
+
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../styles/docfx.vendor.css" />
+    <link rel="stylesheet" href="../styles/docfx.css" />
+    <link rel="stylesheet" href="../styles/main.css" />
+    <meta property="docfx:navrel" content="../toc.html" />
+    <meta property="docfx:tocrel" content="toc.html" />
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        <nav
+          id="autocollapse"
+          class="navbar navbar-inverse ng-scope"
+          role="navigation"
+        >
+          <div class="container">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle"
+                data-toggle="collapse"
+                data-target="#navbar"
+              >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="" />
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="search-query"
+                    placeholder="Search"
+                    autocomplete="off"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a
+            class="btn toc-toggle collapse"
+            data-toggle="collapse"
+            href="#sidetoggle"
+            aria-expanded="false"
+            aria-controls="sidetoggle"
+            >Show / Hide Table of Contents</a
+          >
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+              <h1 id="prise-en-main-de-perception-neuron">
+                <strong> General Organization Of The Program </strong>
+              </h1>
+              <h2 id="introduction">Introduction</h2>
+              <p>
+                In unity, each scene represents a level. A scene is composed of
+                a number of GameObject, which are all the elements that are
+                present. They range from light source to 3d objects and UI
+                elements. The behavior of these gameObjects is defined by their
+                components. Components are usually scripts, but can also be
+                shaders, colliders or particle effects. What we are interested
+                in are the scripts we have made and put on different gameObject,
+                and how we link them together.
+              </p>
+              <p>
+                When a script is meant to be attached to a gameObject (acting as
+                a component), the class that are inside must inherit from
+                <a
+                  href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.html"
+                  >MonoBehavior</a
+                >, the base class from which every Unity script derives. It
+                grants access to some useful methods, such as the
+                &quot;Start&quot; and &quot;Update&quot;, which are respectively
+                called when the scene is launched and at every frame. But, for
+                the sake of clarity, we choose to limit as much as possible the
+                instance of such classes.
+              </p>
+              <p>
+                Indeed, having multiple scripts with routine makes it more
+                difficult for a developer to proofread the code. So, we&#39;ve
+                decided to centralize as much as the code execution, with a
+                single class acting as a &quot;main&quot;. This class is the
+                &quot;GameManager&quot;.
+              </p>
+              <p>
+                Another problem to take care of is the access to certain objects
+                or variables in the differents scripts. For example, many
+                scripts need the &quot;player&quot; gameObject: the usual method
+                in unity is to make the variable accessible in the script, and
+                then drag and drop the gameObject in the inspector of unity. But
+                it becomes a bit redundant if many objects needs it, and the
+                developer must know the script very well to avoid forgetting an
+                instance of the object. To remedy this problem, we have chosen
+                to put all the variable that the developer needs to drag and
+                drop on only on class, the gameManager. Then, every other class
+                will only call the gameManager and ask for such variables.
+                Moreover, some variables are needed in many other classes, but
+                aren&#39;t specified by the player: for theses we have a class
+                &quot;Store&quot;.
+              </p>
+              <p>
+                Finally, another important note about the organisation of the
+                program is our focus on the ease of use. This translates into
+                our choice to limit to the maximum the number of scripts the
+                developer must add to the scene for it to work.
+              </p>
+              <h2 id="schematic">Schematic</h2>
+              <p>
+                //TODO: the script organization might still change, will do
+                later
+              </p>
+              <h2 id="role-of-each-classes">Role of each classes</h2>
+              <h3 id="gamemanager">GameManager</h3>
+              <p>
+                The GameManger is the entry point of our program. It contains
+                all the variables the developer must specify, takes care of the
+                initialization of the different scripts and their updates.
+              </p>
+              <h3 id="store">Store</h3>
+              <p>The Store contains some of the general variables.</p>
+              <h3 id="menu-manager">Menu Manager</h3>
+              <p>Manage the menu on the UI.</p>
+              <h3 id="mvt-recognition">Mvt Recognition</h3>
+              <p>
+                Contains the methods to recognize movements. Also manage the
+                different states of the program (&quot;Entrainement&quot;,
+                &quot;Reconnaissance de mouvement&quot;).
+              </p>
+              <h3 id="pointing-handler">Pointing Handler</h3>
+              <p>
+                Manage the inputs that are related to the menu or the keyboard.
+                Handle the pointing and the selecting actions.
+              </p>
+              <h3 id="neuron-animator">Neuron Animator</h3>
+              <p>
+                Exist in two version: the basic version of Perception Neuron,
+                which allow the program to communicate with the Axis Neuron
+                software, and the tweaked one, which can be used to make a dummy
+                play an animation from a bvh file.
+              </p>
+            </article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav"></ul>
+              </div>
+              <nav
+                class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix"
+                id="affix"
+              >
+                <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

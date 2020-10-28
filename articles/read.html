@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<!--[if IE]> <![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>How to read bvh</title>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="title" content="Getting started" />
+    <meta name="generator" content="docfx 2.56.3.0" />
+
+    <link rel="shortcut icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="../styles/docfx.vendor.css" />
+    <link rel="stylesheet" href="../styles/docfx.css" />
+    <link rel="stylesheet" href="../styles/main.css" />
+    <meta property="docfx:navrel" content="../toc.html" />
+    <meta property="docfx:tocrel" content="toc.html" />
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        <nav
+          id="autocollapse"
+          class="navbar navbar-inverse ng-scope"
+          role="navigation"
+        >
+          <div class="container">
+            <div class="navbar-header">
+              <button
+                type="button"
+                class="navbar-toggle"
+                data-toggle="collapse"
+                data-target="#navbar"
+              >
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="" />
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="search-query"
+                    placeholder="Search"
+                    autocomplete="off"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="sidenav hide-when-search">
+          <a
+            class="btn toc-toggle collapse"
+            data-toggle="collapse"
+            href="#sidetoggle"
+            aria-expanded="false"
+            aria-controls="sidetoggle"
+            >Show / Hide Table of Contents</a
+          >
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+              <h1 id="prise-en-main-de-perception-neuron">
+                <strong> Lire et comprendre un fichier BVH </strong>
+              </h1>
+              <h2 id="note">Note</h2>
+              <p>
+                Ce texte est une traduction de la ressource disponible
+                <a
+                  href="https://research.cs.wisc.edu/graphics/Courses/cs-838-1999/Jeff/BVH.html"
+                  >ici</a
+                >
+                (Le lien est aussi disponible dans la bibliographie).
+              </p>
+              <h3 id="le-bvh-de-biovision">Le BVH de Biovision</h3>
+              <p>
+                Le format de fichier BVH a été développé à l&#39;origine par
+                Biovision, une société de services de capture de mouvements,
+                pour fournir des données de capture de mouvements à ses clients.
+                Le nom BVH est l&#39;abréviation de BioVision Hierarchical data.
+                Ce format a principalement remplacé un format antérieur
+                qu&#39;ils ont développé, le format BVA, qui est discuté dans la
+                section suivante, comme moyen de fournir des informations
+                hiérarchiques schématiques en plus des données de mouvement. Le
+                format BVH est un excellent format général, son seul
+                inconvénient est l&#39;absence d&#39;une définition complète de
+                la pose de base (ce format n&#39;a que des décalages
+                translationnels des segments enfants par rapport à leur parent,
+                aucun décalage rotationnel n&#39;est défini), il manque
+                également d&#39;informations explicites sur la façon de dessiner
+                les segments mais cela n&#39;a aucune incidence sur la
+                définition du mouvement.
+              </p>
+              <h3 id="analyse-du-fichier">Analyse du fichier</h3>
+              <p>
+                Un fichier BVH se compose de deux parties, une section
+                d&#39;en-tête qui décrit la hiérarchie et la pose initiale du
+                squelette, et une section de données qui contient les données de
+                mouvement. Examinez l&#39;exemple de fichier BVH appelé
+                <a
+                  href="https://research.cs.wisc.edu/graphics/Courses/cs-838-1999/Jeff/Example1.bvh"
+                  >&quot;Example1.bvh&quot;</a
+                >. Le début de la section d&#39;en-tête commence par le mot-clé
+                &quot;<strong>HIERARCHY</strong>&quot;. La ligne suivante
+                commence par le mot-clé &quot;<strong>ROOT</strong>&quot; suivi
+                du nom du segment racine de la hiérarchie à définir. Après avoir
+                décrit cette hiérarchie, il est possible de définir une autre
+                hiérarchie, qui sera également désignée par le mot-clé
+                &quot;<strong>ROOT</strong>&quot;. En principe, un fichier BVH
+                peut contenir un nombre illimité de hiérarchies squelettes. En
+                pratique, le nombre de segments est limité par le format de la
+                section de mouvement, un échantillon dans le temps pour tous les
+                segments se trouve sur une ligne de données et cela posera des
+                problèmes aux lecteurs qui supposent une limite à la taille
+                d&#39;une ligne dans un fichier.
+              </p>
+              <p>
+                Le format BVH devient alors une définition récursive. Chaque
+                segment de la hiérarchie contient des données qui ne concernent
+                que ce segment, puis il définit récursivement ses enfants. La
+                ligne qui suit le mot-clé &quot;<strong>ROOT</strong>&quot;
+                contient un seul accolade gauche &quot;{&quot;, l&#39;accolade
+                est alignée sur le mot-clé &quot;<strong>ROOT</strong>&quot;. La
+                ligne qui suit un accolade est indentée par un caractère de
+                tabulation, ces indentations sont principalement destinées à
+                rendre le fichier plus lisible, mais certains analyseurs de
+                fichiers BVH attendent des tabulations, donc si vous créez un
+                fichier BVH, veillez à ce qu&#39;il s&#39;agisse de tabulations
+                et pas seulement d&#39;espaces. La première information d&#39;un
+                segment est le décalage de ce segment par rapport à son parent,
+                ou dans le cas de l&#39;objet racine, le décalage sera
+                généralement égal à zéro. Le décalage est spécifié par le
+                mot-clé &quot;<strong>OFFSET</strong>&quot; suivi du décalage
+                X,Y et Z du segment par rapport à son parent. L&#39;information
+                sur le décalage indique également la longueur et la direction
+                utilisées pour dessiner le segment parent. Dans le format BVH,
+                il n&#39;y a pas d&#39;information explicite sur la façon dont
+                un segment doit être dessiné. Cette information est généralement
+                déduite du décalage du premier enfant défini pour le parent. En
+                règle générale, seuls les segments de la racine et du haut du
+                corps auront plusieurs enfants.
+              </p>
+              <p>
+                La ligne qui suit le décalage contient les informations
+                d&#39;en-tête du canal. Elle contient le mot-clé
+                &quot;<strong>CHANNELS</strong>&quot; suivi d&#39;un nombre
+                indiquant le nombre de chaînes, puis une liste de ces nombreuses
+                étiquettes indiquant le type de chaque chaîne. Le lecteur de
+                fichiers BVH doit garder une trace du nombre de chaînes et des
+                types de chaînes rencontrés au fur et à mesure que les
+                informations de la hiérarchie sont analysées. Plus tard, lorsque
+                les informations de mouvement seront analysées, cet ordre sera
+                nécessaire pour analyser chaque ligne de données de mouvement.
+                Ce format semble avoir la souplesse nécessaire pour permettre
+                des segments comportant un nombre quelconque de canaux qui
+                peuvent apparaître dans n&#39;importe quel ordre. Si vous
+                écrivez votre analyseur pour gérer cela, tant mieux, cependant,
+                je n&#39;ai jamais rencontré un fichier BVH qui n&#39;avait pas
+                6 canaux pour l&#39;objet racine et 3 canaux pour chaque autre
+                objet dans la hiérarchie.
+              </p>
+              <p>
+                Vous pouvez voir que l&#39;ordre des canaux de rotation semble
+                un peu bizarre, il va de la rotation Z, suivie de la rotation X
+                et enfin de la rotation Y. Ce n&#39;est pas une erreur, le
+                format BVH utilise un ordre de rotation quelque peu inhabituel.
+                Placez les éléments de données dans votre structure de données
+                dans cet ordre.
+              </p>
+              <p>
+                Sur la ligne de données suivant la spécification des canaux, il
+                peut y avoir l&#39;un des deux mots-clés suivants : soit vous
+                trouverez le mot-clé &quot;<strong>JOINT</strong>&quot;, soit
+                vous verrez le mot-clé &quot;<strong>End Site</strong>&quot;.
+                Une définition de joint est identique à la définition racine,
+                sauf en ce qui concerne le nombre de canaux. C&#39;est là que la
+                récursion a lieu, le reste de l&#39;analyse des informations de
+                joint se déroule comme avec une racine. L&#39;information de
+                site final met fin à la récursion et indique que le segment
+                actuel est un effecteur final (sans enfant). La définition du
+                site de fin fournit une information supplémentaire, elle donne
+                la longueur du segment précédent tout comme le décalage d&#39;un
+                enfant définit la longueur et la direction du segment de ses
+                parents.
+              </p>
+              <p>
+                La fin de toute définition d&#39;articulation, de site terminal
+                ou de racine est indiquée par une accolade bouclée à droite
+                &quot;}&quot;. Cette accolade est alignée avec son accolade
+                droite correspondante.
+              </p>
+              <p>
+                Une dernière remarque sur la hiérarchie des BVH : le repère
+                global est défini comme un système de coordonnées à droite,
+                l&#39;axe Y étant le vecteur &quot;haut&quot; mondial. Ainsi,
+                vous constaterez généralement que les segments de squelette des
+                BVH sont alignés le long de l&#39;axe Y ou de l&#39;axe Y
+                négatif (puisque les personnages ont souvent une pose zéro où le
+                personnage se tient droit avec les bras tendus vers le côté).
+              </p>
+              <p>
+                La fin d&#39;une articulation, d&#39;un site d&#39;extrémité ou
+                d&#39;une racine est indiquée par une accolade bouclée à droite
+                &quot;}&quot;. Cette accolade est alignée avec l&#39;accolade
+                droite correspondante.
+              </p>
+              <p>
+                La section de mouvement commence par le mot-clé
+                &quot;<strong>MOTION</strong>&quot; sur une ligne à part. Cette
+                ligne est suivie d&#39;une ligne indiquant le nombre
+                d&#39;images, cette ligne utilise le mot-clé &quot;Frames
+                :&quot; (les deux-points font partie du mot-clé) et un nombre
+                indiquant le nombre d&#39;images, ou d&#39;échantillons de
+                mouvement qui se trouvent dans le fichier. Sur la ligne qui suit
+                la définition des images se trouve la définition &quot;Frame
+                Time :&quot;, qui indique le taux d&#39;échantillonnage des
+                données. Dans l&#39;exemple de fichier BVH, le taux
+                d&#39;échantillonnage est de 0,033333, ce qui correspond à 30
+                images par seconde, soit le taux d&#39;échantillonnage habituel
+                dans un fichier BVH.
+              </p>
+              <p>
+                Le reste du fichier contient les données de mouvement réel.
+                Chaque ligne est un échantillon de données de mouvement. Les
+                numéros apparaissent dans l&#39;ordre des spécifications des
+                canaux, car la hiérarchie du squelette a été analysée.
+              </p>
+              <h3 id="interpr-tation-des-donn-es">
+                Interprétation des données
+              </h3>
+              <p>
+                Pour calculer la position d&#39;un segment, vous devez
+                d&#39;abord créer une matrice de transformation à partir des
+                informations de translation et de rotation locales pour ce
+                segment. Pour tout segment commun, les informations de
+                translation seront simplement le décalage tel que défini dans la
+                section de hiérarchie. Les données de rotation proviennent de la
+                section de mouvement. Pour l&#39;objet racine, les données de
+                translation seront la somme des données de décalage et des
+                données de translation de la section de mouvement. Le format BVH
+                ne tient pas compte des échelles, il n&#39;est donc pas
+                nécessaire de se soucier d&#39;inclure un calcul de facteur
+                d&#39;échelle.
+              </p>
+              <p>
+                Une façon simple de créer la matrice de rotation est de créer 3
+                matrices de rotation séparées, une pour chaque axe de rotation.
+                Ensuite, concaténer les matrices de gauche à droite Y, X et Z.
+              </p>
+              <pre><code><span class="hljs-attr">vR</span> = vYXZ
+</code></pre>
+              <p>
+                Une autre méthode consiste à calculer directement la matrice de
+                rotation.
+              </p>
+              <p>
+                L&#39;ajout des informations de décalage est simple, il suffit
+                de placer les données de translation X, Y et Z dans les
+                emplacements appropriés de la matrice. Une fois que la
+                transformation locale est créée, il faut la concaténer avec la
+                transformation locale de son parent, puis de son grand-parent,
+                et ainsi de suite.
+              </p>
+              <pre><code><span class="hljs-attr">vM</span> = vMenfantMparentMgrand-parent...
+</code></pre>
+            </article>
+          </div>
+
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav"></ul>
+              </div>
+              <nav
+                class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix"
+                id="affix"
+              >
+                <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
