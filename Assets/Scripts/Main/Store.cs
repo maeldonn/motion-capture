@@ -1,5 +1,4 @@
 ﻿using UniHumanoid;
-using UnityEngine;
 
 namespace CERV.MouvementRecognition.Main
 {
@@ -10,7 +9,7 @@ namespace CERV.MouvementRecognition.Main
         Recognition
     }
 
-    public class Store : MonoBehaviour
+    public class Store : object
     {
         private bool m_usingArm = false;
         private string m_path = null;
@@ -49,6 +48,7 @@ namespace CERV.MouvementRecognition.Main
                 m_bvh = value;
             }
         }
+
         public Mode Mode
         {
             get { return m_mode; }
