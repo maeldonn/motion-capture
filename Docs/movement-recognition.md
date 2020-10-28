@@ -1,4 +1,4 @@
-# Mouvement Recognition
+# Movement Recognition
 
 ## Table of contents
 
@@ -10,11 +10,11 @@
         * [First score system](#first-score-system)
         * [Second score system](#second-score-system)
         * [Final score system](#final-score-system)
-* [Mouvement recognition](#mouvement-recognition)
-    * [Mouvement recognition: Approach 1](#mouvement-recognition-approach-1)
-    * [Mouvement recognition: Approach 2](#mouvement-recognition-approach-2)
-    * [Mouvement recognition: Approach 3](#mouvement-recognition-approach-3)
-    * [Mouvement recognition: Approach 4](#mouvement-recognition-approach-4)
+* [Movement recognition](#movement-recognition)
+    * [Movement recognition: Approach 1](#movement-recognition-approach-1)
+    * [Movement recognition: Approach 2](#movement-recognition-approach-2)
+    * [Movement recognition: Approach 3](#movement-recognition-approach-3)
+    * [Movement recognition: Approach 4](#movement-recognition-approach-4)
 
 ## Introduction
 
@@ -84,7 +84,7 @@ The final score system is from the study mentioned above. It work somewhat like 
 
 This method return an easy to read result ranging from 0 to 1 (considering that due to biological limitation,  ∆θij can hardly be higher than 90°).
 
-## Mouvement recognition
+## Movement recognition
 
 There are two main elements to detect when trying to recognize a movement: the beginning and the end. 
 To recognize the beginning, we have chosen to try, at each frame, to recognize the first frame of the saved position. 
@@ -93,31 +93,31 @@ The next step is to find out if during all this time the user was doing the move
 
 Here's how we did it. Each movement saved also have a list of float attached to it. These lists are used to store the time passed since a first frame have been detected. We do someting like that:
     
-    foreach(mouvement in allMouvementsToDetect)
+    foreach(movement in allMovementsToDetect)
     {
-        if(mouvement.frame[0].position = user.position)
+        if(movement.frame[0].position = user.position)
         {
             Debug("Beginning of a movement detected!");
-            mouvement.listOfTimesPassedSinceFirstFrame.Add(0);
+            movement.listOfTimesPassedSinceFirstFrame.Add(0);
         }
         
-        for (var i = mouvement.listOfTimesPassedSinceFirstFrame.Count-1; i >=0 ; i--)
+        for (var i = movement.listOfTimesPassedSinceFirstFrame.Count-1; i >=0 ; i--)
         {
-            mouvement.listOfTimesPassedSinceFirstFrame[i] = timeSinceLastFrame;
+            movement.listOfTimesPassedSinceFirstFrame[i] = timeSinceLastFrame;
             
-            if(mouvement.listOfTimesPassedSinceFirstFrame[i] >= mouvement.TotalTime)
+            if(movement.listOfTimesPassedSinceFirstFrame[i] >= movement.TotalTime)
             {
                 Debug("End of a movement detected!");
-                mouvement.listOfTimesPassedSinceFirstFrame.RemoveAt(i);
+                movement.listOfTimesPassedSinceFirstFrame.RemoveAt(i);
                 continue;
             }
             
             nbFrame = calculateFrame(listOfTimesPassedSinceFirstFrame[i])
             
-            if(mouvement.frame[nbFrame].position != user.position)
+            if(movement.frame[nbFrame].position != user.position)
             {
                 Debug("Movement interrupted before the end!");
-                mouvement.listOfTimesPassedSinceFirstFrame.RemoveAt(i);
+                movement.listOfTimesPassedSinceFirstFrame.RemoveAt(i);
                 continue;
             }
             
@@ -128,12 +128,12 @@ _This is pseudo code; the variables names are different and some details are mis
 
 Depending of the approach with movement recognition, we will do different things when we detect the beginning/end/interruption/progress of a movement. It will also use the differents position recognition approach.
 
-### Mouvement recognition: Approach 1
+### Movement recognition: Approach 1
 
 This method will simply debug the name of the movement when his end has been detected. Can only be adjusted with the degree of margin. It is using only the first method to position recognition. 
 It has two inconvenient: it is binary, meaning that it lack precision, and it will inform the user only after the end of his movement.
 
-### Mouvement recognition: Approach 2
+### Movement recognition: Approach 2
 
 This second approach is a first attempt to answer the issues raised above. It implement a system of score, that will be attributed to every movements at every frames.
 It use the first score system and the first approach to position recognition in order to limit the amount computing power used.
@@ -141,11 +141,11 @@ A new list is implemented, with each index corresponding to the index of the lis
 When every instances have a score computed, we take the lowest (corresponding to the best one), and it become the general score of the movement.
 This approach of movement recognition have the same problems that the first score system of the position detection (before we were removing useless nodes).
 
-### Mouvement recognition: Approach 3
+### Movement recognition: Approach 3
 
 This approach is almost the same as the second one, but with the second score system for position recognition. The other difference is that, in a concern of optimization, we only compute the score every 30 frames.
 
-### Mouvement recognition: Approach 4
+### Movement recognition: Approach 4
 
 This last approach uses all the improvements made in the previous methods, and use the last score system.
 
