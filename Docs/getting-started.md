@@ -1,9 +1,19 @@
 
-# Prise en main de Perception Neuron
+# Table of Contents
 
-  
+* [Préparation du matériel](#préparation-du-matériel)
+* [Axis Neuron](#axis-neuron)
+  * [Installation de Axis Neuron](#installation-de-axis-neuron)
+  * [Enfiler la tenue Perception Neuron](#enfiler-la-tenue-perception-neuron)
+  * [Configuration de Axis Neuron](#configuration-de-axis-neuron)
+  * [Obtention d’un fichier BVH sur Axis Neuron](#obtention-dun-fichier-bvh-sur-axis-neuron)
+    * [Enregistrement de l'animation](#enregistrement-de-lanimation)
+    * [Exportation de l'animation au format BVH](#exportation-de-lanimation-au-format-bvh)
+* [Unity](#unity)
+  * [Installation de la librairie de Perception Neuron](#installation-de-la-librairie-de-perception-neuron)
+  * [Configuration de Unity](#configuration-de-unity)
 
-## Préparation du matériel
+# Préparation du matériel
 
 Il existe trois modes d'utilisation du matériel de Perception Neuron :
 
@@ -15,11 +25,23 @@ Il existe trois modes d'utilisation du matériel de Perception Neuron :
 
 On pourra connecter l'équipement en filaire ou sans-fil.
 
-## Installation de Axis Neuron
-
-On commence par installer le logiciel Axis Neuron disponible [ici](https://neuronmocap.com/software/unity-sdk).
+# Axis Neuron
 
 PERCEPTION NEURON va se connecter au logiciel AXIS Neuron pour l’étalonnage et la gestion du système, ainsi que l’enregistrement et l’exportation de fichiers de données pour une manipulation dans Unity.
+
+Un certain nombre de tutoriels sont disponible [sur le site du constructeur](https://neuronmocap.com/tutorials), ainsi qu'une [FAQ](https://support.neuronmocap.com/hc/en-us). ATTENTION: certaines de ces ressources ne sont plus a jour ou concernent une ancienne version de la tenue.
+
+## Installation de Axis Neuron
+
+On commence par installer le logiciel Axis Neuron disponible [ici](https://neuronmocap.com/software/unity-sdk) (ou avec ce [lien directe](https://neuronmocap.com/sites/default/files/Axis_Neuron_x64_3_8_42_8591_20180411034619617000_X64.zip)).
+
+Lancez le fichier d'installation. Suivez les instructions.
+
+## Enfiler la tenue Perception Neuron
+
+Nous conseillons d'enfiler la tenue dans cet ordre: jambes, tronc/tête, bras et finalement mains.
+Celle-ci doit être enfilée comme suis:
+//IMAGES DU MANUEL DU MANEQUIN AVEC LA TENUE.
 
 ## Configuration de Axis Neuron
 
@@ -28,27 +50,64 @@ connecter un équipement. On peut connecter de façon filaire ou sans-fil.
 
 **Filaire**
 
-// TODO : Détailler
+Appuyez sur le bouton "Connect" pour afficher les tenues détectées.
+//INSERER IMAGE DU BOUTON
+Sur la ligne correspondante à la tenue que vous souaitez utiliser, appuyez sur le bouton "Connect".
+//IMAGE
 
 **Sans-fil**
 
-// TODO : Détailler
+// TODO : Apprendre a se servir du sans-fil, expliquer la démarche à suivre
+
 
 ---
 
-Une fois l'équipement connecté, il va falloir calibrer l'équipement de motion capture. Pour cela il suffit de cliquer sur l'icon "Calibrate" à droite de l'écran et il suffit de suivre les instructions.
+Une fois l'équipement connecté, il va falloir calibrer l'équipement de motion capture. Pour cela il faut cliquer sur l'icone "Calibrate" à droite de l'écran et de suivre les instructions.
+//IMAGE DU BOUTON CALIBRATE
 
 Il est aussi possible de choisir la taille du corps de l'utilisateur dans le même menu.
+//IMAGE DU MENU DEROULANT AVEC LA TAILLE A SELECTIONNER
 
-Ensuite il va falloir se rendre dans les paramètres puis dans l'onglet "Broadcasting", on activera "Enable BVH" et on cochera "Binary".
+Ensuite il va falloir se rendre dans les paramètres puis dans l'onglet "Broadcasting", on activera "Enable BVH" et on cochera "Binary". Cela permettra au logiciel d'envoyer les données lues a Unity.
+//IMAGES DES DIFFERENTS MENUS
 
 Les autres paramètres par défaut n'ont pas besoin d'être modifiés.
 
+## Obtention d’un fichier BVH sur Axis Neuron 
+
+### Enregistrement de l'animation
+
+On peut enregistrer une animation sur le logiciel Axis Neuron (à condition d'avoir une tenue de connectée préalablement). Pour ce faire, il faut appuyer sur le bouton "Record":
+//IMAGE DU BOUTON
+
+On devra alors donner un nom a notre enregistrement:
+//IMAGE
+
+L'appuie sur le bouton "Ok" va lancer cet enregistrement. Pour l'arrêter, il faut réappuyer sur le bouton "Record". Un fichier .raw aura été créer. Ces fichiers sont lus par Axis Neuron. 
+
+### Exportation de l'animation au format BVH
+
+Pour exporter une animation au format BVH, il faut dans un premier temps charger le fichier .raw qu'on souhaite obtenir:
+//IMAGE SELECTION FICHIER
+
+On doit ensuite appuyer sur "File", puis "Export":
+//IMAGE DE CA
+
+Une nouvelle fenêtre s'affiche. Notez que l'on peut choisir les frames de début et de fin: cela peut-être utile si on souhaite isoler un mouvement dans une série d'actions. On peut aussi modifier le nom dans "File Name". Il n'est pas necessaire de modifier les autres options. Il faut appuyer sur export pour exporter.
+//IMAGE DE LA FENETRE
+
+Le fichier nouvellement créé sera situé dans le même répertoire que les fichiers .raw. Il est possible d'y accéder directement en appuyant sur le bouton suivant:
+//IMAGE DU BOUTON SUR LEQUEL IL FAUT APPUYER
+
+# Unity
+
 ## Installation de la librairie de Perception Neuron
-  
-Une fois sur Unity, on importe la librairie de Perception Neuron disponible [ici](https://neuronmocap.com/content/axis-neuron) .
+
+NOTE: si on clone le projet directement, la librairie est déjà présente et il n'est alors pas nécessaire de l'importer.
+Sur Unity, on importe la librairie de Perception Neuron disponible [ici](https://neuronmocap.com/software/unity-sdk) (ou en [lien direct](https://neuronmocap.com/sites/default/files/NeuronUnityIntegration0.2.18.zip)).
 
 Choisissez Ressources> Importer le package> Packages personnalisés pour importer le SDK PerceptionNeuron pour Unity.
+//IMAGE
 
 De nombreux exemples basiques sont disponible.
 
@@ -97,6 +156,7 @@ La librairie est composé de plusieurs scripts :
 ## Configuration de Unity
 
 Une fois la librairie importée, il faut configurer le script NeuronConnection.cs et modifier les paramètres de connexion. La configuration est différente en fonction de type de connexion à l'équipement Perception Neuron.
+//IMAGE
 
 **Filaire**
 
@@ -106,6 +166,3 @@ Une fois la librairie importée, il faut configurer le script NeuronConnection.c
 
 // TODO : Détailler
 
-## Obtention d’un fichier BVH sur Axis Neuron
-
-Les animations dans Axis Neuron peuvent être obtenues de deux façon: soit un utilisateur utilise la tenue Perception Neuron, soit un fichier RAW est lu par le logiciel. A noter que pour enregistrer une animation effectuée par l’utilisateur, il faut appuyer sur le bouton “record” situé à droite de la fenêtre de visualisation.
