@@ -9,7 +9,7 @@ namespace CERV.MouvementRecognition.Main
         Recognition
     }
 
-    public class Store : object
+    public class Store : MononBehavior
     {
         private bool m_usingArm = false;
         private string m_path = null;
