@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Neuron;
 using UniHumanoid;
@@ -51,9 +52,6 @@ namespace CERV.MouvementRecognition.Interactions
     /// </item>
     /// </list>
     /// </summary>
-    /// <remarks>
-    /// The <c>Start()</c> and <c>Update()</c> methods are used, it might be a good idea to do the processing on another file.
-    /// </remarks>
     public class PointingHandler
     {
         BvhProperties idlePointing = null;
@@ -143,6 +141,7 @@ namespace CERV.MouvementRecognition.Interactions
 
                         mvt.ClrScoreRecord();
                     }
+                    Debug.Log("Recording started!");
                 }
                 mvtRecognition.RecordingScore = !mvtRecognition.RecordingScore;
             }
@@ -162,20 +161,22 @@ namespace CERV.MouvementRecognition.Interactions
             List<string[]> rowData = new List<string[]>();
 
             // Creating First row of titles manually..
-            string[] rowDataTemp = new string[listMvt.Count];
-            for(int i=0; i<rowDataTemp.Length; i++)
+            string[] rowDataTemp = new string[listMvt.Count+1];
+            rowDataTemp[0] = "index";
+            for (int i=1; i<rowDataTemp.Length; i++)
             {
-                rowDataTemp[i] = listMvt[i].Name;
+                rowDataTemp[i] = listMvt[i-1].Name;
             }
             rowData.Add(rowDataTemp);
 
             // You can add up the values in as many cells as you want.
             for (int i = 0; i < listMvt[0].ScoreRecorded.Count; i++)
             {
-                rowDataTemp = new string[listMvt.Count];
-                for(int j = 0; j<listMvt.Count; j++)
+                rowDataTemp = new string[listMvt.Count+1];
+                rowDataTemp[0] = i.ToString();
+                for (int j = 1; j < listMvt.Count+1; j++)
                 {
-                    rowDataTemp[j] = listMvt[j].ScoreRecorded[i].ToString(CultureInfo.InvariantCulture);
+                    rowDataTemp[j] = listMvt[j-1].ScoreRecorded[i].ToString(CultureInfo.InvariantCulture);
                 }
                 rowData.Add(rowDataTemp);
             }
