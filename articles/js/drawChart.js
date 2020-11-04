@@ -19,7 +19,7 @@ function drawChart(elementId, csvName) {
 
 		var options = {
 			chart: {
-			  title: 'Score of the different movements for the '+elementId+' record',
+			  title: 'Score of the different movements for '+elementId,
 			  subtitle: 'from 0 to 1'
 			},
 			width: 900,
