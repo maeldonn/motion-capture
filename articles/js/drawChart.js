@@ -1,6 +1,6 @@
 function drawChart(elementId, csvName) {
 	
-	$.get('../csv/'+csvName, function(csvString) {
+	$.get('csv/'+csvName, function(csvString) {
 	
 		//transform the CSV string into a 2-dimensional array
 		var arrayData = $.csv.toArrays(csvString.trim(), {onParseValue: $.csv.hooks.castToScalar});
