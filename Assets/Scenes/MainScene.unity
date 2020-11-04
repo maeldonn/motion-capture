@@ -8252,7 +8252,7 @@ GameObject:
   - component: {fileID: 593294647}
   - component: {fileID: 593294646}
   m_Layer: 5
-  m_Name: LabelTemplateX
+  m_Name: labelTemplateX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8330,7 +8330,7 @@ GameObject:
   - component: {fileID: 681511329}
   - component: {fileID: 681511328}
   m_Layer: 5
-  m_Name: DashTemplateX
+  m_Name: dashTemplateY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8348,12 +8348,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1328993224}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.1, y: 115.3}
-  m_SizeDelta: {x: 740, y: 3}
+  m_SizeDelta: {x: 740, y: 1}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &681511328
 MonoBehaviour:
@@ -8404,7 +8404,7 @@ GameObject:
   - component: {fileID: 711160473}
   - component: {fileID: 711160472}
   m_Layer: 5
-  m_Name: DashTemplateY
+  m_Name: dashTemplateX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8422,12 +8422,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1328993224}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 25.4, y: -0.3}
-  m_SizeDelta: {x: 289.8, y: 3}
+  m_SizeDelta: {x: 289.8, y: 1}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &711160472
 MonoBehaviour:
@@ -9974,8 +9974,8 @@ RectTransform:
   - {fileID: 1102713785}
   - {fileID: 593294645}
   - {fileID: 1770379459}
-  - {fileID: 681511327}
   - {fileID: 711160471}
+  - {fileID: 681511327}
   m_Father: {fileID: 1922301072}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17168,7 +17168,7 @@ GameObject:
   - component: {fileID: 1770379461}
   - component: {fileID: 1770379460}
   m_Layer: 5
-  m_Name: LabelTemplateY
+  m_Name: labelTemplateY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

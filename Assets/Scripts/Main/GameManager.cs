@@ -8,16 +8,20 @@ namespace CERV.MouvementRecognition.Main
     {
         public GameObject Player = null;
         public Store Store = null;
+
         [Space(2)]
         [Header("Movement Manager:")]
         public GameObject CharacterExample = null;
+
         public GameObject UiHips = null;
         public int NbFirstMvtToCheck = 0;
         public int PercentageVarianceAccepted = 0;
         public Canvas canvas = null;
+
         [Space(2)]
         [Header("Interactions:")]
         public int DegreeOfMarginPointing = 0;
+
         public int DegreeOfMarginValidating = 0;
         public LineRenderer LineMenu = null;
         public GameObject LeftHand = null;
@@ -31,6 +35,7 @@ namespace CERV.MouvementRecognition.Main
             get;
             private set;
         }
+
         public PointingHandler pointingHandler
         {
             get;
@@ -38,7 +43,7 @@ namespace CERV.MouvementRecognition.Main
         }
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             mvtRecognition = new MvtRecognition(Player, CharacterExample, UiHips, Store, NbFirstMvtToCheck, PercentageVarianceAccepted, canvas);
             mvtRecognition.InitActor();
@@ -48,7 +53,7 @@ namespace CERV.MouvementRecognition.Main
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             // TODO: Supprimer ça
             pointingHandler.UpdateUserInputs();
