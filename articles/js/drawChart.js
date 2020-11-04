@@ -22,7 +22,7 @@ function drawChart(elementId, csvName) {
 			  title: 'Score of the different movements for '+elementId,
 			  subtitle: 'from 0 to 1'
 			},
-			width: 900,
+			width: 700,
 			height: 500,
 			axes: {
 			  x: {
