@@ -18,11 +18,12 @@
       <meta property="docfx:tocrel" content="toc.html" />
 	  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script src="/src/jquery.csv.min.js"></script>
-		<script src="/src/drawChart.js"></script>
+		<script src="/js/jquery.csv.min.js"></script>
+		<script src="/js/drawChart.js"></script>
 		<script type="text/javascript">
 		  google.charts.load('current', {'packages':['line']});
 		  google.charts.setOnLoadCallback(function() { drawChart('the walking recording with Margin=20 and %variance=40','walkingMaelM20V40.csv');} );
+		  google.charts.setOnLoadCallback(function() { drawChart('the walking recording with Margin=20 and %variance=40 ','walkingMaelM20V40.csv');} );
 		  google.charts.setOnLoadCallback(function() { drawChart('the walking recording with Margin=10 and %variance=40','walkingMaelM10V40.csv');} );
 		  google.charts.setOnLoadCallback(function() { drawChart('the walking recording with Margin=40 and %variance=40','walkingMaelM40V40.csv');} );
 		  google.charts.setOnLoadCallback(function() { drawChart('the walking recording with Margin=20 and %variance=10','walkingMaelM20V10.csv');} );
@@ -222,7 +223,7 @@
 					<h4 id="effects-when-decreased">Effects when decreased</h4>
 					<p>It does the opposite of what we&#39;ve said above, but also make every movement more &quot;specialized&quot;. For example, if we have a walking movement saved, and we use it to recognize peoples walking, it will try to recognize that saved person&#39;s precise way of walking.</p>
 					<h4 id="illustrative-curves-of-the-effect-of-the-margin-parameter">Illustrative curves of the effect of the margin parameter</h4>
-					<p><em>We use the same recording every time, and only change the margin parameter.</em></p>
+					<p><em>We use the same recording every time, and only change the margin parameter. Also note that all recordings have the same duration, but due to performances issue, the number of frames may vary.</em></p>
 					<div id="the walking recording with Margin=20 and %variance=40"></div>
 					<div id="the walking recording with Margin=10 and %variance=40"></div>
 					<div id="the walking recording with Margin=40 and %variance=40"></div>
@@ -235,7 +236,7 @@
 					<p>It does the opposite of what we&#39;ve said above, but it also tends to increase the score for every movements. Indeed, significant results will be diluted with those from bones that have little to do with movement.</p>
 					<h4 id="illustrative-curves-of-the-effect-of-the-percentage-of-variance-parameter">Illustrative curves of the effect of the percentage of variance parameter</h4>
 					<p><em>We use the same recording every time, and only change the percentage of variance parameter.</em></p>
-					<div id="the walking recording with Margin=20 and %variance=40"></div>
+					<div id="the walking recording with Margin=20 and %variance=40 "></div>
 					<div id="the walking recording with Margin=20 and %variance=10"></div>
 					<div id="the walking recording with Margin=20 and %variance=70"></div>
 					<p><strong>Recommended value: </strong> 40%</p>
