@@ -270,14 +270,31 @@
                         <li>Order: 5 - 7 - 6 (Open a door, greet someone and close the door again)</li>
                      </ul>
                      <h3 id="results">Results</h3>
-                     <h4 id="5-movements-in-a-row-">5 Movements in a row:</h4>
-                     <p>//TODO: montrer les courbes pour chaques methode de test, interpreter les résultats</p>
-                     <h4 id="first-order-">First order:</h4>
-                     <p>//TODO: montrer les courbes pour chaques methode de test, interpreter les résultats</p>
-                     <h4 id="second-order-">Second order:</h4>
-                     <p>//TODO: montrer les courbes pour chaques methode de test, interpreter les résultats</p>
-                     <h4 id="third-order-">Third order:</h4>
-                     <p>//TODO: montrer les courbes pour chaques methode de test, interpreter les résultats</p>
+                     <form name="myForm" onsubmit="javaScript:drawChart('resultGraph',method.value+record.value+person.value+'.csv'); return false">
+					  <label for="method">Choose a method:</label>
+					  <select id="method" name="method">
+						<option value="M1">Method 1</option>
+						<option value="M2">Method 2</option>
+						<option value="M3">Method 3</option>
+						<option value="M4">Method 4</option>
+					  </select>
+					  <br/>
+					  <label for="record">Choose a record:</label>
+					  <select id="record" name="record">
+						<option value="Walking">Walking</option>
+						<option value="Door">Door</option>
+						<option value="Chair">Chair</option>
+						<option value="Saluting">Saluting</option>
+						<option value="1order">1st order</option>
+						<option value="2order">2nd order</option>
+						<option value="3order">3rd order</option>
+					  </select>
+					  <br/>
+						  <input checked="checked" name="person" type="radio" value="Mael" /> Mael <br /> 
+						  <input name="person" type="radio" value="Oscar" /> Oscar <br />
+					  <input type="submit" value="Submit">
+					</form>
+					<div id="resultGraph"></div>
                   </article>
                </div>
                <div class="hidden-sm col-md-2" role="complementary">

@@ -24,6 +24,7 @@ function drawChart(elementId, csvName) {
 			},
 			width: 700,
 			height: 500,
+			hAxis: {format:'# s'},
 			axes: {
 			  x: {
 				0: {side: 'bottom'}
