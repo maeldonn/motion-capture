@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using CERV.MouvementRecognition.Main;
 using Neuron;
 using UniHumanoid;
 using UnityEngine;
@@ -141,6 +142,8 @@ namespace CERV.MouvementRecognition.Interactions
 
                         mvt.ClrScoreRecord();
                     }
+
+                    mvtRecognition.TimeSinceStartRecord = 0f;
                     Debug.Log("Recording started!");
                 }
                 mvtRecognition.RecordingScore = !mvtRecognition.RecordingScore;
@@ -153,7 +156,7 @@ namespace CERV.MouvementRecognition.Interactions
             {
                 throw new ArgumentException("There are no movement to detect!");
             }
-            if (listMvt[0].ScoreRecorded==null || listMvt[0].ScoreRecorded.Count == 0)
+            if (listMvt[0].ScoreRecorded==null || listMvt[0].ScoreRecorded[0].Count == 0)
             {
                 throw new ArgumentException("Recording session too short!");
             }
@@ -162,7 +165,7 @@ namespace CERV.MouvementRecognition.Interactions
 
             // Creating First row of titles manually..
             string[] rowDataTemp = new string[listMvt.Count+1];
-            rowDataTemp[0] = "index";
+            rowDataTemp[0] = "time";
             for (int i=1; i<rowDataTemp.Length; i++)
             {
                 rowDataTemp[i] = listMvt[i-1].Name;
@@ -170,13 +173,13 @@ namespace CERV.MouvementRecognition.Interactions
             rowData.Add(rowDataTemp);
 
             // You can add up the values in as many cells as you want.
-            for (int i = 0; i < listMvt[0].ScoreRecorded.Count; i++)
+            for (int i = 0; i < listMvt[0].ScoreRecorded[0].Count; i++)
             {
                 rowDataTemp = new string[listMvt.Count+1];
-                rowDataTemp[0] = i.ToString();
+                rowDataTemp[0] = listMvt[0].ScoreRecorded[0][i].ToString(CultureInfo.InvariantCulture);
                 for (int j = 1; j < listMvt.Count+1; j++)
                 {
-                    rowDataTemp[j] = listMvt[j-1].ScoreRecorded[i].ToString(CultureInfo.InvariantCulture);
+                    rowDataTemp[j] = listMvt[j-1].ScoreRecorded[1][i].ToString(CultureInfo.InvariantCulture);
                 }
                 rowData.Add(rowDataTemp);
             }

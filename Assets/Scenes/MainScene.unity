@@ -17793,7 +17793,7 @@ MonoBehaviour:
   CharacterExample: {fileID: 446665775}
   UiHips: {fileID: 6726494051009210618}
   NbFirstMvtToCheck: 100
-  PercentageVarianceAccepted: 30
+  PercentageVarianceAccepted: 40
   canvas: {fileID: 6726494050961180744}
   DegreeOfMarginPointing: 40
   DegreeOfMarginValidating: 10
