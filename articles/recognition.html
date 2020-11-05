@@ -30,6 +30,7 @@
 		  google.charts.setOnLoadCallback(function() { drawChart('the walking recording with Margin=40 and %variance=40','walkingMaelM40V40.csv');} );
 		  google.charts.setOnLoadCallback(function() { drawChart('the walking recording with Margin=20 and %variance=10','walkingMaelM20V10.csv');} );
 		  google.charts.setOnLoadCallback(function() { drawChart('the walking recording with Margin=20 and %variance=70','walkingMaelM20V70.csv');} );
+		  <!-- ATTENTION! L'affichage des graphs peut bugger à cause du CSS qui est généré par DocFX (des parties de courbes qui sont cachées derrière du blanc). Si c'est le cas, il faut enlever le style "svg:hover path" dans docfx.css-->
 		</script>
    </head>
    <body data-spy="scroll" data-target="#affix" data-offset="120">
@@ -215,7 +216,6 @@
                      <h3 id="movement-recognition-approach-4">Movement recognition: Approach 4</h3>
                      <p>This last approach uses all the improvements made in the previous methods, and use the last score system.</p>
                      <p>//TODO: rajouter des graph chiffrés pour comparer les performances (en terme de detection) des différentes méthodes.</p>
-                     <h2 id="parameters-for-motion-detection">Parameters for motion detection</h2>
 					<h2 id="parameters-for-motion-detection">Parameters for motion detection</h2>
 					<p>We change the motion detection accuracy with two parameters: the margin and percentage of variance accepted.</p>
 					<h3 id="margin">Margin</h3>
@@ -223,18 +223,18 @@
 					<h4 id="effects-when-increased">Effects when increased</h4>
 					<p>All the movements will be detected more easily, but it increases the consumption of computing power.</p>
 					<h4 id="effects-when-decreased">Effects when decreased</h4>
-					<p>It does the opposite of what we&#39;ve said above, but also make every movement more &quot;specialized&quot;. For example, if we have a walking movement saved, and we use it to recognize peoples walking, it will try to recognize that saved person&#39;s precise way of walking.</p>
+					<p>It does the opposite of what we&#39;ve said above, but also make every movement more &quot;specialized&quot;. For example, if we have a recorded walking movement, and we use it to recognize people who are walking, it will try to recognize that saved person&#39;s precise way of walking..</p>
 					<h4 id="illustrative-curves-of-the-effect-of-the-margin-parameter">Illustrative curves of the effect of the margin parameter</h4>
-					<p><em>We use the same recording every time, and only change the margin parameter. Also note that all recordings have the same duration, but due to performances issue, the number of frames may vary.</em></p>
+					<p><em>We use the same recording every time, and only change the margin parameter. Also note that all recordings have the same duration, but due to performances issue, the number of frames may vary. The movement used to compare the effect of the parameters is "walking", meaning that ideally only two movements should be detected alternatively: right_step and left_step.</em></p>
 					<div id="the walking recording with Margin=20 and %variance=40"></div>
 					<div id="the walking recording with Margin=10 and %variance=40"></div>
 					<div id="the walking recording with Margin=40 and %variance=40"></div>
 					<p><strong>Recommended value: </strong> 20°</p>
 					<h3 id="percentage-of-variance">Percentage of variance</h3>
 					<p>This parameter is used when the program tries to determine which bones are unimportant in the movement definition. For more information, take a look at the &quot;Limiting the amount of work&quot; part in the &quot;Movement recognition&quot; article.</p>
-					<h4 id="effects-when-increased">Effects when increased</h4>
+					<h4 id="effects-when-increased ">Effects when increased</h4>
 					<p>This will limit the number of bones we study, making the movements easier to compare. However, if too high, it will tend to skew the results. Indeed, if one or two bones are used to describe a movement, it will be detected very often (depending on the margin).</p>
-					<h4 id="effects-when-decreased">Effects when decreased</h4>
+					<h4 id="effects-when-decreased ">Effects when decreased</h4>
 					<p>It does the opposite of what we&#39;ve said above, but it also tends to increase the score for every movements. Indeed, significant results will be diluted with those from bones that have little to do with movement.</p>
 					<h4 id="illustrative-curves-of-the-effect-of-the-percentage-of-variance-parameter">Illustrative curves of the effect of the percentage of variance parameter</h4>
 					<p><em>We use the same recording every time, and only change the percentage of variance parameter.</em></p>
