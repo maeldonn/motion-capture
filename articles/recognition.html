@@ -116,7 +116,7 @@
                         To achieve that, we firstly calculate the variance of each node. Then, we compare these variances with the highest variance, and if these are superior or equal to a certain percentage then we consider this angle as interesting.
                      </p>
                      <h2 id="position-recognition">Position recognition</h2>
-                     <p>To recognise a position, we have no choice but to iterate through all of the selected nodes (in step 1), and compare their values with those saved. It will allow us to tell if the position of the user is roughly the same as the one saved.
+                     <p>To recognize a position, we have no choice but to iterate through all of the selected nodes (in step 1), and compare their values with those saved. It will allow us to tell if the position of the user is roughly the same as the one saved.
                         There are two way to interpret the results: a binary one and a continuous one (in the form of a score).
                      </p>
                      <h3 id="position-recognition-approach-1">Position recognition: Approach 1</h3>
@@ -214,11 +214,11 @@
                      <h3 id="movement-recognition-approach-3">Movement recognition: Approach 3</h3>
                      <p>This approach is almost the same as the second one, but with the second score system for position recognition. The other difference is that, in a concern of optimization, we only compute the score every 30 frames.</p>
                      <h3 id="movement-recognition-approach-4">Movement recognition: Approach 4</h3>
-                     <p>This last approach uses all the improvements made in the previous methods, and use the last score system.</p>
-                     <p>//TODO: rajouter des graph chiffrés pour comparer les performances (en terme de detection) des différentes méthodes.</p>
-					<h2 id="parameters-for-motion-detection">Parameters for motion detection</h2>
+                     <p>This last approach uses all the improvements made in the previous methods, and use the last score system. It also includes a small method of weighting on the score, depending on the progress of the animation. At first, we calculate the score normally, and before giving the final score of the movement on this frame, we apply the following formula (if less than half the movement have been made):</p>
+                     <br><img src="https://render.githubusercontent.com/render/math?math=score\=score\times\frac{2\times Number\ of\ the\ current\ frame}{Total\ amount\ of\ frames\ during\ the\ animation}">
+					 <h2 id="parameters-for-motion-detection">Parameters for motion detection</h2>
 					<p>We change the motion detection accuracy with two parameters: the margin and percentage of variance accepted.</p>
-					<h3 id="margin">Margin</h3>
+					<h3 id="margin">Margin</h3>1
 					<p>The margin will allow more or less amplitude to the user for the movement to be recognized. It can be adjusted from 0° to 90°. It isn&#39;t necessary to go above 90°, because very few joints can rotate more than that in any direction.</p>
 					<h4 id="effects-when-increased">Effects when increased</h4>
 					<p>All the movements will be detected more easily, but it increases the consumption of computing power.</p>
@@ -244,11 +244,12 @@
 					<p><strong>Recommended value: </strong> 40%</p>
 					 <h2 id="protocol-of-recognition-test">Protocol of recognition test</h2>
                      <h3 id="introduction-to-the-protocol">Introduction to the protocol</h3>
-                     <p>We have multiple way to recognize movement, and it is important to test them well. So, we came up with the following protocol:
-                        -Have some basic movements saved
-                        -Try to recognize several iterations of these, get a percentage of success
-                        -Try to recognize them in a series of movement
-                     </p>
+                     <p>We have multiple way to recognize movement, and it is important to test them well. So, we came up with the following protocol:</p>
+					 <ul>
+                        <li>Have some basic movements saved</li>
+                        <li>Try to recognize several iterations of these, get a percentage of success</li>
+                        <li>Try to recognize them in a series of movement</li>
+                     </ul>
                      <p>We will then have some quantitative results that we can compare.</p>
                      <h3 id="details">Details</h3>
                      <p>The movements we want to test are the following:</p>
@@ -275,7 +276,6 @@
 					  <select id="method" name="method">
 						<option value="M1">Method 1</option>
 						<option value="M2">Method 2</option>
-						<option value="M3">Method 3</option>
 						<option value="M4">Method 4</option>
 					  </select>
 					  <br/>
@@ -298,6 +298,14 @@
 					<br/>
 					<p><em>You can compare the results with these recordings we have made:</em></p>
 					<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/videoseries?list=PL9R9UVqB9Bn_n-IxcUcfvdz08fx8nDNJR" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<h3 id="conclusions">Conclusions</h3>
+					<p>
+					The results are for the most part acceptable, with some reservations:</p>
+					<ul>
+                        <li>Very simple movements, like "saluting", tend to be over-detected: indeed, it is mainly defined by one rotation of the arm. And since most animations involve a movement of said arm, the algorithm detects the movement.</li>
+                        <li>On the contrary, more complex movements are very hard to recognize. For example, the movements "opening door" and "closing door" involve a few steps, a hand grasping the handle, and maybe the other hand receiving the door. If one of theses actions is a little behind the recording, or maybe if the user takes two steps instead of three as in the record, the movement will not be considered valid.</li>
+                        <li>Finally, an action recorded by on person can be hard to recognize when performed by another person, and more so with complex movements. Every "model" movements are performed by Mael, and we can see that when Oscar is performing various actions they are far less recognized.</li>
+                     </ul>
                   </article>
                </div>
                <div class="hidden-sm col-md-2" role="complementary">
