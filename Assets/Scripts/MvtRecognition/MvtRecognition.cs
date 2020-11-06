@@ -557,7 +557,7 @@ namespace CERV.MouvementRecognition.Recognition
                             continue;
                         }
                         mvt.OldNbFrame[i] = nbFrame;
-                        mvt.ScoreSeq[i] = score * (nbFrame / (float)mvt.Bvh.FrameCount >= 1 / 4f ? 1 : nbFrame * 4 / (float)mvt.Bvh.FrameCount);
+                        mvt.ScoreSeq[i] = score * (nbFrame / (float)mvt.Bvh.FrameCount >= 1 / 2f ? 1 : nbFrame * 2 / (float)mvt.Bvh.FrameCount);
                     }
                     if (mvt.ScoreSeq.Count > 0) mvt.Score = (float)Math.Round(mvt.ScoreSeq.Max(), 3);
                     else mvt.Score = 0f;
