@@ -220,7 +220,7 @@ namespace CERV.MouvementRecognition.Recognition
                 }
             }else if (store.Mode == Mode.Recognition)
             {
-                CheckMultipleMovementsMethode4(deltaTime);
+                CheckMultipleMovementsMethode2(deltaTime);
             }
             else
             {
@@ -356,7 +356,6 @@ namespace CERV.MouvementRecognition.Recognition
                         if (mvt.TabTimePassedBetweenFrame[i] >= (float)mvt.Bvh.FrameTime.TotalSeconds * mvt.Bvh.FrameCount
                         ) //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
                         {
-                            //The first X frames have been detected, we start the movement recognition
                             Debug.Log(mvt.Name);  //TODO: le remettre dans le code
                             mvt.TabTimePassedBetweenFrame
                                 .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
@@ -383,17 +382,17 @@ namespace CERV.MouvementRecognition.Recognition
         /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
         private void CheckMultipleMovementsMethode2(float deltaTime)
         {
+
+            if (listOfMvts != null && RecordingScore) TimeSinceStartRecord += deltaTime;
+
             foreach (var mvt in listOfMvts)
             {
                 var margin = store.Margin;
-                mvt.Score = 0;
                 if (LaunchComparison(mvt.Bvh.Root, mvt, margin, 0)
                 ) //If the user have a position corresponding to the first frame of the movement
                 {
-                    if (mvt.TabTimePassedBetweenFrame == null) mvt.TabTimePassedBetweenFrame = new System.Collections.Generic.List<float>();
-                    if (mvt.ScoreSeq == null) mvt.ScoreSeq = new System.Collections.Generic.List<float>();
-                    mvt.TabTimePassedBetweenFrame.Add(0f); //It adds a new element to the tabTimePassedBetweenFrame list.
-                    mvt.ScoreSeq.Add(0f); //TODO commentaires
+                    mvt.NewMvt();
+                    mvt.ScoreSeq[mvt.ScoreSeq.Count - 1] = 1;   //That's a dirty way to assign the variable, but since we use the same function in Method4, it saves us from making a new method. Furthermore, this method is not supposed to be used.
                 }
 
                 if (mvt.TabTimePassedBetweenFrame != null) //If the list is not empty
@@ -405,7 +404,6 @@ namespace CERV.MouvementRecognition.Recognition
                         if (mvt.TabTimePassedBetweenFrame[i] >= (float)mvt.Bvh.FrameTime.TotalSeconds * mvt.Bvh.FrameCount
                         ) //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
                         {
-                            //The first X frames have been detected, we start the movement recognition
                             mvt.TabTimePassedBetweenFrame
                                 .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
                             mvt.ScoreSeq
@@ -425,16 +423,20 @@ namespace CERV.MouvementRecognition.Recognition
                             continue;
                         }
 
-                        mvt.ScoreSeq[i] = LaunchComparison(mvt.Bvh.Root, mvt, nbFrame);
+                        mvt.ScoreSeq[i] = LaunchComparisonFirstScoreSystem(mvt.Bvh.Root, mvt, nbFrame);
                     }
                     if (mvt.ScoreSeq.Count>0) mvt.Score = (float) Math.Round(mvt.ScoreSeq.Min(), 1);
-                    else mvt.Score = -1f;
+                    else mvt.Score = 1;
                 }
                 else
                 {
-                    mvt.Score = -1f;
+                    mvt.Score = 1f;
                 }
-                Debug.Log(mvt.Name+" score: "+mvt.Score);
+
+                if (RecordingScore)
+                {
+                    mvt.AddScoreToRecord(TimeSinceStartRecord);
+                }
             }
         }
 
@@ -444,14 +446,17 @@ namespace CERV.MouvementRecognition.Recognition
         /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
         private void CheckMultipleMovementsMethode3(float deltaTime)
         {
+
+            if (listOfMvts != null && RecordingScore) TimeSinceStartRecord += deltaTime;
+
             foreach (var mvt in listOfMvts)
             {
                 var margin = store.Margin;
-                mvt.Score = 0;
                 if (LaunchComparison(mvt.Bvh.Root, mvt, margin, 0)
                 ) //If the user have a position corresponding to the first frame of the movement
                 {
                     mvt.NewMvt();
+                    mvt.ScoreSeq[mvt.ScoreSeq.Count-1] = -10f;   //That's a dirty way to assign the variable, but since we use the same function in Method4, it saves us from making a new method. Furthermore, this method is not supposed to be used.
                 }
 
                 if (mvt.TabTimePassedBetweenFrame != null) //If the list is not empty
@@ -463,7 +468,6 @@ namespace CERV.MouvementRecognition.Recognition
                         if (mvt.TabTimePassedBetweenFrame[i] >= (float)mvt.Bvh.FrameTime.TotalSeconds * mvt.Bvh.FrameCount
                         ) //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
                         {
-                            //The first X frames have been detected, we start the movement recognition
                             mvt.TabTimePassedBetweenFrame
                                 .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
                             mvt.ScoreSeq
@@ -488,14 +492,15 @@ namespace CERV.MouvementRecognition.Recognition
                         mvt.OldNbFrame[i] = nbFrame;
                         mvt.ScoreSeq[i] = LaunchComparison(mvt.Bvh.Root, mvt, nbFrame);
                     }
-                    if (mvt.ScoreSeq.Count > 0) mvt.Score = (float)Math.Round(mvt.ScoreSeq.Min(), 1);
-                    else mvt.Score = -1f;
+                    if (mvt.ScoreSeq.Count > 0 && mvt.ScoreSeq.Any(item => item >= 0)) mvt.Score = (float)Math.Round(mvt.ScoreSeq.Where(item => item >= 0).DefaultIfEmpty().Min(), 1);
+                    else mvt.Score = -10f;
                 }
-                else
+                else mvt.Score = -10f;
+
+                if (RecordingScore)
                 {
-                    mvt.Score = -1f;
+                    mvt.AddScoreToRecord(TimeSinceStartRecord);
                 }
-                if(mvt.Score >-1) Debug.Log(mvt.Name + " score: " + mvt.Score);
             }
         }
 
@@ -694,18 +699,63 @@ namespace CERV.MouvementRecognition.Recognition
         /// <param name="root">The <c>BvhNode</c> from which we want to compare the movement.</param>
         /// <param name="animationToCompare">The <c>BvhProperties</c> which contain the movement to compare.</param>
         /// <param name="frame">The index of the frame to look.</param>
+        public float LaunchComparisonFirstScoreSystem(BvhNode root, BvhProperties animationToCompare,
+            int frame)
+        {
+            var bvh = animationToCompare.Bvh;
+            var i = 0;
+            var valToIgnore = animationToCompare.ValuesToIgnore;
+            var nbIgnoredValue = 0;
+            var checkValidity = 0f;
+            foreach (var node in root.Traverse())
+            {
+                i++;
+                var actorRotation = actor.GetReceivedRotation((NeuronBones)Enum.Parse(typeof(NeuronBones), node.Name));
+                for (var j = 0; j < 3; j++)
+                {
+
+                    if (!valToIgnore[node.Name][j])
+                    {
+                        nbIgnoredValue++;
+                        continue;
+                    }
+
+                    checkValidity += (float)Math.Pow(Math.Abs(actorRotation[j] - bvh.GetReceivedPosition(node.Name, frame, true)[j]), 2);
+                }
+            }
+            return 100* checkValidity / (360f *(3f * i - nbIgnoredValue));
+        }
+
+        /// <summary>
+        /// Compare the position of the actor and a frame of <paramref name="animationToCompare"/>.
+        /// </summary>
+        /// <returns>
+        /// The result of the comparison, the bigger is not the better
+        /// </returns>
+        /// <example>
+        /// <code>
+        /// if(launchComparison(bvhHand, bvhProp, 40, 23)<=1)
+        /// {
+        ///     Debug.Log("The movements of the hand are corresponding.");
+        /// }
+        /// </code>
+        /// </example>
+        /// <param name="root">The <c>BvhNode</c> from which we want to compare the movement.</param>
+        /// <param name="animationToCompare">The <c>BvhProperties</c> which contain the movement to compare.</param>
+        /// <param name="frame">The index of the frame to look.</param>
         public float LaunchComparison(BvhNode root, BvhProperties animationToCompare,
             int frame)
         {
-            var valToIgnore = animationToCompare.ValuesToIgnore;
             var bvh = animationToCompare.Bvh;
+            var valToIgnore = animationToCompare.ValuesToIgnore;
             var checkValidity = 0f;
-            var adjustor = 4 / store.Margin;
+            var adjustor = 4 / (float)store.Margin;
             foreach (var node in root.Traverse())
             {
                 var actorRotation = actor.GetReceivedRotation((NeuronBones)Enum.Parse(typeof(NeuronBones), node.Name));
                 for (var j = 0; j < 3; j++)
                 {
+
                     if (!valToIgnore[node.Name][j])
                     {
                         continue;
