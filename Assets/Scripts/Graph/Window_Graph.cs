@@ -59,7 +59,7 @@ public class Window_Graph : MonoBehaviour
         List<int> newScores = store.Scores;
         if (newScores.Count > 0)
         {
-            for (int i = 0; i <= newScores.Count; i++)
+            for (int i = 0; i < newScores.Count; i++)
             {
                 UpdateValue(i, newScores[i]);
             }
