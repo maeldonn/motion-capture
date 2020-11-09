@@ -56,13 +56,13 @@ public class Window_Graph : MonoBehaviour
 
     private void Update()
     {
-        List<int> newScores = store.Scores;
-        if (newScores.Count > 0) // Différent de 0
+        if (store.EmptyScore()) 
         {
+            List<int> newScores = store.Scores;
             for (int i = 0; i < newScores.Count; i++)
             {
                 UpdateValue(i, newScores[i]);
-            }
+            } 
         }
     }
 

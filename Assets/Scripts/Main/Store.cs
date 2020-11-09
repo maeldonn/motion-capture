@@ -96,5 +96,14 @@ namespace CERV.MouvementRecognition.Main
         {
             Scores = new List<int> { 0, 0, 0, 0, 0, 0, 0};
         }
+
+        public bool EmptyScore()
+        {
+            for (int i = 0; i < Scores.Count; i++)
+            {
+                if (Scores[i] != 0) return false 
+            }
+            return true;
+        }
     }
 }
