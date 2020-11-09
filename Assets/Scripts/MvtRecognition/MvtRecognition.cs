@@ -75,6 +75,8 @@ namespace CERV.MouvementRecognition.Recognition
         public System.Collections.Generic.List<int> OldNbFrame;
         public float Score;
         public System.Collections.Generic.List<float> ScoreRecorded;
+        public System.Collections.Generic.List<float> sumScore;
+        public System.Collections.Generic.List<int> sumFrame;
 
         public MovementProperties(string path, string name, int percentageVarianceAccepted) : base(path, name, percentageVarianceAccepted)
         {
@@ -86,10 +88,14 @@ namespace CERV.MouvementRecognition.Recognition
             if (TabTimePassedBetweenFrame == null) TabTimePassedBetweenFrame = new System.Collections.Generic.List<float>();
             if (ScoreSeq == null) ScoreSeq = new System.Collections.Generic.List<float>();
             if (OldNbFrame == null) OldNbFrame = new System.Collections.Generic.List<int>();
+            if (sumScore == null) sumScore = new System.Collections.Generic.List<float>();
+            if (sumFrame == null) sumFrame = new System.Collections.Generic.List<int>();
             if (TabTimePassedBetweenFrame.Count > 0) if (TabTimePassedBetweenFrame[TabTimePassedBetweenFrame.Count - 1] <= 0.1) return;
             TabTimePassedBetweenFrame.Add(0f); //It adds a new element to the tabTimePassedBetweenFrame list.
             ScoreSeq.Add(0f); //TODO commentaires
             OldNbFrame.Add(0); //TODO commentaires
+            sumScore.Add(0); //TODO commentaires
+            sumFrame.Add(0); //TODO commentaires
         }
 
         public void AddScoreToRecord()
@@ -248,6 +254,13 @@ namespace CERV.MouvementRecognition.Recognition
             }
             for (var i = 0; i < itemPaths.Length; i++)
                 listOfMvts.Add(new MovementProperties(itemPaths[i], itemNames[i], percentageVarianceAccepted));
+
+            var tmpList = new List<int>();
+
+            for (int i = 0; i < listOfMvts.Count; i++) tmpList.Add(0); 
+
+            store.Scores = tmpList;
+            Debug.Log("Scores.Count: "+store.Scores.Count);
         }
 
         /// <summary>
@@ -499,6 +512,7 @@ namespace CERV.MouvementRecognition.Recognition
         /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
         private void CheckMultipleMovementsMethode4(float deltaTime)
         {
+            var indexMvt = 0;
             foreach (var mvt in listOfMvts)
             {
                 var margin = store.Margin;
@@ -518,7 +532,9 @@ namespace CERV.MouvementRecognition.Recognition
                         if (mvt.TabTimePassedBetweenFrame[i] >= (float)mvt.Bvh.FrameTime.TotalSeconds * mvt.Bvh.FrameCount
                         ) //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
                         {
-                            //The first X frames have been detected, we start the movement recognition
+                            store.Scores[indexMvt] = (int)(mvt.sumScore[i] * 100 / (float)mvt.sumFrame[i]);
+                            mvt.sumScore.RemoveAt(i);
+                            mvt.sumFrame.RemoveAt(i);
                             mvt.TabTimePassedBetweenFrame
                                 .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
                             mvt.ScoreSeq
@@ -538,14 +554,19 @@ namespace CERV.MouvementRecognition.Recognition
                         if (score < 1 - margin / 90f
                         ) //If the position of the user does not correspond to that of the frame
                         {
+                            
                             mvt.TabTimePassedBetweenFrame
                                 .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
                             mvt.ScoreSeq
                                 .RemoveAt(i); //Remove this element of the ScoreSeq list
+                            mvt.sumScore.RemoveAt(i);
+                            mvt.sumFrame.RemoveAt(i);
                             mvt.OldNbFrame.RemoveAt(i);
                             continue;
                         }
                         mvt.OldNbFrame[i] = nbFrame;
+                        mvt.sumScore[i] += score;
+                        mvt.sumFrame[i]++;
                         mvt.ScoreSeq[i] = score;
                     }
                     if (mvt.ScoreSeq.Count > 0) mvt.Score = (float)Math.Round(mvt.ScoreSeq.Max(), 3);
@@ -560,7 +581,8 @@ namespace CERV.MouvementRecognition.Recognition
                 {
                     mvt.AddScoreToRecord();
                 }
-                //if(mvt.Score>=0.5) Debug.Log(mvt.Name + " score: " + mvt.Score);
+
+                indexMvt++;
             }
         }
 
