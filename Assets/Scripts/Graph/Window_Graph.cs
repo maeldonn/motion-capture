@@ -1,6 +1,6 @@
 ﻿using CERV.MouvementRecognition.Main;
+using CERV.MouvementRecognition.Recognition;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,11 +20,10 @@ public class Window_Graph : MonoBehaviour
     private RectTransform dashTemplateY;
     private List<GameObject> gameObjectList;
     private List<IGraphVisualObject> graphVisualObjectList;
-    private GameObject tooltipGameObject;
     private List<RectTransform> yLabelList;
 
     // Cached values
-    private List<int> valueList;
+    private List<ScoreItem> valueList;
     private IGraphVisual graphVisual;
     private int maxVisibleValueAmount;
     private Func<int, string> getAxisLabelX;
@@ -56,17 +55,17 @@ public class Window_Graph : MonoBehaviour
 
     private void Update()
     {
-        if (store.EmptyScore()) 
+        if (true/*store.EmptyScore()*/) 
         {
-            List<int> newScores = store.Scores;
+            List<ScoreItem> newScores = store.Scores;
             for (int i = 0; i < newScores.Count; i++)
             {
-                UpdateValue(i, newScores[i]);
+                UpdateValue(i, newScores[i].Score);
             } 
         }
     }
 
-    private void ShowGraph(List<int> valueList, IGraphVisual graphVisual, int maxVisibleValueAmount = -1, Func<int, string> getAxisLabelX = null, Func<float, string> getAxisLabelY = null)
+    private void ShowGraph(List<ScoreItem> valueList, IGraphVisual graphVisual, int maxVisibleValueAmount = -1, Func<int, string> getAxisLabelX = null, Func<float, string> getAxisLabelY = null)
     {
         this.valueList = valueList;
         this.graphVisual = graphVisual;
@@ -127,10 +126,10 @@ public class Window_Graph : MonoBehaviour
         for (int i = Mathf.Max(valueList.Count - maxVisibleValueAmount, 0); i < valueList.Count; i++)
         {
             float xPosition = xSize + xIndex * xSize;
-            float yPosition = ((valueList[i] - yMinimum) / (yMaximum - yMinimum)) * graphHeight;
+            float yPosition = ((valueList[i].Score - yMinimum) / (yMaximum - yMinimum)) * graphHeight;
 
             // Add data point visual
-            string tooltipText = getAxisLabelY(valueList[i]);
+            string tooltipText = getAxisLabelY(valueList[i].Score);
             IGraphVisualObject graphVisualObject = graphVisual.CreateGraphVisualObject(new Vector2(xPosition, yPosition), xSize, tooltipText);
             graphVisualObjectList.Add(graphVisualObject);
 
@@ -180,7 +179,7 @@ public class Window_Graph : MonoBehaviour
         float yMinimumBefore, yMaximumBefore;
         CalculateYScale(out yMinimumBefore, out yMaximumBefore);
 
-        valueList[index] = value;
+        valueList[index].Score = value;
 
         float graphWidth = graphContainer.sizeDelta.x;
         float graphHeight = graphContainer.sizeDelta.y;
@@ -208,10 +207,10 @@ public class Window_Graph : MonoBehaviour
             for (int i = Mathf.Max(valueList.Count - maxVisibleValueAmount, 0); i < valueList.Count; i++)
             {
                 float xPosition = xSize + xIndex * xSize;
-                float yPosition = ((valueList[i] - yMinimum) / (yMaximum - yMinimum)) * graphHeight;
+                float yPosition = ((valueList[i].Score - yMinimum) / (yMaximum - yMinimum)) * graphHeight;
 
                 // Add data point visual
-                string tooltipText = getAxisLabelY(valueList[i]);
+                string tooltipText = getAxisLabelY(valueList[i].Score);
                 graphVisualObjectList[xIndex].SetGraphVisualObjectInfo(new Vector2(xPosition, yPosition), xSize, tooltipText);
 
                 xIndex++;
