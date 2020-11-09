@@ -51,7 +51,7 @@ public class Window_Graph : MonoBehaviour
         IGraphVisual barChartVisual = new BarChartVisual(graphContainer, Color.white, .8f);
 
         // Set up base values
-        ShowGraph(new List<int> { 0, 0, 0, 0}, barChartVisual, -1, (int _i) => "" + (_i + 1), (float _f) => "" + (_f / 100));
+        ShowGraph(new List<int> { 0, 0, 0, 0, 0, 0, 0}, barChartVisual, -1, (int _i) => "" + (_i + 1), (float _f) => "" + (_f / 100));
     }
 
     private void Update()
