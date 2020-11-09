@@ -1,4 +1,4 @@
-﻿using CERV.MouvementRecognition.Animations;
+﻿ using CERV.MouvementRecognition.Animations;
 using CERV.MouvementRecognition.Main;
 using Neuron;
 using System;
@@ -154,6 +154,7 @@ namespace CERV.MouvementRecognition.Recognition
 
         // TODO
         private Canvas canvas = null;
+        private Canvas graph = null;
 
         //TODO
         private Store store = null;
@@ -171,7 +172,7 @@ namespace CERV.MouvementRecognition.Recognition
         public System.Collections.Generic.List<MovementProperties> listOfMvts { get; private set; }
 
         public MvtRecognition(GameObject player, GameObject characterExample, GameObject uiHips, Store store,
-            int nbFirstMvtToCheck, int percentageVarianceAccepted, Canvas canvas)
+            int nbFirstMvtToCheck, int percentageVarianceAccepted, Canvas canvas, Canvas graph)
         {
             this.player = player;
             this.characterExample = characterExample;
@@ -180,6 +181,7 @@ namespace CERV.MouvementRecognition.Recognition
             this.nbFirstMvtToCheck = nbFirstMvtToCheck;
             this.percentageVarianceAccepted = percentageVarianceAccepted;
             this.canvas = canvas;
+            this.graph = graph;
         }
 
         /// <summary>
@@ -211,10 +213,12 @@ namespace CERV.MouvementRecognition.Recognition
             }
             else if (store.Mode == Mode.Recognition)
             {
+                graph.enabled = true;
                 CheckMultipleMovementsMethode4(deltaTime);
             }
             else
             {
+                graph.enabled = false;
                 canvas.enabled = false;
                 characterExample.SetActive(false);
             }

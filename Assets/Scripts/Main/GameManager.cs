@@ -17,6 +17,7 @@ namespace CERV.MouvementRecognition.Main
         public int NbFirstMvtToCheck = 0;
         public int PercentageVarianceAccepted = 0;
         public Canvas canvas = null;
+        public Canvas graph = null;
 
         [Space(2)]
         [Header("Interactions:")]
@@ -45,7 +46,7 @@ namespace CERV.MouvementRecognition.Main
         // Start is called before the first frame update
         private void Start()
         {
-            mvtRecognition = new MvtRecognition(Player, CharacterExample, UiHips, Store, NbFirstMvtToCheck, PercentageVarianceAccepted, canvas);
+            mvtRecognition = new MvtRecognition(Player, CharacterExample, UiHips, Store, NbFirstMvtToCheck, PercentageVarianceAccepted, canvas, graph);
             mvtRecognition.InitActor();
             mvtRecognition.InitMvtSet();
             pointingHandler = new PointingHandler(Player, DegreeOfMarginPointing, DegreeOfMarginValidating, LineMenu, LeftHand, ClipConfirm, ClipPointing, mvtRecognition);

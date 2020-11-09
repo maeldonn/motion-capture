@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CERV.MouvementRecognition.Main;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class Window_Graph : MonoBehaviour
     private static Window_Graph instance;
 
     [SerializeField] private Sprite dotSprite;
+    [SerializeField] private Store store;
     private RectTransform graphContainer;
     private RectTransform labelTemplateX;
     private RectTransform labelTemplateY;
@@ -49,96 +51,19 @@ public class Window_Graph : MonoBehaviour
         IGraphVisual barChartVisual = new BarChartVisual(graphContainer, Color.white, .8f);
 
         // Set up base values
-        List<int> valueList = new List<int>() { 5, 98, 56, 45, 30, 22, 17, 15, 13, 17, 25, 37, 40, 36, 33 };
-        ShowGraph(valueList, barChartVisual, -1, (int _i) => "Day " + (_i + 1), (float _f) => "$" + Mathf.RoundToInt(_f));
+        ShowGraph(new List<int> { 0, 0, 0, 0}, barChartVisual, -1, (int _i) => "" + (_i + 1), (float _f) => "" + (_f / 100));
+    }
 
-        /*
-        // Automatically modify graph values and visual
-        bool useBarChart = true;
-        FunctionPeriodic.Create(() => {
-            for (int i = 0; i < valueList.Count; i++) {
-                valueList[i] = Mathf.RoundToInt(valueList[i] * UnityEngine.Random.Range(0.8f, 1.2f));
-                if (valueList[i] < 0) valueList[i] = 0;
+    private void Update()
+    {
+        List<int> newScores = store.Scores;
+        if (newScores.Count > 0)
+        {
+            for (int i = 0; i <= newScores.Count; i++)
+            {
+                UpdateValue(i, newScores[i]);
             }
-            if (useBarChart) {
-                ShowGraph(valueList, barChartVisual, -1, (int _i) => "Day " + (_i + 1), (float _f) => "$" + Mathf.RoundToInt(_f));
-            } else {
-                ShowGraph(valueList, lineGraphVisual, -1, (int _i) => "Day " + (_i + 1), (float _f) => "$" + Mathf.RoundToInt(_f));
-            }
-            useBarChart = !useBarChart;
-        }, .5f);
-        //*/
-
-        int index = 0;
-        FunctionPeriodic.Create(() => {
-            index = (index + 1) % valueList.Count;
-        }, .1f);
-        FunctionPeriodic.Create(() => {
-            //int index = UnityEngine.Random.Range(0, valueList.Count);
-            UpdateValue(index, valueList[index] + UnityEngine.Random.Range(1, 3));
-        }, .02f);
-    }
-
-    public static void ShowTooltip_Static(string tooltipText, Vector2 anchoredPosition)
-    {
-        instance.ShowTooltip(tooltipText, anchoredPosition);
-    }
-
-    private void ShowTooltip(string tooltipText, Vector2 anchoredPosition)
-    {
-        // Show Tooltip GameObject
-        tooltipGameObject.SetActive(true);
-
-        tooltipGameObject.GetComponent<RectTransform>().anchoredPosition = anchoredPosition;
-
-        Text tooltipUIText = tooltipGameObject.transform.Find("text").GetComponent<Text>();
-        tooltipUIText.text = tooltipText;
-
-        float textPaddingSize = 4f;
-        Vector2 backgroundSize = new Vector2(
-            tooltipUIText.preferredWidth + textPaddingSize * 2f,
-            tooltipUIText.preferredHeight + textPaddingSize * 2f
-        );
-
-        tooltipGameObject.transform.Find("background").GetComponent<RectTransform>().sizeDelta = backgroundSize;
-
-        // UI Visibility Sorting based on Hierarchy, SetAsLastSibling in order to show up on top
-        tooltipGameObject.transform.SetAsLastSibling();
-    }
-
-    public static void HideTooltip_Static()
-    {
-        instance.HideTooltip();
-    }
-
-    private void HideTooltip()
-    {
-        tooltipGameObject.SetActive(false);
-    }
-
-    private void SetGetAxisLabelX(Func<int, string> getAxisLabelX)
-    {
-        ShowGraph(this.valueList, this.graphVisual, this.maxVisibleValueAmount, getAxisLabelX, this.getAxisLabelY);
-    }
-
-    private void SetGetAxisLabelY(Func<float, string> getAxisLabelY)
-    {
-        ShowGraph(this.valueList, this.graphVisual, this.maxVisibleValueAmount, this.getAxisLabelX, getAxisLabelY);
-    }
-
-    private void IncreaseVisibleAmount()
-    {
-        ShowGraph(this.valueList, this.graphVisual, this.maxVisibleValueAmount + 1, this.getAxisLabelX, this.getAxisLabelY);
-    }
-
-    private void DecreaseVisibleAmount()
-    {
-        ShowGraph(this.valueList, this.graphVisual, this.maxVisibleValueAmount - 1, this.getAxisLabelX, this.getAxisLabelY);
-    }
-
-    private void SetGraphVisual(IGraphVisual graphVisual)
-    {
-        ShowGraph(this.valueList, graphVisual, this.maxVisibleValueAmount, this.getAxisLabelX, this.getAxisLabelY);
+        }
     }
 
     private void ShowGraph(List<int> valueList, IGraphVisual graphVisual, int maxVisibleValueAmount = -1, Func<int, string> getAxisLabelX = null, Func<float, string> getAxisLabelY = null)
@@ -303,34 +228,8 @@ public class Window_Graph : MonoBehaviour
     private void CalculateYScale(out float yMinimum, out float yMaximum)
     {
         // Identify y Min and Max values
-        yMaximum = valueList[0];
-        yMinimum = valueList[0];
-
-        for (int i = Mathf.Max(valueList.Count - maxVisibleValueAmount, 0); i < valueList.Count; i++)
-        {
-            int value = valueList[i];
-            if (value > yMaximum)
-            {
-                yMaximum = value;
-            }
-            if (value < yMinimum)
-            {
-                yMinimum = value;
-            }
-        }
-
-        float yDifference = yMaximum - yMinimum;
-        if (yDifference <= 0)
-        {
-            yDifference = 5f;
-        }
-        yMaximum = yMaximum + (yDifference * 0.2f);
-        yMinimum = yMinimum - (yDifference * 0.2f);
-
-        if (startYScaleAtZero)
-        {
-            yMinimum = 0f; // Start the graph at zero
-        }
+        yMaximum = 100f;
+        yMinimum = 0f;
     }
 
 
