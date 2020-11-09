@@ -51,13 +51,13 @@ public class Window_Graph : MonoBehaviour
         IGraphVisual barChartVisual = new BarChartVisual(graphContainer, Color.white, .8f);
 
         // Set up base values
-        ShowGraph(new List<int> { 0, 0, 0, 0, 0, 0, 0}, barChartVisual, -1, (int _i) => "" + (_i + 1), (float _f) => "" + (_f / 100));
+        ShowGraph(store.Scores, barChartVisual, -1, (int _i) => "" + (_i + 1), (float _f) => "" + (_f / 100));
     }
 
     private void Update()
     {
         List<int> newScores = store.Scores;
-        if (newScores.Count > 0)
+        if (newScores.Count > 0) // Différent de 0
         {
             for (int i = 0; i < newScores.Count; i++)
             {

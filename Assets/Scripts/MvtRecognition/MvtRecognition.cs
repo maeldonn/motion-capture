@@ -255,13 +255,6 @@ namespace CERV.MouvementRecognition.Recognition
             }
             for (var i = 0; i < itemPaths.Length; i++)
                 listOfMvts.Add(new MovementProperties(itemPaths[i], itemNames[i], percentageVarianceAccepted));
-
-            var tmpList = new List<int>();
-
-            for (int i = 0; i < listOfMvts.Count; i++) tmpList.Add(0); 
-
-            store.Scores = tmpList;
-            Debug.Log("Scores.Count: "+store.Scores.Count);
         }
 
         /// <summary>

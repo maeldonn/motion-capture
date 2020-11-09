@@ -18,7 +18,7 @@ namespace CERV.MouvementRecognition.Main
         private Bvh m_bvh = null;
         private Mode m_mode = Mode.Empty;
         private int m_margin = 30;
-        private List<int> m_scores = new List<int>();
+        private List<int> m_scores = new List<int>() { 0, 0, 0, 0, 0, 0, 0};
 
         public bool UsingArm
         {
@@ -92,9 +92,9 @@ namespace CERV.MouvementRecognition.Main
             Mode = Mode.Recognition;
         }
 
-        public void UpdateScores(List<int> newScores)
+        public void RemoveScores(List<int> newScores)
         {
-            Scores = newScores;
+            Scores = new List<int> { 0, 0, 0, 0, 0, 0, 0};
         }
     }
 }
