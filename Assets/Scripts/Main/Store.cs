@@ -1,4 +1,5 @@
-﻿using UniHumanoid;
+﻿using System.Collections.Generic;
+using UniHumanoid;
 using UnityEngine;
 
 namespace CERV.MouvementRecognition.Main
@@ -17,6 +18,7 @@ namespace CERV.MouvementRecognition.Main
         private Bvh m_bvh = null;
         private Mode m_mode = Mode.Empty;
         private int m_margin = 30;
+        private List<int> m_scores = new List<int>();
 
         public bool UsingArm
         {
@@ -69,6 +71,16 @@ namespace CERV.MouvementRecognition.Main
                 m_margin = value;
             }
         }
+        public List<int> Scores
+        {
+            get { return m_scores; }
+            set
+            {
+                if (m_scores == value) return;
+                m_scores = value;
+            }
+        }
+
 
         public void toggleUsingArm()
         {
@@ -78,6 +90,11 @@ namespace CERV.MouvementRecognition.Main
         public void changeModeToRecognition()
         {
             Mode = Mode.Recognition;
+        }
+
+        public void UpdateScores(List<int> newScores)
+        {
+            Scores = newScores;
         }
     }
 }
