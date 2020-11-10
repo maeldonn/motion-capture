@@ -5,6 +5,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public class ScoreItem
+{
+    private string m_name = null;
+    private int m_score = 0;
+
+    public ScoreItem(string name, int score)
+    {
+        m_name = name;
+        m_score = score;
+    }
+
+    public string Name
+    {
+        get { return m_name; }
+        set
+        {
+            if (m_name == value) return;
+            m_name = value;
+        }
+    }
+
+    public int Score
+    {
+        get { return m_score; }
+        set
+        {
+            if (m_score == value) return;
+            m_score = value;
+        }
+    }
+}
+
 public class Window_Graph : MonoBehaviour
 {
 
@@ -50,27 +82,32 @@ public class Window_Graph : MonoBehaviour
         IGraphVisual barChartVisual = new BarChartVisual(graphContainer, Color.white, .8f);
 
         // Set up base values
-        ShowGraph(store.Scores, barChartVisual, -1, (int _i) => "" + (_i + 1), (float _f) => "" + (_f / 100));
+        ShowGraph(store.Scores, barChartVisual, -1);
     }
 
     private void Update()
     {
-        if (true/*store.EmptyScore()*/) 
+        if (store.Mode == Mode.Recognition) 
         {
             List<ScoreItem> newScores = store.Scores;
             for (int i = 0; i < newScores.Count; i++)
             {
                 UpdateValue(i, newScores[i].Score);
             } 
+        } else
+        {
+            if (!store.EmptyScore())
+            {
+                store.RemoveScores();
+            }
         }
     }
 
-    private void ShowGraph(List<ScoreItem> valueList, IGraphVisual graphVisual, int maxVisibleValueAmount = -1, Func<int, string> getAxisLabelX = null, Func<float, string> getAxisLabelY = null)
+    private void ShowGraph(List<ScoreItem> valueList, IGraphVisual graphVisual, int maxVisibleValueAmount = -1)
     {
         this.valueList = valueList;
         this.graphVisual = graphVisual;
-        this.getAxisLabelX = getAxisLabelX;
-        this.getAxisLabelY = getAxisLabelY;
+        getAxisLabelY = (float _f) => "" + (_f / 100);
 
         if (maxVisibleValueAmount <= 0)
         {
@@ -84,16 +121,6 @@ public class Window_Graph : MonoBehaviour
         }
 
         this.maxVisibleValueAmount = maxVisibleValueAmount;
-
-        // Test for label defaults
-        if (getAxisLabelX == null)
-        {
-            getAxisLabelX = delegate (int _i) { return _i.ToString(); };
-        }
-        if (getAxisLabelY == null)
-        {
-            getAxisLabelY = delegate (float _f) { return Mathf.RoundToInt(_f).ToString(); };
-        }
 
         // Clean up previous graph
         foreach (GameObject gameObject in gameObjectList)
@@ -123,7 +150,7 @@ public class Window_Graph : MonoBehaviour
 
         // Cycle through all visible data points
         int xIndex = 0;
-        for (int i = Mathf.Max(valueList.Count - maxVisibleValueAmount, 0); i < valueList.Count; i++)
+        for (int i = 0; i < valueList.Count; i++)
         {
             float xPosition = xSize + xIndex * xSize;
             float yPosition = ((valueList[i].Score - yMinimum) / (yMaximum - yMinimum)) * graphHeight;
@@ -138,7 +165,7 @@ public class Window_Graph : MonoBehaviour
             labelX.SetParent(graphContainer, false);
             labelX.gameObject.SetActive(true);
             labelX.anchoredPosition = new Vector2(xPosition, -7f);
-            labelX.GetComponent<Text>().text = getAxisLabelX(i);
+            labelX.GetComponent<Text>().text = valueList[i].Name;
             gameObjectList.Add(labelX.gameObject);
 
             // Duplicate the x dash template

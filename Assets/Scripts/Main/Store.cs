@@ -19,8 +19,7 @@ namespace CERV.MouvementRecognition.Main
         private Bvh m_bvh = null;
         private Mode m_mode = Mode.Empty;
         private int m_margin = 30;
-        // [ closing_door, left_step, opening_door, right_step, saluting, sitting_down, standing_up]
-        private List<ScoreItem> m_scores = new List<ScoreItem>() { new ScoreItem("closing_door", 0), new ScoreItem("left_step", 0), new ScoreItem("opening_door", 0), new ScoreItem("right_step", 0), new ScoreItem("saluting", 0), new ScoreItem("sitting_down", 0), new ScoreItem("standing_up", 0) };
+        private List<ScoreItem> m_scores = new List<ScoreItem>() { new ScoreItem("1", 0), new ScoreItem("2", 0), new ScoreItem("3", 0), new ScoreItem("4", 0), new ScoreItem("5", 0), new ScoreItem("6", 0), new ScoreItem("7", 0) };
 
         public bool UsingArm
         {
@@ -95,9 +94,9 @@ namespace CERV.MouvementRecognition.Main
             Mode = Mode.Recognition;
         }
 
-        public void RemoveScores(List<ScoreItem> newScores)
+        public void RemoveScores()
         {
-            Scores = new List<ScoreItem>() { new ScoreItem("closing_door", 0), new ScoreItem("left_step", 0), new ScoreItem("opening_door", 0), new ScoreItem("right_step", 0), new ScoreItem("saluting", 0), new ScoreItem("sitting_down", 0), new ScoreItem("standing_up", 0) };
+            Scores.ForEach((score) => score.Score = 0);
         }
 
         public bool EmptyScore()
