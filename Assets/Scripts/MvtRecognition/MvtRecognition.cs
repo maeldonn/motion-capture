@@ -195,7 +195,6 @@ namespace CERV.MouvementRecognition.Recognition
         /// </summary>
         public void UpdateMvtRecognition()
         {
-            store.Margin = 90;
             store.Mode = Mode.Recognition;
             var deltaTime = Time.deltaTime;
             if (store.Mode == Mode.Training)
@@ -357,7 +356,6 @@ namespace CERV.MouvementRecognition.Recognition
                         ) //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
                         {
                             //The first X frames have been detected, we start the movement recognition
-                            Debug.Log(mvt.Name);  //TODO: le remettre dans le code
                             mvt.TabTimePassedBetweenFrame
                                 .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
                             continue;
@@ -527,7 +525,7 @@ namespace CERV.MouvementRecognition.Recognition
                         if (mvt.TabTimePassedBetweenFrame[i] >= (float)mvt.Bvh.FrameTime.TotalSeconds * mvt.Bvh.FrameCount
                         ) //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
                         {
-                            store.Scores[indexMvt].Name = mvt.Name;
+                            // store.Scores[indexMvt].Name = mvt.Name;
                             store.Scores[indexMvt].Score = (int)(mvt.sumScore[i] * 100 / (float)mvt.sumFrame[i]);
                             mvt.sumScore.RemoveAt(i);
                             mvt.sumFrame.RemoveAt(i);

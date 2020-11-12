@@ -164,7 +164,7 @@ public class Window_Graph : MonoBehaviour
             RectTransform labelX = Instantiate(labelTemplateX);
             labelX.SetParent(graphContainer, false);
             labelX.gameObject.SetActive(true);
-            labelX.anchoredPosition = new Vector2(xPosition, -7f);
+            labelX.anchoredPosition = new Vector2(xPosition - 15, -7f); // TODO: Changer place des labels
             labelX.GetComponent<Text>().text = valueList[i].Name;
             gameObjectList.Add(labelX.gameObject);
 
