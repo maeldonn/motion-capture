@@ -1,4 +1,7 @@
-﻿using UniHumanoid;
+﻿using CERV.MouvementRecognition.Recognition;
+using System.Collections.Generic;
+using UniHumanoid;
+using UnityEngine;
 
 namespace CERV.MouvementRecognition.Main
 {
@@ -9,13 +12,14 @@ namespace CERV.MouvementRecognition.Main
         Recognition
     }
 
-    public class Store : object
+    public class Store : MonoBehaviour
     {
         private bool m_usingArm = false;
         private string m_path = null;
         private Bvh m_bvh = null;
         private Mode m_mode = Mode.Empty;
-        private int m_margin = 30;
+        private int m_margin = 20;
+        private List<ScoreItem> m_scores = new List<ScoreItem>() { new ScoreItem("closing_door", 0), new ScoreItem("left_step", 0), new ScoreItem("opening_door", 0), new ScoreItem("right_step", 0), new ScoreItem("saluting", 0), new ScoreItem("sitting_down", 0), new ScoreItem("standing_up", 0) };
 
         public bool UsingArm
         {
@@ -69,6 +73,17 @@ namespace CERV.MouvementRecognition.Main
             }
         }
 
+        public List<ScoreItem> Scores
+        {
+            get { return m_scores; }
+            set
+            {
+                if (m_scores == value) return;
+                m_scores = value;
+            }
+        }
+
+
         public void toggleUsingArm()
         {
             UsingArm = !UsingArm;
@@ -77,6 +92,20 @@ namespace CERV.MouvementRecognition.Main
         public void changeModeToRecognition()
         {
             Mode = Mode.Recognition;
+        }
+
+        public void RemoveScores()
+        {
+            Scores.ForEach((score) => score.Score = 0);
+        }
+
+        public bool EmptyScore()
+        {
+            for (int i = 0; i < Scores.Count; i++)
+            {
+                if (Scores[i].Score != 0) return false; 
+            }
+            return true;
         }
     }
 }

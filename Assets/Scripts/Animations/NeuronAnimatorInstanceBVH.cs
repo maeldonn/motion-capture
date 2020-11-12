@@ -17,15 +17,13 @@
  limitations under the License.
 ************************************************************************************/
 
+using CERV.MouvementRecognition.Main;
 using Neuron;
 using UniHumanoid;
 using UnityEngine;
 
-using CERV.MouvementRecognition.Main;
-
 namespace CERV.MouvementRecognition.Animations
 {
-
     /// <summary>
     /// The <c>NeuronAnimatorInstanceBVH</c> class.
     /// Contains all the methods to animate a character with a .bvh file. Most of this class is from a pre-existing class on the Neuron library.
@@ -164,7 +162,7 @@ namespace CERV.MouvementRecognition.Animations
                     //	t.localPosition = pos;
 
                     var srcP = pos;
-                    var finalP = Quaternion.Inverse(orignalParentRot[(int) bone]) * srcP;
+                    var finalP = Quaternion.Inverse(orignalParentRot[(int)bone]) * srcP;
                     t.localPosition = finalP;
                 }
             }
@@ -184,13 +182,13 @@ namespace CERV.MouvementRecognition.Animations
                     Quaternion orignalBoneRot = Quaternion.identity;
                     if (orignalRot != null)
                     {
-                        orignalBoneRot = orignalRot[(int) bone];
+                        orignalBoneRot = orignalRot[(int)bone];
                     }
 
                     Quaternion srcQ = rot;
 
-                    Quaternion usedQ = Quaternion.Inverse(orignalParentRot[(int) bone]) * srcQ *
-                                       orignalParentRot[(int) bone];
+                    Quaternion usedQ = Quaternion.Inverse(orignalParentRot[(int)bone]) * srcQ *
+                                       orignalParentRot[(int)bone];
                     Vector3 transedRot = usedQ.eulerAngles;
                     Quaternion finalBoneQ = Quaternion.Euler(transedRot) * orignalBoneRot;
                     t.localRotation = finalBoneQ;
@@ -206,7 +204,7 @@ namespace CERV.MouvementRecognition.Animations
             {
                 //Debug.Log(bvh);
                 SetPosition(animator, HumanBodyBones.Hips,
-                    bvh.GetReceivedPosition("Hips", NbFrame, false) + positionOffsets[(int) HumanBodyBones.Hips]);
+                    bvh.GetReceivedPosition("Hips", NbFrame, false) + positionOffsets[(int)HumanBodyBones.Hips]);
                 SetRotation(animator, HumanBodyBones.Hips, bvh.GetReceivedPosition("Hips", NbFrame, true));
             }
 
@@ -216,13 +214,13 @@ namespace CERV.MouvementRecognition.Animations
                 // legs
                 SetPosition(animator, HumanBodyBones.RightUpperLeg,
                     bvh.GetReceivedPosition("RightUpLeg", NbFrame, false) +
-                    positionOffsets[(int) HumanBodyBones.RightUpperLeg]);
+                    positionOffsets[(int)HumanBodyBones.RightUpperLeg]);
                 SetPosition(animator, HumanBodyBones.RightLowerLeg,
                     bvh.GetReceivedPosition("RightLeg", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.RightFoot, bvh.GetReceivedPosition("RightFoot", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftUpperLeg,
                     bvh.GetReceivedPosition("LeftUpLeg", NbFrame, false) +
-                    positionOffsets[(int) HumanBodyBones.LeftUpperLeg]);
+                    positionOffsets[(int)HumanBodyBones.LeftUpperLeg]);
                 SetPosition(animator, HumanBodyBones.LeftLowerLeg, bvh.GetReceivedPosition("LeftLeg", NbFrame, false));
                 SetPosition(animator, HumanBodyBones.LeftFoot, bvh.GetReceivedPosition("LeftFoot", NbFrame, false));
 
@@ -507,7 +505,7 @@ namespace CERV.MouvementRecognition.Animations
             if (BoundAnimator != null)
             {
                 // initiate values
-                for (int i = 0; i < (int) HumanBodyBones.LastBone; ++i)
+                for (int i = 0; i < (int)HumanBodyBones.LastBone; ++i)
                 {
                     bonePositionOffsets[i] = Vector3.zero;
                     boneRotationOffsets[i] = Vector3.zero;
@@ -519,11 +517,11 @@ namespace CERV.MouvementRecognition.Animations
                     Transform rightLegTransform = BoundAnimator.GetBoneTransform(HumanBodyBones.RightUpperLeg);
                     if (leftLegTransform != null)
                     {
-                        bonePositionOffsets[(int) HumanBodyBones.LeftUpperLeg] =
+                        bonePositionOffsets[(int)HumanBodyBones.LeftUpperLeg] =
                             new Vector3(0.0f, leftLegTransform.localPosition.y, 0.0f);
-                        bonePositionOffsets[(int) HumanBodyBones.RightUpperLeg] =
+                        bonePositionOffsets[(int)HumanBodyBones.RightUpperLeg] =
                             new Vector3(0.0f, rightLegTransform.localPosition.y, 0.0f);
-                        bonePositionOffsets[(int) HumanBodyBones.Hips] = new Vector3(0.0f,
+                        bonePositionOffsets[(int)HumanBodyBones.Hips] = new Vector3(0.0f,
                             -(leftLegTransform.localPosition.y + rightLegTransform.localPosition.y) * 0.5f, 0.0f);
                     }
                 }
@@ -534,7 +532,7 @@ namespace CERV.MouvementRecognition.Animations
         {
             for (int i = 0; i < orignalRot.Length; i++)
             {
-                Transform t = BoundAnimator.GetBoneTransform((HumanBodyBones) i);
+                Transform t = BoundAnimator.GetBoneTransform((HumanBodyBones)i);
 
                 orignalRot[i] = t == null ? Quaternion.identity : t.localRotation;
             }
@@ -542,7 +540,7 @@ namespace CERV.MouvementRecognition.Animations
             for (int i = 0; i < orignalRot.Length; i++)
             {
                 Quaternion parentQs = Quaternion.identity;
-                Transform t = BoundAnimator.GetBoneTransform((HumanBodyBones) i);
+                Transform t = BoundAnimator.GetBoneTransform((HumanBodyBones)i);
                 if (t == null)
                 {
                     orignalParentRot[i] = Quaternion.identity;
