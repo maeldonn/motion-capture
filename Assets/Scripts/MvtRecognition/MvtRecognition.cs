@@ -8,7 +8,7 @@ using System.Linq;
 using UniHumanoid;
 using UnityEngine;
 using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
+ using Debug = UnityEngine.Debug;
 
 namespace CERV.MouvementRecognition.Recognition
 {
@@ -261,6 +261,7 @@ namespace CERV.MouvementRecognition.Recognition
             }
             for (var i = 0; i < itemPaths.Length; i++)
                 listOfMvts.Add(new MovementProperties(itemPaths[i], itemNames[i], percentageVarianceAccepted));
+            BvhAnimationToImage(listOfMvts[0]);
         }
 
         /// <summary>
@@ -858,5 +859,92 @@ namespace CERV.MouvementRecognition.Recognition
 
             return true;
         }
+
+        /// <summary>
+        /// Turn a bvh nodes rotation to an color
+        /// </summary>
+        /// <returns>
+        /// A Color
+        /// </returns>
+        /// <example>
+        /// <code>
+        /// bvhNodeRotationToColor();
+        /// </code>
+        /// </example>
+        /// <param name="rotationToConvert">The <c>Vector3</c> rotations of a bvh node to convert.</param>
+        public Color BvhNodeRotationToColor(Vector3 rotationToConvert)
+        {
+            var normalizedValues = new Vector3();
+            for(var i=0; i< 3;i++)
+            {
+                normalizedValues[i] = (int) (rotationToConvert[i] * (17f / 12f) + 127.5);
+                /*
+                 * The elements of this calculation have been chosen by resolving the following system:
+                 *  | -90 * x + a = 0
+                 *  | 90 * x + a = 255
+                 * The 90 and -90 are the highest rotations an human body can get. 0 and 255 are the minimum and maximum values used to describe a color.
+                 * The result is the following:
+                 *  | x = 17 / 12
+                 *  | a = 127.5
+                 */
+            }
+            return new Color(normalizedValues[0], normalizedValues[1], normalizedValues[2]);
+        }
+
+        /// <summary>
+        /// Turn a bvh frame to an list of pixels
+        /// </summary>
+        /// <returns>
+        /// A list of colors
+        /// </returns>
+        /// <example>
+        /// <code>
+        /// frameToColor();
+        /// </code>
+        /// </example>
+        /// <param name="animationToCompare">The <c>BvhProperties</c> which contain the movement to compare.</param>
+        public List<Color> BvhFrameToColor(BvhProperties animationToCompare,
+            int frame)
+        {
+            var bvh = animationToCompare.Bvh;
+            var returnList = new List<Color>();
+            foreach (var node in bvh.Root.Traverse())
+            {
+                returnList.Add(BvhNodeRotationToColor(bvh.GetReceivedPosition(node.Name, frame, true)));
+            }
+
+            return returnList;
+        }
+
+        /// <summary>
+        /// Turn a bvh animation to an image
+        /// </summary>
+        /// <returns>
+        /// An image
+        /// </returns>
+        /// <example>
+        /// <code>
+        /// bvhAnimationToImage();
+        /// </code>
+        /// </example>
+        /// <param name="animationToCompare">The <c>BvhProperties</c> which contain the movement to compare.</param>
+        public void BvhAnimationToImage(BvhProperties animationToCompare)
+        {
+            var width = animationToCompare.Bvh.FrameCount;
+            var height = animationToCompare.Bvh.Root.Traverse().Count();
+            var colorMap = new List<Color>();
+
+            for (int x = 0; x < width; x++)
+            {
+                colorMap.AddRange(BvhFrameToColor(animationToCompare, x));
+            }
+            Texture2D tex = new Texture2D(width, height, TextureFormat.RGB24, false);
+            tex.filterMode = FilterMode.Point;
+            tex.SetPixels(colorMap.ToArray());
+            tex.Apply();
+            var bytes = tex.EncodeToPNG();
+            File.WriteAllBytes(Application.dataPath + "/../SavedScreen.png", bytes);
+        }
+
     }
 }
