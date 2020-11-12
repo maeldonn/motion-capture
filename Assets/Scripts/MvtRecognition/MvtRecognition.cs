@@ -110,38 +110,6 @@ namespace CERV.MouvementRecognition.Recognition
         }
     }
 
-    public class ScoreItem
-    {
-        private string m_name = null;
-        private int m_score = 0;
-
-        public ScoreItem(string name, int score)
-        {
-            m_name = m_name;
-            m_score = m_score;
-        }
-
-        public string Name
-        {
-            get { return m_name; }
-            set
-            {
-                if (m_name == value) return;
-                m_name = value;
-            }
-        }
-
-        public int Score
-        {
-            get { return m_score; }
-            set
-            {
-                if (m_score == value) return;
-                m_score = value;
-            }
-        }
-    }
-
     /// <summary>
     /// The <c>MvtRecognition</c> class.
     /// Contains all the methods to detect and analyze movements.
@@ -387,7 +355,6 @@ namespace CERV.MouvementRecognition.Recognition
                         ) //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
                         {
                             //The first X frames have been detected, we start the movement recognition
-                            Debug.Log(mvt.Name);  //TODO: le remettre dans le code
                             mvt.TabTimePassedBetweenFrame
                                 .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
                             continue;
@@ -557,7 +524,8 @@ namespace CERV.MouvementRecognition.Recognition
                         if (mvt.TabTimePassedBetweenFrame[i] >= (float)mvt.Bvh.FrameTime.TotalSeconds * mvt.Bvh.FrameCount
                         ) //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
                         {
-                            store.Scores[indexMvt] = new ScoreItem(mvt.Name, (int)(mvt.sumScore[i] * 100 / (float)mvt.sumFrame[i]));
+                            // store.Scores[indexMvt].Name = mvt.Name;
+                            store.Scores[indexMvt].Score = (int)(mvt.sumScore[i] * 100 / (float)mvt.sumFrame[i]);
                             mvt.sumScore.RemoveAt(i);
                             mvt.sumFrame.RemoveAt(i);
                             mvt.TabTimePassedBetweenFrame
