@@ -1085,8 +1085,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5, y: 2.5, z: 10}
   m_LocalScale: {x: 10, y: -5, z: 0.2}
-  m_Children:
-  - {fileID: 1825190817}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18287,7 +18286,7 @@ MonoBehaviour:
   CharacterExample: {fileID: 446665775}
   UiHips: {fileID: 6726494051009210618}
   NbFirstMvtToCheck: 100
-  PercentageVarianceAccepted: 1
+  PercentageVarianceAccepted: 40
   canvas: {fileID: 6726494050961180744}
   graph: {fileID: 1825190821}
   DegreeOfMarginPointing: 40

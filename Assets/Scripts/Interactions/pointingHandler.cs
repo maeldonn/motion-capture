@@ -3,7 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
+using CERV.MouvementRecognition.Main;
+using Neuron;
+using UniHumanoid;
 using UnityEngine;
 
 namespace CERV.MouvementRecognition.Interactions
@@ -45,9 +49,6 @@ namespace CERV.MouvementRecognition.Interactions
     /// </item>
     /// </list>
     /// </summary>
-    /// <remarks>
-    /// The <c>Start()</c> and <c>Update()</c> methods are used, it might be a good idea to do the processing on another file.
-    /// </remarks>
     public class PointingHandler
     {
         private BvhProperties idlePointing = null;
@@ -136,6 +137,9 @@ namespace CERV.MouvementRecognition.Interactions
                     {
                         mvt.ClrScoreRecord();
                     }
+
+                    mvtRecognition.TimeSinceStartRecord = 0f;
+                    Debug.Log("Recording started!");
                 }
                 mvtRecognition.RecordingScore = !mvtRecognition.RecordingScore;
             }
@@ -147,7 +151,7 @@ namespace CERV.MouvementRecognition.Interactions
             {
                 throw new ArgumentException("There are no movement to detect!");
             }
-            if (listMvt[0].ScoreRecorded == null || listMvt[0].ScoreRecorded.Count == 0)
+            if (listMvt[0].ScoreRecorded==null || listMvt[0].ScoreRecorded[0].Count == 0)
             {
                 throw new ArgumentException("Recording session too short!");
             }
@@ -155,20 +159,22 @@ namespace CERV.MouvementRecognition.Interactions
             List<string[]> rowData = new List<string[]>();
 
             // Creating First row of titles manually..
-            string[] rowDataTemp = new string[listMvt.Count];
-            for (int i = 0; i < rowDataTemp.Length; i++)
+            string[] rowDataTemp = new string[listMvt.Count+1];
+            rowDataTemp[0] = "time";
+            for (int i=1; i<rowDataTemp.Length; i++)
             {
-                rowDataTemp[i] = listMvt[i].Name;
+                rowDataTemp[i] = listMvt[i-1].Name;
             }
             rowData.Add(rowDataTemp);
 
             // You can add up the values in as many cells as you want.
-            for (int i = 0; i < listMvt[0].ScoreRecorded.Count; i++)
+            for (int i = 0; i < listMvt[0].ScoreRecorded[0].Count; i++)
             {
-                rowDataTemp = new string[listMvt.Count];
-                for (int j = 0; j < listMvt.Count; j++)
+                rowDataTemp = new string[listMvt.Count+1];
+                rowDataTemp[0] = listMvt[0].ScoreRecorded[0][i].ToString(CultureInfo.InvariantCulture);
+                for (int j = 1; j < listMvt.Count+1; j++)
                 {
-                    rowDataTemp[j] = listMvt[j].ScoreRecorded[i].ToString(CultureInfo.InvariantCulture);
+                    rowDataTemp[j] = listMvt[j-1].ScoreRecorded[1][i].ToString(CultureInfo.InvariantCulture);
                 }
                 rowData.Add(rowDataTemp);
             }
