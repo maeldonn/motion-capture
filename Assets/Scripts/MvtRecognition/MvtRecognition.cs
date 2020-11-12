@@ -5,7 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using UniHumanoid;
+ using System.Runtime.CompilerServices;
+ using UniHumanoid;
 using UnityEngine;
 using UnityEngine.UI;
  using Debug = UnityEngine.Debug;
@@ -261,7 +262,8 @@ namespace CERV.MouvementRecognition.Recognition
             }
             for (var i = 0; i < itemPaths.Length; i++)
                 listOfMvts.Add(new MovementProperties(itemPaths[i], itemNames[i], percentageVarianceAccepted));
-            BvhAnimationToImage(listOfMvts[0]);
+            foreach(var mvt in listOfMvts) BvhAnimationToImage(mvt);
+
         }
 
         /// <summary>
@@ -877,15 +879,15 @@ namespace CERV.MouvementRecognition.Recognition
             var normalizedValues = new Vector3();
             for(var i=0; i< 3;i++)
             {
-                normalizedValues[i] = (int) (rotationToConvert[i] * (17f / 12f) + 127.5);
+                normalizedValues[i] = rotationToConvert[i] * (1f / 360f) + 0.5f;
                 /*
                  * The elements of this calculation have been chosen by resolving the following system:
-                 *  | -90 * x + a = 0
-                 *  | 90 * x + a = 255
-                 * The 90 and -90 are the highest rotations an human body can get. 0 and 255 are the minimum and maximum values used to describe a color.
+                 *  | -180 * x + a = 0
+                 *  | 180 * x + a = 1
+                 * The 180 and -180 are the highest rotations an human body can get. 0 and 1 are the minimum and maximum values used to describe a color.
                  * The result is the following:
-                 *  | x = 17 / 12
-                 *  | a = 127.5
+                 *  | x = 1 / 360
+                 *  | a = 0.5
                  */
             }
             return new Color(normalizedValues[0], normalizedValues[1], normalizedValues[2]);
@@ -938,10 +940,12 @@ namespace CERV.MouvementRecognition.Recognition
             {
                 colorMap.AddRange(BvhFrameToColor(animationToCompare, x));
             }
-            Texture2D tex = new Texture2D(width, height, TextureFormat.RGB24, false);
-            tex.filterMode = FilterMode.Point;
-            tex.SetPixels(colorMap.ToArray());
+
+            Texture2D tex = new Texture2D(width, height) {filterMode = FilterMode.Point};
+            for (int x = 0; x< width; x++)
+                for (int y = 0; y < height; y++) tex.SetPixel(x,y, colorMap[y + x * height]);
             tex.Apply();
+            //GameObject.Find("EmptyWall").GetComponent<Renderer>().material.mainTexture = tex; //Useful to quickly test, TODO remove this line
             var bytes = tex.EncodeToPNG();
             File.WriteAllBytes(Application.dataPath + "/../SavedScreen.png", bytes);
         }
