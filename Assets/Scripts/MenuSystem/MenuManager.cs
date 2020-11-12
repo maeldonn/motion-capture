@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using CERV.MouvementRecognition.Main;
+﻿using CERV.MouvementRecognition.Main;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 

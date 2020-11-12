@@ -1,15 +1,14 @@
-﻿using Neuron;
+﻿ using CERV.MouvementRecognition.Animations;
+using CERV.MouvementRecognition.Main;
+using Neuron;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CERV.MouvementRecognition.Animations;
-using CERV.MouvementRecognition.Main;
 using UniHumanoid;
 using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
-
 
 namespace CERV.MouvementRecognition.Recognition
 {
@@ -19,7 +18,7 @@ namespace CERV.MouvementRecognition.Recognition
         public string Name = null;
         public Dictionary<string, bool[]> ValuesToIgnore = null;
 
-        public BvhProperties(string path,string name, int percentageVarianceAccepted)
+        public BvhProperties(string path, string name, int percentageVarianceAccepted)
         {
             Bvh = new Bvh().GetBvhFromPath(path);
             Name = name;
@@ -44,7 +43,7 @@ namespace CERV.MouvementRecognition.Recognition
                     }
 
                     average /= Bvh.FrameCount;
-                    variance.Add(((1 / (double) Bvh.FrameCount) * sumOfRootsSquared) - Math.Pow(average, 2));
+                    variance.Add(((1 / (double)Bvh.FrameCount) * sumOfRootsSquared) - Math.Pow(average, 2));
                 }
             }
             var returnValue = new Dictionary<string, bool[]>();
@@ -54,12 +53,12 @@ namespace CERV.MouvementRecognition.Recognition
                 returnValue.Add(node.Name,new bool[3]);
                 if (node.Name == "Hips" || node.Name.Contains("Spine"))
                 {
-                    returnValue[node.Name] = new bool[3]{ false, false, false };
+                    returnValue[node.Name] = new bool[3] { false, false, false };
                     continue;
                 }
                 for (var i = 0; i < 3; i++)
                 {
-                    if (variance[i + tmpIndex * 3] < (percentageVarianceAccepted/100f) * variance.Max()) returnValue[node.Name][i] = false;
+                    if (variance[i + tmpIndex * 3] < (percentageVarianceAccepted / 100f) * variance.Max()) returnValue[node.Name][i] = false;
                     else returnValue[node.Name][i] = true;
                 }
 
@@ -75,9 +74,11 @@ namespace CERV.MouvementRecognition.Recognition
         public System.Collections.Generic.List<float> ScoreSeq;
         public System.Collections.Generic.List<int> OldNbFrame;
         public float Score;
-        public System.Collections.Generic.List<List<float>> ScoreRecorded;
-        
-        public MovementProperties(string path, string name, int percentageVarianceAccepted) : base (path, name, percentageVarianceAccepted)
+        public System.Collections.Generic.List<float> ScoreRecorded;
+        public System.Collections.Generic.List<float> sumScore;
+        public System.Collections.Generic.List<int> sumFrame;
+
+        public MovementProperties(string path, string name, int percentageVarianceAccepted) : base(path, name, percentageVarianceAccepted)
         {
             Score = 0;
         }
@@ -87,10 +88,14 @@ namespace CERV.MouvementRecognition.Recognition
             if (TabTimePassedBetweenFrame == null) TabTimePassedBetweenFrame = new System.Collections.Generic.List<float>();
             if (ScoreSeq == null) ScoreSeq = new System.Collections.Generic.List<float>();
             if (OldNbFrame == null) OldNbFrame = new System.Collections.Generic.List<int>();
+            if (sumScore == null) sumScore = new System.Collections.Generic.List<float>();
+            if (sumFrame == null) sumFrame = new System.Collections.Generic.List<int>();
             if (TabTimePassedBetweenFrame.Count > 0) if (TabTimePassedBetweenFrame[TabTimePassedBetweenFrame.Count - 1] <= 0.1) return;
             TabTimePassedBetweenFrame.Add(0f); //It adds a new element to the tabTimePassedBetweenFrame list.
             ScoreSeq.Add(0f); //TODO commentaires
             OldNbFrame.Add(0); //TODO commentaires
+            sumScore.Add(0); //TODO commentaires
+            sumFrame.Add(0); //TODO commentaires
         }
 
         public void AddScoreToRecord(float timeSinceStartRecord)
@@ -160,6 +165,7 @@ namespace CERV.MouvementRecognition.Recognition
 
         // TODO
         private Canvas canvas = null;
+        private Canvas graph = null;
 
         //TODO
         private Store store = null;
@@ -177,10 +183,8 @@ namespace CERV.MouvementRecognition.Recognition
 
         public System.Collections.Generic.List<MovementProperties> listOfMvts { get; private set; }
 
-        
-
         public MvtRecognition(GameObject player, GameObject characterExample, GameObject uiHips, Store store,
-            int nbFirstMvtToCheck, int percentageVarianceAccepted, Canvas canvas)
+            int nbFirstMvtToCheck, int percentageVarianceAccepted, Canvas canvas, Canvas graph)
         {
             this.player = player;
             this.characterExample = characterExample;
@@ -189,6 +193,7 @@ namespace CERV.MouvementRecognition.Recognition
             this.nbFirstMvtToCheck = nbFirstMvtToCheck;
             this.percentageVarianceAccepted = percentageVarianceAccepted;
             this.canvas = canvas;
+            this.graph = graph;
         }
 
         /// <summary>
@@ -218,16 +223,18 @@ namespace CERV.MouvementRecognition.Recognition
                     CheckBeginningMvt(deltaTime);
                     if (characterExample.activeSelf) characterExample.SetActive(false);
                 }
-            }else if (store.Mode == Mode.Recognition)
+            }
+            else if (store.Mode == Mode.Recognition)
             {
-                CheckMultipleMovementsMethode2(deltaTime);
+                graph.enabled = true;
+                CheckMultipleMovementsMethode4(deltaTime);
             }
             else
             {
+                graph.enabled = false;
                 canvas.enabled = false;
                 characterExample.SetActive(false);
             }
-
         }
 
         /// <summary>
@@ -256,8 +263,6 @@ namespace CERV.MouvementRecognition.Recognition
                 listOfMvts.Add(new MovementProperties(itemPaths[i], itemNames[i], percentageVarianceAccepted));
         }
 
-
-
         /// <summary>
         /// Initialize all the values of the MvtRecognition class to work as intended.
         /// </summary>
@@ -269,7 +274,7 @@ namespace CERV.MouvementRecognition.Recognition
             var nameOfBvh = splittedPath[splittedPath.Length - 1].Split('.')[0];
             bvhProp = new BvhProperties(store.Path, nameOfBvh, percentageVarianceAccepted);
             InitActor();
-            totalTime = (float) bvhProp.Bvh.FrameTime.TotalSeconds * bvhProp.Bvh.FrameCount;
+            totalTime = (float)bvhProp.Bvh.FrameTime.TotalSeconds * bvhProp.Bvh.FrameCount;
         }
 
         /// <summary>
@@ -281,7 +286,7 @@ namespace CERV.MouvementRecognition.Recognition
             int margin = store.Margin;
             timePassedBetweenFrame += deltaTime;
             timePassedBetweenFrame %= totalTime;
-            nbFrame = (int) ((timePassedBetweenFrame - timePassedBetweenFrame % bvhProp.Bvh.FrameTime.TotalSeconds) /
+            nbFrame = (int)((timePassedBetweenFrame - timePassedBetweenFrame % bvhProp.Bvh.FrameTime.TotalSeconds) /
                              bvhProp.Bvh.FrameTime.TotalSeconds);
             LaunchComparison(bvhProp.Bvh.Root, bvhProp, margin, nbFrame, ChangeColorUiCharacter);
             return LaunchComparison(bvhProp.Bvh.Root, bvhProp, margin, nbFrame);
@@ -301,7 +306,7 @@ namespace CERV.MouvementRecognition.Recognition
                 if (tabTimePassedBetweenFrame == null) tabTimePassedBetweenFrame = new System.Collections.Generic.List<float>();
                 tabTimePassedBetweenFrame.Add(0f); //It adds a new element to the tabTimePassedBetweenFrame list.
             }
-            
+
             if (tabTimePassedBetweenFrame != null) //If the list is not empty
             {
                 for (var i = 0; i < tabTimePassedBetweenFrame.Count; i++) //We go through it
@@ -317,7 +322,7 @@ namespace CERV.MouvementRecognition.Recognition
                         return;
                     }
 
-                    nbFrame = (int) ((tabTimePassedBetweenFrame[i] -
+                    nbFrame = (int)((tabTimePassedBetweenFrame[i] -
                                       tabTimePassedBetweenFrame[i] % bvhProp.Bvh.FrameTime.TotalSeconds) /
                                      bvhProp.Bvh.FrameTime.TotalSeconds);
                     if (!LaunchComparison(bvhProp.Bvh.Root, bvhProp, margin, nbFrame)
@@ -349,20 +354,19 @@ namespace CERV.MouvementRecognition.Recognition
 
                 if (mvt.TabTimePassedBetweenFrame != null) //If the list is not empty
                 {
-                    for (var i = mvt.TabTimePassedBetweenFrame.Count-1; i >=0 ; i--) //We go through it
+                    for (var i = mvt.TabTimePassedBetweenFrame.Count - 1; i >= 0; i--) //We go through it
                     {
                         mvt.TabTimePassedBetweenFrame[i] +=
                             deltaTime; //Updating the time since the first frame was detected
                         if (mvt.TabTimePassedBetweenFrame[i] >= (float)mvt.Bvh.FrameTime.TotalSeconds * mvt.Bvh.FrameCount
                         ) //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
                         {
-                            Debug.Log(mvt.Name);  //TODO: le remettre dans le code
                             mvt.TabTimePassedBetweenFrame
                                 .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
                             continue;
                         }
 
-                        nbFrame = (int) ((mvt.TabTimePassedBetweenFrame[i] -
+                        nbFrame = (int)((mvt.TabTimePassedBetweenFrame[i] -
                                           mvt.TabTimePassedBetweenFrame[i] % mvt.Bvh.FrameTime.TotalSeconds) /
                                          mvt.Bvh.FrameTime.TotalSeconds);
                         if (!LaunchComparison(mvt.Bvh.Root, mvt, margin, nbFrame)
@@ -478,7 +482,7 @@ namespace CERV.MouvementRecognition.Recognition
                         nbFrame = (int)((mvt.TabTimePassedBetweenFrame[i] -
                                          mvt.TabTimePassedBetweenFrame[i] % mvt.Bvh.FrameTime.TotalSeconds) /
                                         mvt.Bvh.FrameTime.TotalSeconds);
-                        if (nbFrame% mvt.Bvh.FrameCount < (mvt.OldNbFrame[i] + 30)%mvt.Bvh.FrameCount) continue;
+                        if (nbFrame % mvt.Bvh.FrameCount < (mvt.OldNbFrame[i] + 30) % mvt.Bvh.FrameCount) continue;
                         if (!LaunchComparison(mvt.Bvh.Root, mvt, margin, nbFrame)
                         ) //If the position of the user does not correspond to that of the frame
                         {
@@ -512,9 +516,8 @@ namespace CERV.MouvementRecognition.Recognition
         /// <param name="deltaTime">A float value representing the time that has passed since the last frame.</param>
         private void CheckMultipleMovementsMethode4(float deltaTime)
         {
-
             if(listOfMvts!=null && RecordingScore) TimeSinceStartRecord += deltaTime;
-
+            var indexMvt = 0;
             foreach (var mvt in listOfMvts)
             {
                 var margin = store.Margin;
@@ -534,7 +537,10 @@ namespace CERV.MouvementRecognition.Recognition
                         if (mvt.TabTimePassedBetweenFrame[i] >= (float)mvt.Bvh.FrameTime.TotalSeconds * mvt.Bvh.FrameCount
                         ) //If the time passed since the first frame was detected is superior or equal to the time of the X first frame we wanted to test
                         {
-                            //The first X frames have been detected, we start the movement recognition
+                            // store.Scores[indexMvt].Name = mvt.Name;
+                            store.Scores[indexMvt].Score = (int)(mvt.sumScore[i] * 100 / (float)mvt.sumFrame[i]);
+                            mvt.sumScore.RemoveAt(i);
+                            mvt.sumFrame.RemoveAt(i);
                             mvt.TabTimePassedBetweenFrame
                                 .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
                             mvt.ScoreSeq
@@ -551,18 +557,23 @@ namespace CERV.MouvementRecognition.Recognition
                             continue;
                         }
                         var score = LaunchComparisonUpdated(mvt.Bvh.Root, mvt, nbFrame);
-                        if (score<1-margin/90f
+                        if (score < 1 - margin / 90f
                         ) //If the position of the user does not correspond to that of the frame
                         {
+                            
                             mvt.TabTimePassedBetweenFrame
                                 .RemoveAt(i); //Remove this element of the tabTimePassedBetweenFrame list
                             mvt.ScoreSeq
                                 .RemoveAt(i); //Remove this element of the ScoreSeq list
+                            mvt.sumScore.RemoveAt(i);
+                            mvt.sumFrame.RemoveAt(i);
                             mvt.OldNbFrame.RemoveAt(i);
                             continue;
                         }
                         mvt.OldNbFrame[i] = nbFrame;
                         mvt.ScoreSeq[i] = score * (nbFrame / (float)mvt.Bvh.FrameCount >= 1 / 2f ? 1 : nbFrame * 2 / (float)mvt.Bvh.FrameCount);
+                        mvt.sumScore[i] += score;
+                        mvt.sumFrame[i]++;
                     }
                     if (mvt.ScoreSeq.Count > 0) mvt.Score = (float)Math.Round(mvt.ScoreSeq.Max(), 3);
                     else mvt.Score = 0f;
@@ -576,7 +587,8 @@ namespace CERV.MouvementRecognition.Recognition
                 {
                     mvt.AddScoreToRecord(TimeSinceStartRecord);
                 }
-                //if(mvt.Score>=0.5) Debug.Log(mvt.Name + " score: " + mvt.Score);
+
+                indexMvt++;
             }
         }
 
@@ -622,7 +634,7 @@ namespace CERV.MouvementRecognition.Recognition
             foreach (var node in root.Traverse())
             {
                 var checkValidity = true;
-                var actorRotation = actor.GetReceivedRotation((NeuronBones) Enum.Parse(typeof(NeuronBones), node.Name));
+                var actorRotation = actor.GetReceivedRotation((NeuronBones)Enum.Parse(typeof(NeuronBones), node.Name));
                 for (var j = 0; j < 3; j++)
                 {
                     if (!valToIgnore[node.Name][j])
@@ -787,7 +799,6 @@ namespace CERV.MouvementRecognition.Recognition
         public float LaunchComparisonUpdated(BvhNode root, BvhProperties animationToCompare,
             int frame)
         {
-
             var bvh = animationToCompare.Bvh;
             var valToIgnore = animationToCompare.ValuesToIgnore;
             var checkValidity = 0f;
@@ -807,7 +818,7 @@ namespace CERV.MouvementRecognition.Recognition
                     checkValidity += (1 - Math.Abs(actorRotation[j] - bvh.GetReceivedPosition(node.Name, frame, true)[j]) / 90f);
                 }
             }
-            return checkValidity/(3f*i-nbIgnoredValue);
+            return checkValidity / (3f * i - nbIgnoredValue);
         }
 
         /// <summary>
@@ -837,7 +848,7 @@ namespace CERV.MouvementRecognition.Recognition
             foreach (var node in root.Traverse())
             {
                 if (partsToIgnore.Any(node.Name.Contains)) continue;
-                var actorRotation = actor.GetReceivedRotation((NeuronBones) Enum.Parse(typeof(NeuronBones), node.Name));
+                var actorRotation = actor.GetReceivedRotation((NeuronBones)Enum.Parse(typeof(NeuronBones), node.Name));
                 for (var j = 0; j < 3; j++)
                 {
                     if (Math.Abs(actorRotation[j] - bvh.GetReceivedPosition(node.Name, frame, true)[j]) >=

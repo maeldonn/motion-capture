@@ -15,7 +15,6 @@ namespace CERV.MouvementRecognition.Interactions
         private GameObject m_CurrentObject = null;
         private PointerEventData m_Data = null;
 
-
         protected override void Awake()
         {
             base.Awake();
@@ -47,8 +46,6 @@ namespace CERV.MouvementRecognition.Interactions
             //Release
             else if (Gm.pointingHandler.GetConfirmState().ToString() == "Idle") ProcessRelease(m_Data);
         }
-
-
 
         public PointerEventData GetData()
         {

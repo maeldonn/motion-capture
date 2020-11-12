@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CERV.MouvementRecognition.Recognition;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -8,14 +9,9 @@ using CERV.MouvementRecognition.Main;
 using Neuron;
 using UniHumanoid;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using CERV.MouvementRecognition.Recognition;
-using UnityEngine.SocialPlatforms.Impl;
 
 namespace CERV.MouvementRecognition.Interactions
 {
-
     public enum simpleStateMachine
     {
         Idle,
@@ -55,27 +51,27 @@ namespace CERV.MouvementRecognition.Interactions
     /// </summary>
     public class PointingHandler
     {
-        BvhProperties idlePointing = null;
-        BvhProperties BVHactivating = null;
+        private BvhProperties idlePointing = null;
+        private BvhProperties BVHactivating = null;
 
         private GameObject player = null;
 
-        int degreeOfMarginPointing = 0;
+        private int degreeOfMarginPointing = 0;
 
-        int degreeOfMarginValidating = 0;
+        private int degreeOfMarginValidating = 0;
 
-        LineRenderer lineMenu = null;
+        private LineRenderer lineMenu = null;
 
-        GameObject leftHand = null;
+        private GameObject leftHand = null;
 
-        simpleStateMachine stateConfirm;
-        simpleStateMachine statePointing;
+        private simpleStateMachine stateConfirm;
+        private simpleStateMachine statePointing;
 
         public AudioClip clipConfirm = null;
 
         public AudioClip clipPointing = null;
 
-        MvtRecognition mvtRecognition = null;
+        private MvtRecognition mvtRecognition = null;
 
         public PointingHandler(GameObject player, int degreeOfMarginPointing, int degreeOfMarginValidating,
             LineRenderer lineMenu, GameObject leftHand, AudioClip clipConfirm, AudioClip clipPointing,
@@ -92,7 +88,7 @@ namespace CERV.MouvementRecognition.Interactions
         }
 
         /// <summary>
-        /// Update all that is related to the user input (the pointing line and the clicks). 
+        /// Update all that is related to the user input (the pointing line and the clicks).
         /// </summary>
         public void UpdateUserInputs()
         {
@@ -132,14 +128,13 @@ namespace CERV.MouvementRecognition.Interactions
             {
                 if (mvtRecognition.RecordingScore)
                 {
-                    Debug.Log("CSV file created at the following location: "+Path.Combine(Application.persistentDataPath, "scores.csv"));
+                    Debug.Log("CSV file created at the following location: " + Path.Combine(Application.persistentDataPath, "scores.csv"));
                     exportToCsv(mvtRecognition.listOfMvts);
                 }
                 else
                 {
                     foreach (var mvt in mvtRecognition.listOfMvts)
                     {
-
                         mvt.ClrScoreRecord();
                     }
 
@@ -152,7 +147,7 @@ namespace CERV.MouvementRecognition.Interactions
 
         private void exportToCsv(List<MovementProperties> listMvt)
         {
-            if (listMvt==null || listMvt.Count == 0)
+            if (listMvt == null || listMvt.Count == 0)
             {
                 throw new ArgumentException("There are no movement to detect!");
             }
@@ -198,7 +193,6 @@ namespace CERV.MouvementRecognition.Interactions
 
             for (int index = 0; index < length; index++)
                 sb.AppendLine(string.Join(delimiter, output[index]));
-
 
             string filePath = Path.Combine(Application.persistentDataPath, "scores.csv");
 
@@ -247,7 +241,7 @@ namespace CERV.MouvementRecognition.Interactions
                 case simpleStateMachine.IdleAction:
                     if (mvtRecognition.LaunchComparisonPointing(
                         BVHactivating.Bvh.Root.Children[2].Children[0].Children[0].Children[0].Children[2].Children[0]
-                            .Children[0].Children[0].Children[0], BVHactivating.Bvh,new string[0], degreeOfMarginValidating,
+                            .Children[0].Children[0].Children[0], BVHactivating.Bvh, new string[0], degreeOfMarginValidating,
                          1))
                     {
                         stateConfirm = simpleStateMachine.Idle;
@@ -255,6 +249,7 @@ namespace CERV.MouvementRecognition.Interactions
                     }
 
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
