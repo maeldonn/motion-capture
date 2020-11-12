@@ -195,7 +195,6 @@ namespace CERV.MouvementRecognition.Recognition
         /// </summary>
         public void UpdateMvtRecognition()
         {
-            store.Mode = Mode.Recognition;
             var deltaTime = Time.deltaTime;
             if (store.Mode == Mode.Training)
             {
