@@ -74,7 +74,7 @@ namespace CERV.MouvementRecognition.Recognition
         public System.Collections.Generic.List<float> ScoreSeq;
         public System.Collections.Generic.List<int> OldNbFrame;
         public float Score;
-        public System.Collections.Generic.List<float> ScoreRecorded;
+        public System.Collections.Generic.List<List<float>> ScoreRecorded;
         public System.Collections.Generic.List<float> sumScore;
         public System.Collections.Generic.List<int> sumFrame;
 
