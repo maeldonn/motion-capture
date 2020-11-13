@@ -912,6 +912,7 @@ namespace CERV.MouvementRecognition.Recognition
             var returnList = new List<Color>();
             foreach (var node in bvh.Root.Traverse())
             {
+                if (node.Name == "Hips") continue;
                 returnList.Add(BvhNodeRotationToColor(bvh.GetReceivedPosition(node.Name, frame, true)));
             }
 
@@ -933,7 +934,7 @@ namespace CERV.MouvementRecognition.Recognition
         public void BvhAnimationToImage(BvhProperties animationToCompare)
         {
             var width = animationToCompare.Bvh.FrameCount;
-            var height = animationToCompare.Bvh.Root.Traverse().Count();
+            var height = animationToCompare.Bvh.Root.Traverse().Count() - 1;    //We do -1 because we want to ignore the Hips.
             var colorMap = new List<Color>();
 
             for (int x = 0; x < width; x++)
@@ -945,9 +946,10 @@ namespace CERV.MouvementRecognition.Recognition
             for (int x = 0; x< width; x++)
                 for (int y = 0; y < height; y++) tex.SetPixel(x,y, colorMap[y + x * height]);
             tex.Apply();
-            //GameObject.Find("EmptyWall").GetComponent<Renderer>().material.mainTexture = tex; //Useful to quickly test, TODO remove this line
             var bytes = tex.EncodeToPNG();
-            File.WriteAllBytes(Application.dataPath + "/../SavedScreen.png", bytes);
+            if (!Directory.Exists(Application.persistentDataPath + "/BVHImage"))
+                Directory.CreateDirectory(Application.persistentDataPath + "/BVHImage"); // returns a DirectoryInfo object
+            File.WriteAllBytes(Application.persistentDataPath + "/BVHImage/"+ animationToCompare.Name+".png", bytes);
         }
 
     }
