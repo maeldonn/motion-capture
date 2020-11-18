@@ -202,7 +202,6 @@ namespace CERV.MouvementRecognition.Recognition
         public void UpdateMvtRecognition()
         {
             var deltaTime = Time.deltaTime;
-            store.Mode = Mode.Recognition;
             if (store.Mode == Mode.Training)
             {
                 // Canvas on
