@@ -262,8 +262,26 @@ namespace CERV.MouvementRecognition.Recognition
             }
             for (var i = 0; i < itemPaths.Length; i++)
                 listOfMvts.Add(new MovementProperties(itemPaths[i], itemNames[i], percentageVarianceAccepted));
-            foreach(var mvt in listOfMvts) BvhAnimationToImage(mvt);
 
+            /*
+             * This code is used to export our dataset of bvh to image, it is useless if the machine learning model is already trained
+             * 
+             *
+            var listOfMvtsDataset = new System.Collections.Generic.List<MovementProperties>();
+            directoryPath = "C:/Users/cerv/Documents/testCNN/rechercheDataset/CarnegieMellon/chosenFiles";
+            itemPaths = Directory.GetFiles(directoryPath, "*.bvh");
+            itemNames = new string[itemPaths.Length];
+            for (int i = 0; i < itemNames.Length; i++)
+            {
+                string[] splittedPath = itemPaths[i].Split('/');
+                itemNames[i] = splittedPath[splittedPath.Length - 1].Split('.')[0];
+            }
+            for (var i = 0; i < itemPaths.Length; i++)
+            {
+                listOfMvtsDataset.Add(new MovementProperties(itemPaths[i], itemNames[i], percentageVarianceAccepted));
+            }
+            foreach (var mvt in listOfMvtsDataset) BvhAnimationToImage(mvt);
+            */
         }
 
         /// <summary>
@@ -912,10 +930,10 @@ namespace CERV.MouvementRecognition.Recognition
             var returnList = new List<Color>();
             foreach (var node in bvh.Root.Traverse())
             {
-                if (node.Name == "Hips") continue;
+                if (node.Name == "hip") continue;
+
                 returnList.Add(BvhNodeRotationToColor(bvh.GetReceivedPosition(node.Name, frame, true)));
             }
-
             return returnList;
         }
 
@@ -935,6 +953,12 @@ namespace CERV.MouvementRecognition.Recognition
         {
             var width = animationToCompare.Bvh.FrameCount;
             var height = animationToCompare.Bvh.Root.Traverse().Count() - 1;    //We do -1 because we want to ignore the Hips.
+            if(width>= 16385 || height >= 16385)
+            {
+                Debug.Log("This animation is too long to be exported as an image (should be <16385 frames):" + animationToCompare.Name);
+                return;
+            }
+
             var colorMap = new List<Color>();
 
             for (int x = 0; x < width; x++)
