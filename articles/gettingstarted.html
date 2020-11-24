@@ -87,11 +87,11 @@
                      </h1>
                      <h1 id="presentation-du-mat-riel">Présentation du matériel</h1>
                      <img src="https://neuronmocap.com/sites/default/files/styles/store_image/public/2020_PN32V2_STORE_0.png?itok=l0tQq9zH" style="width: 650px; max-width: 100%; height: auto" /><br/>
-                     <p>La tenue Perception Neuron est composée d'un ensemble de sangles, avec à certains endroits clés des emplacements pour des capteurs.</p>
+                     <p>La tenue Perception Neuron est une tenue de motion capture développée par Noitom (<a href="https://neuronmocap.com/">site internet</a>). Elle est composée d'un ensemble de sangles, avec à certains endroits clés des emplacements pour des capteurs.</p>
 					 <img src="https://neuronmocap.com/sites/default/files/styles/store_image/public/store_pn32_5_1.jpg?itok=9RUlVwTh" style="width: 650px; max-width: 100%; height: auto" /><br/>
 					 <p>Ceux-ci se clipsent sur la tenue, et permettent d'obtenir la position de chaque membre de l'utilisateur.</p>
 					 <img src="https://neuronmocap.com/sites/default/files/styles/store_image/public/store_pn32_2_0.jpg?itok=5ZfUVnDn" style="width: 650px; max-width: 100%; height: auto" /><br/>
-                     <p>Chaque parties de la tenue sont connectées entre-elles, et celle-ci se rejoingnent sur le hub ci dessous.</p>
+                     <p>Chaque parties de la tenue sont connectées entre-elles, et celles-ci se rejoingnent sur le hub ci dessous.</p>
 					 <img src="https://neuronmocap.com/sites/default/files/styles/store_image/public/store_pn32_3_0.jpg?itok=7WojpRxg" style="width: 650px; max-width: 100%; height: auto" /><br/>
 					 <p>Celui-ci se connectera ensuite au logiciel Axis Neuron, qui interprétera les données reçues pour qu'elles soient exploitables. Cela peut se faire en filaire ou en wifi via un routeur.</p>
                      <h1 id="axis-neuron">Axis Neuron</h1>
@@ -215,63 +215,31 @@
                         <br/><img src="https://drive.google.com/uc?export=view&id=1zdMwhqgpag1kimuJ9MFnrAEswDkWPhBS" style="width: 650px; max-width: 100%; height: auto" /><br/>
                      </p>
                      <h1 id="unity">Unity</h1>
+                     <h2 id="premiers-pas-sur-unity">Premiers pas sur Unity</h2>
+					 <p>Unity est un moteur de jeu gratuit, utilisé principalement dans le domaine du jeu vidéo, qui permet de réaliser très rapidement des prototypes de qualité comme des projet de plus grande ampleur.</p>
+					 <p>Une bonne introduction à ce logiciel est proposé par Unity Technologies, l'entreprise qui développe le logiciel:</p>
+					 <iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLX2vGYjWbI0Q1e0IIGsYro3SiE0chtRtc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					 <p>Unity dispose d'une communauté très active et d'un grand nombre de ressource, et si cette introduction ne vous suffit nous vous invitons à les consulter.</p>
+					 <p>Les parties suivantes concernent le fonctionnement de Unity en parallèle du logiciel Axis Neuron.</p>
                      <h2 id="installation-de-la-librairie-de-perception-neuron">Installation de la librairie de Perception Neuron</h2>
-                     <p>NOTE: si on clone le projet directement, la librairie est déjà présente et il n&#39;est alors pas nécessaire de l&#39;importer.
-                        Sur Unity, on importe la librairie de Perception Neuron disponible <a href="https://neuronmocap.com/software/unity-sdk">ici</a> (ou en <a href="https://neuronmocap.com/sites/default/files/NeuronUnityIntegration0.2.18.zip">lien direct</a>).
-                     </p>
-                     <p>Choisissez Ressources&gt; Importer le package&gt; Packages personnalisés pour importer le SDK PerceptionNeuron pour Unity.
-                        //IMAGE
-                     </p>
-                     <p>De nombreux exemples basiques sont disponible.</p>
-                     <p>La librairie est composé de plusieurs scripts : </p>
-                     <ol>
-                        <li>
-                           <p>Assets/Neuron/Scripts/Mocap/NeuronDataReaderManaged.cs Version gérée en C# pour la réception des données BVH de Axis Neuron.</p>
-                        </li>
-                        <li>
-                           <p>Assets/Neuron/Scripts/Mocap/NeuronConnection.cs<br>NeuronConnection gère les connexions avec Axis Neuron en utilisant NeuronDataReaderManaged.cs. Vous pouvez vous connecter à plusieurs instances d&#39;Axis Neuron et chaque connexion sera mappée à une instance de NeuronSource.</p>
-                        </li>
-                        <li>
-                           <p>Assets/Neuron/Scripts/Mocap/NeuronSource.cs<br>NeuronSource gère des instances de NeuronActor avec deux dictionnaires appelés ActiveActors et SuspendedActors. NeuronSource surveille la dernière mise à jour de l&#39;horodatage dans NeuronActor par la méthode OnUpdate et utilise un seuil pour juger si un acteur est perdu (le nombre d&#39;acteurs dans Axis Neuron a changé ou la connexion a été complètement perdue). Lorsque cela se produit, NeuronSource ajoute ou supprime des acteurs entre les deux dictionnaires et en informe NeuronActor.</p>
-                        </li>
-                        <li>
-                           <p>Assets/Neuron/Scripts/Mocap/NeuronActor.cs<br>Classe de données qui permet de ne stocker que la trame de données de mouvement la plus récente, fournit également des méthodes pour analyser les données de mouvement reçues qui sont reçues comme valeurs flottantes du réseau. NeuronActor sauvegarde également les informations de la mocap et fournit des méthodes pour enregistrer les rappels lorsqu&#39;ils ont été repris ou suspendus par NeuronSource.</p>
-                        </li>
-                        <li>
-                           <p>Assets/Neuron/Scripts/Mocap/NeuronInstance.cs<br>Classe de base pour toutes sortes d&#39;instances pour la réception de données de mouvement. Héritage de UnityEngine.MonoBehaviour. NeuronInstance fournit des callbacks pour les changements d&#39;état et la réception d&#39;informations mocap d&#39;une instance NeuronActor qui était liée à cette instance par des méthodes de connexion ou autres. Cette classe n&#39;est pas destinée à être utilisée directement mais peut être héritée pour fournir des méthodes personnalisées pour appliquer des données de mouvement, gérer les changements d&#39;état et les informations mocap.</p>
-                        </li>
-                        <li>
-                           <p>Assets/Neuron/Scripts/Mocap/NeuronAnimatorInstance.cs<br>Inherited from NeuronInstance. Provides custom methods to apply Neuron motion data to the transform components of the bones bound in the Unity animator component. Needs a humanoid skeleton setup to work properly.</p>
-                        </li>
-                        <li>
-                           <p>Assets/Neuron/Scripts/Mocap/NeuronAnimatorPhysicalReference.cs<br>Data class for initialization and cleanup of a reference skeleton used for motions based upon Unity’s rigidbody component. Used by NeuronAnimatorInstance if physics toggle is enabled.</p>
-                        </li>
-                        <li>
-                           <p>Assets/Neuron/Scripts/Mocap/NeuronTransformsInstance.cs<br>Inherited from NeuronInstance. Provides custom methods to apply Neuron motion data directly to transform components. Use this for non-humanoid skeletons or skeletons with more bones then the default setup used in Unity.</p>
-                        </li>
-                        <li>
-                           <p>Assets/Neuron/Scripts/Mocap/NeuronTransformsPhysicalReference.cs<br>Classe de données pour l&#39;initialisation et le nettoyage d&#39;un squelette de référence utilisé pour les mouvements basés sur le composant de corps rigide de Unity. Utilisée par NeuronTransformsInstance si le basculement physique est activé.</p>
-                        </li>
-                        <li>
-                           <p>Assets/Neuron/Scripts/Mocap/NeuronInstancesManager.cs<br>Pour chaque NeuronActeur, le NeuronInstancesManager conserve exactement une NeuronAnimatorInstance. Utilisé dans NeuronDebugViewer.</p>
-                        </li>
-                        <li>
-                           <p>Assets/Neuron/Scripts/Utilities/BoneLine.cs<br>Classe d&#39;utilité utilisant un logiciel de rendu de lignes pour dessiner des lignes osseuses.</p>
-                        </li>
-                        <li>
-                           <p>Assets/Neuron/Scripts/Utilities/BoneLines.cs<br>Classe d&#39;utilité pour l&#39;éditeur Neuron permettant d&#39;ajouter ou de supprimer des BoneLines.</p>
-                        </li>
-                        <li>
-                           <p>Assets/Neuron/Scripts/Utilities/BoneRigidbodies.cs<br>Classe d&#39;utilitaire pour l&#39;éditeur Neuron permettant d&#39;ajouter ou de supprimer des corps rigides.</p>
-                        </li>
-                        <li>
-                           <p>Assets/Neuron/Scripts/Utilities/FPSCounter.cs Classe d&#39;utilité pour calculer le FPS (Frames-Per-Second).</p>
-                        </li>
-                     </ol>
+                     <p>NOTE: si on clone le projet "motion-capture" directement, la librairie est déjà présente et il n'est alors pas nécessaire de l'importer.</p>
+                     <p>Pour facilité l'utilisation de la tenue, Noitom à développé des librairies pour divers logiciels d'animation et de jeux-vidéo, dont Unity. Celles-ci permettent de facilement lier les données reçu sur le logiciel Axis Neuron avec le logiciel voulu. Cette partie vous apprendra à importer cette librairie.</p>
+					 <p>Celle-ci est disponible <a href="https://neuronmocap.com/software/unity-sdk">ici</a> (ou en <a href="https://neuronmocap.com/sites/default/files/NeuronUnityIntegration0.2.18.zip">lien direct</a>).</p>
+					 <img src="https://drive.google.com/uc?export=view&id=1IHf6dKzETIYxO9qqIAhgrNcZrlNDL0U3" style="width: 650px; max-width: 100%; height: auto" /><br/>
+					 
+					 <p>Commencez par télécharger la librairie. Un fois cela fait, ouvrez l'archive obtenue, et rentrez dans le dossier. Vous trouverez alors un fichier ".unitypackage". Il y a plusieurs manière de l'importer dans Unity, mais le plus simple reste encore d'ouvrir le projet où vous souhaitez l'importer avec Unity, puis de double-cliquer dessus. Unity va alors automatiquement lancer la procédure d'importation sur ce projet spécifiquement.</p>
+					 <img src="https://drive.google.com/uc?export=view&id=1G-CMhwjo1ZnelZhPBq-DBNUie7MrEb4u" style="width: 650px; max-width: 100%; height: auto" /><br/>
+					 <p>Sur Unity, une fenêtre va s'ouvrir, vous demandant quels fichiers vous souhaitez importer. Tous ne vous serons pas utiles, néanmoins pour éviter de surcharger ce tutoriel nous les laisserons tous cochés. Appuyez sur "Import" en bas de cette fenêtre:</p>
+					 <img src="https://drive.google.com/uc?export=view&id=1J54sLnYFX3aYl816soakxsZnkjeYu0lL" style="width: 650px; max-width: 100%; height: auto" /><br/>
+					 <p>Dans les assets de votre projet, un nouveau dossier est apparu, nommé Noitom. C'est là que se trouvent tout les fichiers de la librairie.</p>
+					 <img src="https://drive.google.com/uc?export=view&id=1mEZJZxd2yYkxK0CCsXi33usFNNdTffH7" style="width: 650px; max-width: 100%; height: auto" /><br/>
                      <h2 id="configuration-de-unity">Configuration de Unity</h2>
-                     <p>Une fois la librairie importée, il faut configurer le script NeuronConnection.cs et modifier les paramètres de connexion.
-                        //IMAGE
-                     </p>
+                     <p>Plusieurs exemples sont disponibles dans la librairie afin de se familiariser avec son fonctionnement et en comprendre les différents aspect. Dans cette partie, nous vous montrerons à partir de l'un d'entre eux comment relié Unity avec Axis Neuron.</p>
+                     <p>La première étape est de charger l'exemple en question. Pour cela, allez dans l'arborescence de votre projet, puis dans Noitom > PerceptionNeuron > QuickStart, et chargez la scène "QuickStart" en double cliquant dessus.</p>
+					 <img src="https://drive.google.com/uc?export=view&id=1617jOhkBte7-EXqtayvLvi3WQDJpaFV4" style="width: 650px; max-width: 100%; height: auto" />
+					 <p><br/>Ensuite, dans l'arborescence de votre scène, cliquez sur l'objet "NeuronRobot_SingleMesh - Animator", et regardez ses Components à droite. Le script "Neuron Animator Instance" est attaché à celui-ci, et c'est ce qui nous interessera. En effet, celui-ci gère la liaison entre Unity et Axis, et anime le personnage auquel il est attaché. Vous pourrez changer l'adresse IP et le port pour qu'ils correspondent à ceux de Axis Neuron (si tout est laissé par défaut ce n'est pas necessaire). Il faut aussi cocher "Connect To Axis" pour que les données envoyés par Axis Neuron soient lues.</p>
+					 <img src="https://drive.google.com/uc?export=view&id=1i-booGzMP1Wx_gmg09zw1toK1NSlNztc" style="width: 650px; max-width: 100%; height: auto" />
+					 <p><br/>Un fois tout cela fait, lancez le programme Unity. Si une animation est jouée sur Axis Neuron au même moment, le personnage d'Unity devrait s'animer de la même manière.</p>
                   </article>
                </div>
                <div class="hidden-sm col-md-2" role="complementary">
