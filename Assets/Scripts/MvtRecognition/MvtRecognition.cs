@@ -23,7 +23,7 @@ namespace CERV.MouvementRecognition.Recognition
         {
             Bvh = new Bvh().GetBvhFromPath(path);
             Name = name;
-            ValuesToIgnore = DetermineValuesToIgnore(Bvh, percentageVarianceAccepted);
+            //ValuesToIgnore = DetermineValuesToIgnore(Bvh, percentageVarianceAccepted);
         }
 
         public Dictionary<string, bool[]> DetermineValuesToIgnore(Bvh Bvh, int percentageVarianceAccepted)
@@ -263,12 +263,15 @@ namespace CERV.MouvementRecognition.Recognition
             for (var i = 0; i < itemPaths.Length; i++)
                 listOfMvts.Add(new MovementProperties(itemPaths[i], itemNames[i], percentageVarianceAccepted));
 
+            var modelMvt = new MovementProperties("C:/Users/cerv/Documents/testCNN/rechercheDataset/SkeletalData/skl_s12_a11_r05.bvh", "skl_s12_a11_r05", percentageVarianceAccepted);
+            convertBVH(listOfMvts[0],modelMvt);
+
             /*
              * This code is used to export our dataset of bvh to image, it is useless if the machine learning model is already trained
              * 
              *
             var listOfMvtsDataset = new System.Collections.Generic.List<MovementProperties>();
-            directoryPath = "C:/Users/cerv/Documents/testCNN/rechercheDataset/CarnegieMellon/chosenFiles";
+            directoryPath = "C:/Users/cerv/Documents/testCNN/rechercheDataset/SkeletalData";
             itemPaths = Directory.GetFiles(directoryPath, "*.bvh");
             itemNames = new string[itemPaths.Length];
             for (int i = 0; i < itemNames.Length; i++)
@@ -930,7 +933,7 @@ namespace CERV.MouvementRecognition.Recognition
             var returnList = new List<Color>();
             foreach (var node in bvh.Root.Traverse())
             {
-                if (node.Name == "hip") continue;
+                if (node.Name == "Hips") continue;
 
                 returnList.Add(BvhNodeRotationToColor(bvh.GetReceivedPosition(node.Name, frame, true)));
             }
@@ -974,6 +977,85 @@ namespace CERV.MouvementRecognition.Recognition
             if (!Directory.Exists(Application.persistentDataPath + "/BVHImage"))
                 Directory.CreateDirectory(Application.persistentDataPath + "/BVHImage"); // returns a DirectoryInfo object
             File.WriteAllBytes(Application.persistentDataPath + "/BVHImage/"+ animationToCompare.Name+".png", bytes);
+        }
+
+        /// TODO: commentaires
+        public Bvh convertBVH(BvhProperties originalFormat, BvhProperties wantedFormat)
+        {
+            var bvhOriginal = originalFormat.Bvh;
+            var bvhOutputed = new Bvh(wantedFormat.Bvh.Root, bvhOriginal.FrameCount, (float)bvhOriginal.FrameTime.TotalSeconds);
+            var index = 0;
+            foreach (var node in bvhOriginal.Root.Traverse())
+            {
+                var listOfNodeToIgnore = new List<String> { "InHand", "Thumb", "Index","Middle","Pinky","Ring", "Spine3" };
+                if (listOfNodeToIgnore.Any(node.Name.Contains))
+                {
+                    continue;
+                }
+
+                var nodeOutputed = bvhOutputed.Root.Traverse().Where(nodeWantedTmp => nodeWantedTmp.Name.ToLower() == node.Name.ToLower()).FirstOrDefault();
+                if(nodeOutputed == null)
+                {
+                    Debug.Log("This should not be displayed, node: "+node.Name);
+                    continue;
+                }
+                index++;
+
+                var nodeOffset = node.Offset;
+                var nodeOutputedOffset = nodeOutputed.Offset;
+                var angle = getAngleBetweenVectors(new Vector3(nodeOffset.x, nodeOffset.y, nodeOffset.z), new Vector3(nodeOutputedOffset.x, nodeOutputedOffset.y, nodeOutputedOffset.z));
+                //Debug.Log("node name: "+node.Name+"    start: "+nodeOffset.x+" "+ nodeOffset.y + " "+ nodeOffset.z +"     end: " + nodeWantedOffset.x + " " + nodeWantedOffset.y + " " + nodeWantedOffset.z + "     angle: " +angle);
+
+                if (node.Name.Contains("Spine2"))
+                {
+                    var nodeSpine3 = bvhOriginal.Root.Traverse().Where(nodeOutputTmp => nodeOutputTmp.Name == "Spine3").FirstOrDefault();
+                    var nodeOutputedOffset = nodeOutputed.Offset;
+                    angle += 
+                    //TODO: ajouter à l'angle globale celui de Spine3
+
+                }
+
+                if (node.Name.Contains("Foot"))
+                {
+                    //TODO: ajouter un node ToeBase avec jsp quelle rotation -> surement 0
+                }
+
+                for (int i =0; i< bvhOriginal.FrameCount; i++) //i = no de la frame
+                {
+                    for (int j = 0; j < 3; j++) //j = l'axe voulu 
+                    {
+                        bvhOutputed.Channels[index*3+j+6].Keys[i] = (angle[j] + bvhOriginal.GetReceivedPosition(node.Name, i, true)[j])%180;
+                    }
+                }
+
+                var listOfNodeWithRoll = new List<String> { "Arm", "Leg" };
+                if (listOfNodeWithRoll.Any(node.Name.Contains))
+                {
+                    //TODO: noeud roll, avec aucune rotation
+                    index++;
+                    for (int i = 0; i < bvhOriginal.FrameCount; i++) //i = no de la frame
+                    {
+                        for (int j = 0; j < 3; j++) //j = l'axe voulu 
+                        {
+                            bvhOutputed.Channels[index * 3 + j + 6].Keys[i] = 0;
+                        }
+                    }
+                    continue;
+                }
+
+            }
+            foreach(var c in bvhOutputed.Channels)
+            {
+                Debug.Log(c.Keys[0]);
+            }
+            return bvhOutputed;
+        }
+
+        /// TODO: commentaires
+        public Vector3 getAngleBetweenVectors(Vector3 start, Vector3 end)
+        {
+            var qRot = Quaternion.FromToRotation(start, end);
+            return qRot.eulerAngles;
         }
 
     }

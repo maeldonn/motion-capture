@@ -82,13 +82,13 @@ namespace UniHumanoid
         public Single3 Offset
         {
             get;
-            private set;
+            set;
         }
 
         public Channel[] Channels
         {
             get;
-            private set;
+            set;
         }
 
         public List<BvhNode> Children
