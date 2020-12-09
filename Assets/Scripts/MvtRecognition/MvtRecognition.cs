@@ -26,6 +26,13 @@ namespace CERV.MouvementRecognition.Recognition
             //ValuesToIgnore = DetermineValuesToIgnore(Bvh, percentageVarianceAccepted);
         }
 
+        public BvhProperties(Bvh inputBvh, string name, int percentageVarianceAccepted)
+        {
+            Bvh = inputBvh;
+            Name = name;
+            //ValuesToIgnore = DetermineValuesToIgnore(Bvh, percentageVarianceAccepted);
+        }
+
         public Dictionary<string, bool[]> DetermineValuesToIgnore(Bvh Bvh, int percentageVarianceAccepted)
         {
             var variance = new System.Collections.Generic.List<double>();
@@ -264,8 +271,10 @@ namespace CERV.MouvementRecognition.Recognition
                 listOfMvts.Add(new MovementProperties(itemPaths[i], itemNames[i], percentageVarianceAccepted));
 
             var modelMvt = new MovementProperties("C:/Users/cerv/Documents/testCNN/rechercheDataset/SkeletalData/skl_s12_a11_r05.bvh", "skl_s12_a11_r05", percentageVarianceAccepted);
-            convertBVH(listOfMvts[0],modelMvt);
-
+            var convertedBVH = convertBVH(listOfMvts[0],modelMvt);
+            BvhAnimationToImage(new BvhProperties(convertedBVH,"test", percentageVarianceAccepted));
+            BvhAnimationToImage(new BvhProperties(modelMvt.Bvh, "test2", percentageVarianceAccepted));
+            BvhAnimationToImage(new BvhProperties(listOfMvts[0].Bvh, "test3", percentageVarianceAccepted));
             /*
              * This code is used to export our dataset of bvh to image, it is useless if the machine learning model is already trained
              * 
@@ -1009,14 +1018,30 @@ namespace CERV.MouvementRecognition.Recognition
                 if (node.Name.Contains("Spine2"))
                 {
                     var nodeSpine3 = bvhOriginal.Root.Traverse().Where(nodeOutputTmp => nodeOutputTmp.Name == "Spine3").FirstOrDefault();
-                    var nodeOutputedOffset = nodeOutputed.Offset;
-                    angle += 
-                    //TODO: ajouter à l'angle globale celui de Spine3
+                    var nodeSpine3Offset = nodeOutputed.Offset;
 
+                    angle += getAngleBetweenVectors(new Vector3(nodeSpine3Offset.x, nodeSpine3Offset.y, nodeSpine3Offset.z), new Vector3(nodeOutputedOffset.x, nodeOutputedOffset.y, nodeOutputedOffset.z));
+                    for (int i = 0; i < bvhOriginal.FrameCount; i++) //i = no de la frame
+                    {
+                        for (int j = 0; j < 3; j++) //j = l'axe voulu 
+                        {
+                            bvhOutputed.Channels[index * 3 + j + 6].Keys[i] = (angle[j] + bvhOriginal.GetReceivedPosition(node.Name, i, true)[j] + bvhOriginal.GetReceivedPosition("Spine3", i, true)[j]) % 180;
+                        }
+                    }
+                    //TODO: ajouter à l'angle globale celui de Spine3
+                    continue;
                 }
 
                 if (node.Name.Contains("Foot"))
                 {
+                    for (int i = 0; i < bvhOriginal.FrameCount; i++) //i = no de la frame
+                    {
+                        for (int j = 0; j < 3; j++) //j = l'axe voulu 
+                        {
+                            bvhOutputed.Channels[index * 3 + j + 6].Keys[i] = 0;
+                        }
+                    }
+                    continue;
                     //TODO: ajouter un node ToeBase avec jsp quelle rotation -> surement 0
                 }
 
