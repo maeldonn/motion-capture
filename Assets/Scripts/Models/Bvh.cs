@@ -208,6 +208,17 @@ namespace UniHumanoid
             public bool IsLocation;
         }
 
+        public int getIndexFromNode(string wantedNode)
+        {
+            var index = 0;
+            foreach(var node in Root.Traverse())
+            {
+                if (node.Name == wantedNode) break;
+                index++;
+            }
+            return index;
+        }
+
         public Vector3 GetReceivedPosition(string boneName, int frame, bool rotation)
         {
             Vector3 temp = new Vector3(0f, 0f, 0f);

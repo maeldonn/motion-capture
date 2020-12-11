@@ -1013,7 +1013,6 @@ namespace CERV.MouvementRecognition.Recognition
                 var nodeOffset = node.Offset;
                 var nodeOutputedOffset = nodeOutputed.Offset;
                 var angle = getAngleBetweenVectors(new Vector3(nodeOffset.x, nodeOffset.y, nodeOffset.z), new Vector3(nodeOutputedOffset.x, nodeOutputedOffset.y, nodeOutputedOffset.z));
-                //Debug.Log("node name: "+node.Name+"    start: "+nodeOffset.x+" "+ nodeOffset.y + " "+ nodeOffset.z +"     end: " + nodeWantedOffset.x + " " + nodeWantedOffset.y + " " + nodeWantedOffset.z + "     angle: " +angle);
 
                 if (node.Name.Contains("Spine2"))
                 {
@@ -1021,52 +1020,14 @@ namespace CERV.MouvementRecognition.Recognition
                     var nodeSpine3Offset = nodeOutputed.Offset;
 
                     angle += getAngleBetweenVectors(new Vector3(nodeSpine3Offset.x, nodeSpine3Offset.y, nodeSpine3Offset.z), new Vector3(nodeOutputedOffset.x, nodeOutputedOffset.y, nodeOutputedOffset.z));
-                    for (int i = 0; i < bvhOriginal.FrameCount; i++) //i = no de la frame
-                    {
-                        for (int j = 0; j < 3; j++) //j = l'axe voulu 
-                        {
-                            bvhOutputed.Channels[index * 3 + j + 6].Keys[i] = (angle[j] + bvhOriginal.GetReceivedPosition(node.Name, i, true)[j] + bvhOriginal.GetReceivedPosition("Spine3", i, true)[j]) % 180;
-                        }
-                    }
+                    var tmpIndex1 = index;
+                    adjustAngle(angle, bvhOriginal, bvhOutputed, node, nodeOutputed);
+
                     //TODO: ajouter à l'angle globale celui de Spine3
                     continue;
                 }
 
-                if (node.Name.Contains("Foot"))
-                {
-                    for (int i = 0; i < bvhOriginal.FrameCount; i++) //i = no de la frame
-                    {
-                        for (int j = 0; j < 3; j++) //j = l'axe voulu 
-                        {
-                            bvhOutputed.Channels[index * 3 + j + 6].Keys[i] = 0;
-                        }
-                    }
-                    continue;
-                    //TODO: ajouter un node ToeBase avec jsp quelle rotation -> surement 0
-                }
-
-                for (int i =0; i< bvhOriginal.FrameCount; i++) //i = no de la frame
-                {
-                    for (int j = 0; j < 3; j++) //j = l'axe voulu 
-                    {
-                        bvhOutputed.Channels[index*3+j+6].Keys[i] = (angle[j] + bvhOriginal.GetReceivedPosition(node.Name, i, true)[j])%180;
-                    }
-                }
-
-                var listOfNodeWithRoll = new List<String> { "Arm", "Leg" };
-                if (listOfNodeWithRoll.Any(node.Name.Contains))
-                {
-                    //TODO: noeud roll, avec aucune rotation
-                    index++;
-                    for (int i = 0; i < bvhOriginal.FrameCount; i++) //i = no de la frame
-                    {
-                        for (int j = 0; j < 3; j++) //j = l'axe voulu 
-                        {
-                            bvhOutputed.Channels[index * 3 + j + 6].Keys[i] = 0;
-                        }
-                    }
-                    continue;
-                }
+                adjustAngle(angle, bvhOriginal, bvhOutputed, node, nodeOutputed);
 
             }
             foreach(var c in bvhOutputed.Channels)
@@ -1083,5 +1044,39 @@ namespace CERV.MouvementRecognition.Recognition
             return qRot.eulerAngles;
         }
 
+        public void adjustAngle(Vector3 eulerRotation, Bvh original, Bvh wanted, BvhNode currentOriginalNode, BvhNode currentNodeWanted)
+        {
+            var angle = new Vector3();
+            if (currentNodeWanted != null)
+            {
+                var originalNodeOffset = new Vector3(currentOriginalNode.Offset.x, currentOriginalNode.Offset.y, currentOriginalNode.Offset.z);
+                var nodeWantedOffset = new Vector3(currentNodeWanted.Offset.x, currentNodeWanted.Offset.y, currentNodeWanted.Offset.z);
+                angle = getAngleBetweenVectors(Quaternion.Euler(eulerRotation) * originalNodeOffset, nodeWantedOffset);
+                for (int i = 0; i < original.FrameCount; i++) //i = no de la frame
+                {
+                    for (int j = 0; j < 3; j++) //j = l'axe voulu 
+                    {
+                        wanted.Channels[wanted.getIndexFromNode(currentNodeWanted.Name) * 3 + j + 6].Keys[i] = (angle[j] + original.GetReceivedPosition(currentNodeWanted.Name, i, true)[j]) % 180;
+                    }
+                }
+            }else if (currentOriginalNode.Name == "Spine3")
+            {
+                for (int i = 0; i < original.FrameCount; i++) //i = no de la frame
+                {
+                    for (int j = 0; j < 3; j++) //j = l'axe voulu 
+                    {
+                        wanted.Channels[wanted.getIndexFromNode("spine2") * 3 + j + 6].Keys[i] = (wanted.Channels[wanted.getIndexFromNode("spine2") * 3 + j + 6].Keys[i] + original.GetReceivedPosition("Spine3", i, true)[j]) % 180;
+                    }
+                }
+            }else { Debug.Log("Unexpected node:" + currentOriginalNode.Name); }
+
+            foreach (var children in currentOriginalNode.Children)
+            {
+                var listOfNodeToIgnore = new List<String> { "InHand", "Thumb", "Index", "Middle", "Pinky", "Ring" };
+                if (listOfNodeToIgnore.Any(children.Name.Contains)) continue;
+                Debug.Log(original.getIndexFromNode(children.Name) + "      "+ children.Name+"   "+ currentOriginalNode.Name);
+                adjustAngle(angle, original, wanted, children, wanted.Root.Traverse().Where(nodeWantedTmp => nodeWantedTmp.Name.ToLower() == children.Name.ToLower()).FirstOrDefault());
+            }
+        }
     }
 }
