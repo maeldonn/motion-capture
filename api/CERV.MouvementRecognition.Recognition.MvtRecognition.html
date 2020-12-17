@@ -121,12 +121,12 @@ Contains all the methods to detect and analyze movements.
   
   
   <a id="CERV_MouvementRecognition_Recognition_MvtRecognition__ctor_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.#ctor*"></a>
-  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition__ctor_UnityEngine_GameObject_UnityEngine_GameObject_UnityEngine_GameObject_CERV_MouvementRecognition_Models_Store_System_Int32_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.#ctor(UnityEngine.GameObject,UnityEngine.GameObject,UnityEngine.GameObject,CERV.MouvementRecognition.Models.Store,System.Int32)">MvtRecognition(GameObject, GameObject, GameObject, Store, Int32)</h4>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition__ctor_UnityEngine_GameObject_UnityEngine_GameObject_UnityEngine_GameObject_CERV_MouvementRecognition_Main_Store_System_Int32_System_Int32_UnityEngine_Canvas_UnityEngine_Canvas_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.#ctor(UnityEngine.GameObject,UnityEngine.GameObject,UnityEngine.GameObject,CERV.MouvementRecognition.Main.Store,System.Int32,System.Int32,UnityEngine.Canvas,UnityEngine.Canvas)">MvtRecognition(GameObject, GameObject, GameObject, Store, Int32, Int32, Canvas, Canvas)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MvtRecognition(GameObject _player, GameObject _characterExample, GameObject _uiHips, Store _store, int _nbFirstMvtToCheck)</code></pre>
+    <pre><code class="lang-csharp hljs">public MvtRecognition(GameObject player, GameObject characterExample, GameObject uiHips, Store store, int nbFirstMvtToCheck, int percentageVarianceAccepted, Canvas canvas, Canvas graph)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -140,27 +140,42 @@ Contains all the methods to detect and analyze movements.
     <tbody>
       <tr>
         <td><span class="xref">UnityEngine.GameObject</span></td>
-        <td><span class="parametername">_player</span></td>
+        <td><span class="parametername">player</span></td>
         <td></td>
       </tr>
       <tr>
         <td><span class="xref">UnityEngine.GameObject</span></td>
-        <td><span class="parametername">_characterExample</span></td>
+        <td><span class="parametername">characterExample</span></td>
         <td></td>
       </tr>
       <tr>
         <td><span class="xref">UnityEngine.GameObject</span></td>
-        <td><span class="parametername">_uiHips</span></td>
+        <td><span class="parametername">uiHips</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="CERV.MouvementRecognition.Models.Store.html">Store</a></td>
-        <td><span class="parametername">_store</span></td>
+        <td><a class="xref" href="CERV.MouvementRecognition.Main.Store.html">Store</a></td>
+        <td><span class="parametername">store</span></td>
         <td></td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
-        <td><span class="parametername">_nbFirstMvtToCheck</span></td>
+        <td><span class="parametername">nbFirstMvtToCheck</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">percentageVarianceAccepted</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">UnityEngine.Canvas</span></td>
+        <td><span class="parametername">canvas</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">UnityEngine.Canvas</span></td>
+        <td><span class="parametername">graph</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -169,12 +184,12 @@ Contains all the methods to detect and analyze movements.
   </h3>
   
   
-  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_degreeOfMargin" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.degreeOfMargin">degreeOfMargin</h4>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_TimeSinceStartRecord" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.TimeSinceStartRecord">TimeSinceStartRecord</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int degreeOfMargin</code></pre>
+    <pre><code class="lang-csharp hljs">public float TimeSinceStartRecord</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -186,13 +201,355 @@ Contains all the methods to detect and analyze movements.
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Int32</span></td>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  
+  <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_listOfMvts_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.listOfMvts*"></a>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_listOfMvts" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.listOfMvts">listOfMvts</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;MovementProperties&gt; listOfMvts { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<a class="xref" href="CERV.MouvementRecognition.Recognition.MovementProperties.html">MovementProperties</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_RecordingScore_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.RecordingScore*"></a>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_RecordingScore" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.RecordingScore">RecordingScore</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool RecordingScore { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
+  
+  
+  <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_adjustAngle_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.adjustAngle*"></a>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_adjustAngle_UnityEngine_Vector3_UniHumanoid_Bvh_UniHumanoid_Bvh_UniHumanoid_BvhNode_UniHumanoid_BvhNode_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.adjustAngle(UnityEngine.Vector3,UniHumanoid.Bvh,UniHumanoid.Bvh,UniHumanoid.BvhNode,UniHumanoid.BvhNode)">adjustAngle(Vector3, Bvh, Bvh, BvhNode, BvhNode)</h4>
+  <div class="markdown level1 summary"><p>First attempt at making a function that adjust the angles of a bvh when we change the angle of a parent node. Recursive. The math in it is not correct, needs reworking.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void adjustAngle(Vector3 eulerRotation, Bvh original, Bvh wanted, BvhNode currentOriginalNode, BvhNode currentNodeWanted)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnityEngine.Vector3</span></td>
+        <td><span class="parametername">eulerRotation</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="UniHumanoid.Bvh.html">Bvh</a></td>
+        <td><span class="parametername">original</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="UniHumanoid.Bvh.html">Bvh</a></td>
+        <td><span class="parametername">wanted</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="UniHumanoid.BvhNode.html">BvhNode</a></td>
+        <td><span class="parametername">currentOriginalNode</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="UniHumanoid.BvhNode.html">BvhNode</a></td>
+        <td><span class="parametername">currentNodeWanted</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_BvhAnimationToImage_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.BvhAnimationToImage*"></a>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_BvhAnimationToImage_CERV_MouvementRecognition_Recognition_BvhProperties_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.BvhAnimationToImage(CERV.MouvementRecognition.Recognition.BvhProperties)">BvhAnimationToImage(BvhProperties)</h4>
+  <div class="markdown level1 summary"><p>Turn a bvh animation to an image</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void BvhAnimationToImage(BvhProperties animationToCompare)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="CERV.MouvementRecognition.Recognition.BvhProperties.html">BvhProperties</a></td>
+        <td><span class="parametername">animationToCompare</span></td>
+        <td><p>The <code>BvhProperties</code> which contain the movement to compare.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="CERV_MouvementRecognition_Recognition_MvtRecognition_BvhAnimationToImage_CERV_MouvementRecognition_Recognition_BvhProperties__examples">Examples</h5>
+  <pre><code>bvhAnimationToImage();</code></pre>
+
+  
+  
+  <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_BvhFrameToColor_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.BvhFrameToColor*"></a>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_BvhFrameToColor_CERV_MouvementRecognition_Recognition_BvhProperties_System_Int32_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.BvhFrameToColor(CERV.MouvementRecognition.Recognition.BvhProperties,System.Int32)">BvhFrameToColor(BvhProperties, Int32)</h4>
+  <div class="markdown level1 summary"><p>Turn a bvh frame to a list of pixels</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;Color&gt; BvhFrameToColor(BvhProperties animationToCompare, int frame)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="CERV.MouvementRecognition.Recognition.BvhProperties.html">BvhProperties</a></td>
+        <td><span class="parametername">animationToCompare</span></td>
+        <td><p>The <code>BvhProperties</code> which contain the movement to compare.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">frame</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.List</span>&lt;<span class="xref">UnityEngine.Color</span>&gt;</td>
+        <td><p>A list of colors</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="CERV_MouvementRecognition_Recognition_MvtRecognition_BvhFrameToColor_CERV_MouvementRecognition_Recognition_BvhProperties_System_Int32__examples">Examples</h5>
+  <pre><code>frameToColor();</code></pre>
+
+  
+  
+  <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_BvhNodeRotationToColor_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.BvhNodeRotationToColor*"></a>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_BvhNodeRotationToColor_UnityEngine_Vector3_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.BvhNodeRotationToColor(UnityEngine.Vector3)">BvhNodeRotationToColor(Vector3)</h4>
+  <div class="markdown level1 summary"><p>Turn the rotations of a bvh node to a color</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Color BvhNodeRotationToColor(Vector3 rotationToConvert)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnityEngine.Vector3</span></td>
+        <td><span class="parametername">rotationToConvert</span></td>
+        <td><p>The <code>Vector3</code> rotations of a bvh node to convert. Not parameters should be above 180°.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnityEngine.Color</span></td>
+        <td><p>A Color</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="CERV_MouvementRecognition_Recognition_MvtRecognition_BvhNodeRotationToColor_UnityEngine_Vector3__examples">Examples</h5>
+  <pre><code>bvhNodeRotationToColor(node);
+bvhNodeRotationToColor(new Vector(-50,60,170));</code></pre>
+
+  
+  
+  <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_convertBVH_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.convertBVH*"></a>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_convertBVH_CERV_MouvementRecognition_Recognition_BvhProperties_CERV_MouvementRecognition_Recognition_BvhProperties_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.convertBVH(CERV.MouvementRecognition.Recognition.BvhProperties,CERV.MouvementRecognition.Recognition.BvhProperties)">convertBVH(BvhProperties, BvhProperties)</h4>
+  <div class="markdown level1 summary"><p>First attempt at converting a bvh from Axis Neuron to the one of the dataset from Barkeley. Is not working.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bvh convertBVH(BvhProperties originalFormat, BvhProperties wantedFormat)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="CERV.MouvementRecognition.Recognition.BvhProperties.html">BvhProperties</a></td>
+        <td><span class="parametername">originalFormat</span></td>
+        <td><p>The <code>BvhProperties</code> which contain the original Axis Neuron bvh.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="CERV.MouvementRecognition.Recognition.BvhProperties.html">BvhProperties</a></td>
+        <td><span class="parametername">wantedFormat</span></td>
+        <td><p>The <code>BvhProperties</code> which contain an exemple bvh from the dataset of Barkeley.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="UniHumanoid.Bvh.html">Bvh</a></td>
+        <td><p>The <code data-dev-comment-type="paramref" class="paramref">originalFormat</code> animation to the format of the <code data-dev-comment-type="paramref" class="paramref">wantedFormat</code>, in bvh.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="CERV_MouvementRecognition_Recognition_MvtRecognition_convertBVH_CERV_MouvementRecognition_Recognition_BvhProperties_CERV_MouvementRecognition_Recognition_BvhProperties__examples">Examples</h5>
+  <pre><code>Bvh convertedBvh = convertBVH(orginal, wanted);</code></pre>
+
+  
+  
+  <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_getAngleBetweenVectors_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.getAngleBetweenVectors*"></a>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_getAngleBetweenVectors_UnityEngine_Vector3_UnityEngine_Vector3_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.getAngleBetweenVectors(UnityEngine.Vector3,UnityEngine.Vector3)">getAngleBetweenVectors(Vector3, Vector3)</h4>
+  <div class="markdown level1 summary"><p>Give the angle between two vector starting at the same position.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector3 getAngleBetweenVectors(Vector3 start, Vector3 end)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnityEngine.Vector3</span></td>
+        <td><span class="parametername">start</span></td>
+        <td><p>The starting vector.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">UnityEngine.Vector3</span></td>
+        <td><span class="parametername">end</span></td>
+        <td><p>The vector of the end.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnityEngine.Vector3</span></td>
+        <td><p>An euler angle, in the form of a vector3.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="CERV_MouvementRecognition_Recognition_MvtRecognition_getAngleBetweenVectors_UnityEngine_Vector3_UnityEngine_Vector3__examples">Examples</h5>
+  <pre><code>var angle = getAngleBetweenVectors(firstVector, secondVector);</code></pre>
+
   
   
   <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_InitActor_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.InitActor*"></a>
@@ -206,14 +563,88 @@ Contains all the methods to detect and analyze movements.
   </div>
   
   
+  <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_InitiateValuesBvh_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.InitiateValuesBvh*"></a>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_InitiateValuesBvh" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.InitiateValuesBvh">InitiateValuesBvh()</h4>
+  <div class="markdown level1 summary"><p>Initialize all the values of the MvtRecognition class to work as intended.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void InitiateValuesBvh()</code></pre>
+  </div>
+  
+  
+  <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_InitMvtSet_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.InitMvtSet*"></a>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_InitMvtSet" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.InitMvtSet">InitMvtSet()</h4>
+  <div class="markdown level1 summary"><p>Initialize all the values of the MvtRecognition class that are used with the movement recognition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void InitMvtSet()</code></pre>
+  </div>
+  
+  
   <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparison_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparison*"></a>
-  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparison_UniHumanoid_BvhNode_UniHumanoid_Bvh_System_Int32_System_String___System_Int32_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparison(UniHumanoid.BvhNode,UniHumanoid.Bvh,System.Int32,System.String[],System.Int32)">LaunchComparison(BvhNode, Bvh, Int32, String[], Int32)</h4>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparison_UniHumanoid_BvhNode_CERV_MouvementRecognition_Recognition_BvhProperties_System_Int32_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparison(UniHumanoid.BvhNode,CERV.MouvementRecognition.Recognition.BvhProperties,System.Int32)">LaunchComparison(BvhNode, BvhProperties, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float LaunchComparison(BvhNode root, BvhProperties animationToCompare, int frame)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="UniHumanoid.BvhNode.html">BvhNode</a></td>
+        <td><span class="parametername">root</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="CERV.MouvementRecognition.Recognition.BvhProperties.html">BvhProperties</a></td>
+        <td><span class="parametername">animationToCompare</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">frame</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparison_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparison*"></a>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparison_UniHumanoid_BvhNode_CERV_MouvementRecognition_Recognition_BvhProperties_System_Int32_System_Int32_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparison(UniHumanoid.BvhNode,CERV.MouvementRecognition.Recognition.BvhProperties,System.Int32,System.Int32)">LaunchComparison(BvhNode, BvhProperties, Int32, Int32)</h4>
   <div class="markdown level1 summary"><p>Compare the position of the actor and a frame of <code data-dev-comment-type="paramref" class="paramref">animationToCompare</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool LaunchComparison(BvhNode root, Bvh animationToCompare, int degOfMargin, string[] bodyPartsToIgnore, int frame)</code></pre>
+    <pre><code class="lang-csharp hljs">public bool LaunchComparison(BvhNode root, BvhProperties animationToCompare, int degOfMargin, int frame)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -232,22 +663,15 @@ Contains all the methods to detect and analyze movements.
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="UniHumanoid.Bvh.html">Bvh</a></td>
+        <td><a class="xref" href="CERV.MouvementRecognition.Recognition.BvhProperties.html">BvhProperties</a></td>
         <td><span class="parametername">animationToCompare</span></td>
-        <td><p>The bvh which contain the movement to compare.</p>
+        <td><p>The <code>BvhProperties</code> which contain the movement to compare.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">degOfMargin</span></td>
         <td><p>The margin angle with which the user can make the movement.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">System.String</span>[]</td>
-        <td><span class="parametername">bodyPartsToIgnore</span></td>
-        <td><p>An array of strings containing the names of the parts of the body that we do not want to compare in the movement. The following list show some valid examples:
-<ul><li></li><li></li><li></li><li></li><li></li></ul></p>
 </td>
       </tr>
       <tr>
@@ -274,8 +698,8 @@ Contains all the methods to detect and analyze movements.
       </tr>
     </tbody>
   </table>
-  <h5 id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparison_UniHumanoid_BvhNode_UniHumanoid_Bvh_System_Int32_System_String___System_Int32__examples">Examples</h5>
-  <pre><code>if(launchComparison(bvhHand, bvh, 40, new []{ &quot;Leg&quot;,&quot;Spine2&quot; },23))
+  <h5 id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparison_UniHumanoid_BvhNode_CERV_MouvementRecognition_Recognition_BvhProperties_System_Int32_System_Int32__examples">Examples</h5>
+  <pre><code>if(launchComparison(bvhHand, bvhProp, 40,23))
 {
     Debug.Log(&quot;The movements of the hand are corresponding.&quot;);
 }</code></pre>
@@ -283,13 +707,121 @@ Contains all the methods to detect and analyze movements.
   
   
   <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparison_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparison*"></a>
-  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparison_UniHumanoid_BvhNode_UniHumanoid_Bvh_System_Int32_System_String___System_Int32_System_Func_UniHumanoid_BvhNode_System_Boolean_System_Int32__" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparison(UniHumanoid.BvhNode,UniHumanoid.Bvh,System.Int32,System.String[],System.Int32,System.Func{UniHumanoid.BvhNode,System.Boolean,System.Int32})">LaunchComparison(BvhNode, Bvh, Int32, String[], Int32, Func&lt;BvhNode, Boolean, Int32&gt;)</h4>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparison_UniHumanoid_BvhNode_CERV_MouvementRecognition_Recognition_BvhProperties_System_Int32_System_Int32_System_Func_UniHumanoid_BvhNode_System_Boolean_System_Int32__" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparison(UniHumanoid.BvhNode,CERV.MouvementRecognition.Recognition.BvhProperties,System.Int32,System.Int32,System.Func{UniHumanoid.BvhNode,System.Boolean,System.Int32})">LaunchComparison(BvhNode, BvhProperties, Int32, Int32, Func&lt;BvhNode, Boolean, Int32&gt;)</h4>
   <div class="markdown level1 summary"><p>Compare the position of the actor and a frame of <code data-dev-comment-type="paramref" class="paramref">animationToCompare</code>, and launch a function for every node.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void LaunchComparison(BvhNode root, Bvh animationToCompare, int degOfMargin, string[] bodyPartsToIgnore, int frame, Func&lt;BvhNode, bool, int&gt; functionCalledAtEveryNode)</code></pre>
+    <pre><code class="lang-csharp hljs">public void LaunchComparison(BvhNode root, BvhProperties animationToCompare, int degOfMargin, int frame, Func&lt;BvhNode, bool, int&gt; functionCalledAtEveryNode)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="UniHumanoid.BvhNode.html">BvhNode</a></td>
+        <td><span class="parametername">root</span></td>
+        <td><p>The <code>BvhNode</code> from which we want to compare the movement.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="CERV.MouvementRecognition.Recognition.BvhProperties.html">BvhProperties</a></td>
+        <td><span class="parametername">animationToCompare</span></td>
+        <td><p>The <code>BvhProperties</code> which contain the movement to compare.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">degOfMargin</span></td>
+        <td><p>The margin angle with which the user can make the movement.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">frame</span></td>
+        <td><p>The index of the frame to look.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="UniHumanoid.BvhNode.html">BvhNode</a>, <span class="xref">System.Boolean</span>, <span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">functionCalledAtEveryNode</span></td>
+        <td><p>A function taking as arguments a <code>BvhNode</code> and a <code>bool</code>, and which return an int.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparison_UniHumanoid_BvhNode_CERV_MouvementRecognition_Recognition_BvhProperties_System_Int32_System_Int32_System_Func_UniHumanoid_BvhNode_System_Boolean_System_Int32___examples">Examples</h5>
+  <pre><code>launchComparison(bvhHand, bvhProp, 40 ,23,changeColorUICharacter)</code></pre>
+
+  
+  
+  <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparisonFirstScoreSystem_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparisonFirstScoreSystem*"></a>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparisonFirstScoreSystem_UniHumanoid_BvhNode_CERV_MouvementRecognition_Recognition_BvhProperties_System_Int32_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparisonFirstScoreSystem(UniHumanoid.BvhNode,CERV.MouvementRecognition.Recognition.BvhProperties,System.Int32)">LaunchComparisonFirstScoreSystem(BvhNode, BvhProperties, Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float LaunchComparisonFirstScoreSystem(BvhNode root, BvhProperties animationToCompare, int frame)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="UniHumanoid.BvhNode.html">BvhNode</a></td>
+        <td><span class="parametername">root</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="CERV.MouvementRecognition.Recognition.BvhProperties.html">BvhProperties</a></td>
+        <td><span class="parametername">animationToCompare</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">frame</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparisonPointing_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparisonPointing*"></a>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparisonPointing_UniHumanoid_BvhNode_UniHumanoid_Bvh_System_String___System_Int32_System_Int32_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparisonPointing(UniHumanoid.BvhNode,UniHumanoid.Bvh,System.String[],System.Int32,System.Int32)">LaunchComparisonPointing(BvhNode, Bvh, String[], Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Compare the position of the actor and a frame of <code data-dev-comment-type="paramref" class="paramref">inputBvh</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool LaunchComparisonPointing(BvhNode root, Bvh inputBvh, string[] partsToIgnore, int degOfMargin, int frame)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -309,8 +841,14 @@ Contains all the methods to detect and analyze movements.
       </tr>
       <tr>
         <td><a class="xref" href="UniHumanoid.Bvh.html">Bvh</a></td>
-        <td><span class="parametername">animationToCompare</span></td>
-        <td><p>The bvh which contain the movement to compare.</p>
+        <td><span class="parametername">inputBvh</span></td>
+        <td><p>The <code>Bvh</code> which contain the movement to compare.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td><span class="parametername">partsToIgnore</span></td>
+        <td><p>The name of the nodes to ignore.</p>
 </td>
       </tr>
       <tr>
@@ -320,10 +858,66 @@ Contains all the methods to detect and analyze movements.
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.String</span>[]</td>
-        <td><span class="parametername">bodyPartsToIgnore</span></td>
-        <td><p>An array of strings containing the names of the parts of the body that we do not want to compare in the movement. The following list show some valid examples:
-<ul><li></li><li></li><li></li><li></li><li></li></ul></p>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">frame</span></td>
+        <td><p>The index of the frame to look.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>The result of the comparison (true or false)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparisonPointing_UniHumanoid_BvhNode_UniHumanoid_Bvh_System_String___System_Int32_System_Int32__examples">Examples</h5>
+  <pre><code>if(launchComparison(bvhHand, bvh, new String[] {&quot;Thumb&quot;},40,23))
+{
+    Debug.Log(&quot;The movements of the hand are corresponding.&quot;);
+}</code></pre>
+
+  
+  
+  <a id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparisonUpdated_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparisonUpdated*"></a>
+  <h4 id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparisonUpdated_UniHumanoid_BvhNode_CERV_MouvementRecognition_Recognition_BvhProperties_System_Int32_" data-uid="CERV.MouvementRecognition.Recognition.MvtRecognition.LaunchComparisonUpdated(UniHumanoid.BvhNode,CERV.MouvementRecognition.Recognition.BvhProperties,System.Int32)">LaunchComparisonUpdated(BvhNode, BvhProperties, Int32)</h4>
+  <div class="markdown level1 summary"><p>Compare the position of the actor and a frame of <code data-dev-comment-type="paramref" class="paramref">animationToCompare</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float LaunchComparisonUpdated(BvhNode root, BvhProperties animationToCompare, int frame)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="UniHumanoid.BvhNode.html">BvhNode</a></td>
+        <td><span class="parametername">root</span></td>
+        <td><p>The <code>BvhNode</code> from which we want to compare the movement.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="CERV.MouvementRecognition.Recognition.BvhProperties.html">BvhProperties</a></td>
+        <td><span class="parametername">animationToCompare</span></td>
+        <td><p>The <code>BvhProperties</code> which contain the movement to compare.</p>
 </td>
       </tr>
       <tr>
@@ -332,16 +926,29 @@ Contains all the methods to detect and analyze movements.
         <td><p>The index of the frame to look.</p>
 </td>
       </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
       <tr>
-        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="UniHumanoid.BvhNode.html">BvhNode</a>, <span class="xref">System.Boolean</span>, <span class="xref">System.Int32</span>&gt;</td>
-        <td><span class="parametername">functionCalledAtEveryNode</span></td>
-        <td><p>A function taking as arguments a <code>BvhNode</code> and a <code>bool</code>, and which return an int.</p>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Single</span></td>
+        <td><p>The result of the comparison (0 to 1, one being exactly the movement)</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparison_UniHumanoid_BvhNode_UniHumanoid_Bvh_System_Int32_System_String___System_Int32_System_Func_UniHumanoid_BvhNode_System_Boolean_System_Int32___examples">Examples</h5>
-  <pre><code>launchComparison(bvhHand, bvh, 40, new []{ &quot;Leg&quot;,&quot;Spine2&quot; },23,changeColorUICharacter)</code></pre>
+  <h5 id="CERV_MouvementRecognition_Recognition_MvtRecognition_LaunchComparisonUpdated_UniHumanoid_BvhNode_CERV_MouvementRecognition_Recognition_BvhProperties_System_Int32__examples">Examples</h5>
+  <pre><code>if(launchComparison(bvhHand, bvhProp, 40, 23)==1)
+{
+    Debug.Log(&quot;The movements of the hand are corresponding.&quot;);
+}</code></pre>
 
   
   
