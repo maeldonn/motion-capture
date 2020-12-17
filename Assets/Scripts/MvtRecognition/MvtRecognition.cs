@@ -5,10 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using UniHumanoid;
+ using System.Runtime.CompilerServices;
+ using UniHumanoid;
 using UnityEngine;
 using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
+ using Debug = UnityEngine.Debug;
 
 namespace CERV.MouvementRecognition.Recognition
 {
@@ -22,7 +23,14 @@ namespace CERV.MouvementRecognition.Recognition
         {
             Bvh = new Bvh().GetBvhFromPath(path);
             Name = name;
-            ValuesToIgnore = DetermineValuesToIgnore(Bvh, percentageVarianceAccepted);
+            //ValuesToIgnore = DetermineValuesToIgnore(Bvh, percentageVarianceAccepted);
+        }
+
+        public BvhProperties(Bvh inputBvh, string name, int percentageVarianceAccepted)
+        {
+            Bvh = inputBvh;
+            Name = name;
+            //ValuesToIgnore = DetermineValuesToIgnore(Bvh, percentageVarianceAccepted);
         }
 
         public Dictionary<string, bool[]> DetermineValuesToIgnore(Bvh Bvh, int percentageVarianceAccepted)
@@ -260,6 +268,31 @@ namespace CERV.MouvementRecognition.Recognition
             }
             for (var i = 0; i < itemPaths.Length; i++)
                 listOfMvts.Add(new MovementProperties(itemPaths[i], itemNames[i], percentageVarianceAccepted));
+
+            var modelMvt = new MovementProperties("C:/Users/cerv/Documents/testCNN/rechercheDataset/SkeletalData/skl_s12_a11_r05.bvh", "skl_s12_a11_r05", percentageVarianceAccepted);
+            var convertedBVH = convertBVH(listOfMvts[0],modelMvt);
+            BvhAnimationToImage(new BvhProperties(convertedBVH,"test", percentageVarianceAccepted));
+            BvhAnimationToImage(new BvhProperties(modelMvt.Bvh, "test2", percentageVarianceAccepted));
+            BvhAnimationToImage(new BvhProperties(listOfMvts[0].Bvh, "test3", percentageVarianceAccepted));
+            /*
+             * This code is used to export our dataset of bvh to image, it is useless if the machine learning model is already trained
+             * 
+             *
+            var listOfMvtsDataset = new System.Collections.Generic.List<MovementProperties>();
+            directoryPath = "C:/Users/cerv/Documents/testCNN/rechercheDataset/SkeletalData";
+            itemPaths = Directory.GetFiles(directoryPath, "*.bvh");
+            itemNames = new string[itemPaths.Length];
+            for (int i = 0; i < itemNames.Length; i++)
+            {
+                string[] splittedPath = itemPaths[i].Split('/');
+                itemNames[i] = splittedPath[splittedPath.Length - 1].Split('.')[0];
+            }
+            for (var i = 0; i < itemPaths.Length; i++)
+            {
+                listOfMvtsDataset.Add(new MovementProperties(itemPaths[i], itemNames[i], percentageVarianceAccepted));
+            }
+            foreach (var mvt in listOfMvtsDataset) BvhAnimationToImage(mvt);
+            */
         }
 
         /// <summary>
@@ -856,6 +889,193 @@ namespace CERV.MouvementRecognition.Recognition
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Turn a bvh nodes rotation to an color
+        /// </summary>
+        /// <returns>
+        /// A Color
+        /// </returns>
+        /// <example>
+        /// <code>
+        /// bvhNodeRotationToColor();
+        /// </code>
+        /// </example>
+        /// <param name="rotationToConvert">The <c>Vector3</c> rotations of a bvh node to convert.</param>
+        public Color BvhNodeRotationToColor(Vector3 rotationToConvert)
+        {
+            var normalizedValues = new Vector3();
+            for(var i=0; i< 3;i++)
+            {
+                normalizedValues[i] = rotationToConvert[i] * (1f / 360f) + 0.5f;
+                /*
+                 * The elements of this calculation have been chosen by resolving the following system:
+                 *  | -180 * x + a = 0
+                 *  | 180 * x + a = 1
+                 * The 180 and -180 are the highest rotations an human body can get. 0 and 1 are the minimum and maximum values used to describe a color.
+                 * The result is the following:
+                 *  | x = 1 / 360
+                 *  | a = 0.5
+                 */
+            }
+            return new Color(normalizedValues[0], normalizedValues[1], normalizedValues[2]);
+        }
+
+        /// <summary>
+        /// Turn a bvh frame to an list of pixels
+        /// </summary>
+        /// <returns>
+        /// A list of colors
+        /// </returns>
+        /// <example>
+        /// <code>
+        /// frameToColor();
+        /// </code>
+        /// </example>
+        /// <param name="animationToCompare">The <c>BvhProperties</c> which contain the movement to compare.</param>
+        public List<Color> BvhFrameToColor(BvhProperties animationToCompare,
+            int frame)
+        {
+            var bvh = animationToCompare.Bvh;
+            var returnList = new List<Color>();
+            foreach (var node in bvh.Root.Traverse())
+            {
+                if (node.Name == "Hips") continue;
+
+                returnList.Add(BvhNodeRotationToColor(bvh.GetReceivedPosition(node.Name, frame, true)));
+            }
+            return returnList;
+        }
+
+        /// <summary>
+        /// Turn a bvh animation to an image
+        /// </summary>
+        /// <returns>
+        /// An image
+        /// </returns>
+        /// <example>
+        /// <code>
+        /// bvhAnimationToImage();
+        /// </code>
+        /// </example>
+        /// <param name="animationToCompare">The <c>BvhProperties</c> which contain the movement to compare.</param>
+        public void BvhAnimationToImage(BvhProperties animationToCompare)
+        {
+            var width = animationToCompare.Bvh.FrameCount;
+            var height = animationToCompare.Bvh.Root.Traverse().Count() - 1;    //We do -1 because we want to ignore the Hips.
+            if(width>= 16385 || height >= 16385)
+            {
+                Debug.Log("This animation is too long to be exported as an image (should be <16385 frames):" + animationToCompare.Name);
+                return;
+            }
+
+            var colorMap = new List<Color>();
+
+            for (int x = 0; x < width; x++)
+            {
+                colorMap.AddRange(BvhFrameToColor(animationToCompare, x));
+            }
+
+            Texture2D tex = new Texture2D(width, height) {filterMode = FilterMode.Point};
+            for (int x = 0; x< width; x++)
+                for (int y = 0; y < height; y++) tex.SetPixel(x,y, colorMap[y + x * height]);
+            tex.Apply();
+            var bytes = tex.EncodeToPNG();
+            if (!Directory.Exists(Application.persistentDataPath + "/BVHImage"))
+                Directory.CreateDirectory(Application.persistentDataPath + "/BVHImage"); // returns a DirectoryInfo object
+            File.WriteAllBytes(Application.persistentDataPath + "/BVHImage/"+ animationToCompare.Name+".png", bytes);
+        }
+
+        /// TODO: commentaires
+        public Bvh convertBVH(BvhProperties originalFormat, BvhProperties wantedFormat)
+        {
+            var bvhOriginal = originalFormat.Bvh;
+            var bvhOutputed = new Bvh(wantedFormat.Bvh.Root, bvhOriginal.FrameCount, (float)bvhOriginal.FrameTime.TotalSeconds);
+            var index = 0;
+            foreach (var node in bvhOriginal.Root.Traverse())
+            {
+                var listOfNodeToIgnore = new List<String> { "InHand", "Thumb", "Index","Middle","Pinky","Ring", "Spine3" };
+                if (listOfNodeToIgnore.Any(node.Name.Contains))
+                {
+                    continue;
+                }
+
+                var nodeOutputed = bvhOutputed.Root.Traverse().Where(nodeWantedTmp => nodeWantedTmp.Name.ToLower() == node.Name.ToLower()).FirstOrDefault();
+                if(nodeOutputed == null)
+                {
+                    Debug.Log("This should not be displayed, node: "+node.Name);
+                    continue;
+                }
+                index++;
+
+                var nodeOffset = node.Offset;
+                var nodeOutputedOffset = nodeOutputed.Offset;
+                var angle = getAngleBetweenVectors(new Vector3(nodeOffset.x, nodeOffset.y, nodeOffset.z), new Vector3(nodeOutputedOffset.x, nodeOutputedOffset.y, nodeOutputedOffset.z));
+
+                if (node.Name.Contains("Spine2"))
+                {
+                    var nodeSpine3 = bvhOriginal.Root.Traverse().Where(nodeOutputTmp => nodeOutputTmp.Name == "Spine3").FirstOrDefault();
+                    var nodeSpine3Offset = nodeOutputed.Offset;
+
+                    angle += getAngleBetweenVectors(new Vector3(nodeSpine3Offset.x, nodeSpine3Offset.y, nodeSpine3Offset.z), new Vector3(nodeOutputedOffset.x, nodeOutputedOffset.y, nodeOutputedOffset.z));
+                    var tmpIndex1 = index;
+                    adjustAngle(angle, bvhOriginal, bvhOutputed, node, nodeOutputed);
+
+                    //TODO: ajouter à l'angle globale celui de Spine3
+                    continue;
+                }
+
+                adjustAngle(angle, bvhOriginal, bvhOutputed, node, nodeOutputed);
+
+            }
+            foreach(var c in bvhOutputed.Channels)
+            {
+                Debug.Log(c.Keys[0]);
+            }
+            return bvhOutputed;
+        }
+
+        /// TODO: commentaires
+        public Vector3 getAngleBetweenVectors(Vector3 start, Vector3 end)
+        {
+            var qRot = Quaternion.FromToRotation(start, end);
+            return qRot.eulerAngles;
+        }
+
+        public void adjustAngle(Vector3 eulerRotation, Bvh original, Bvh wanted, BvhNode currentOriginalNode, BvhNode currentNodeWanted)
+        {
+            var angle = new Vector3();
+            if (currentNodeWanted != null)
+            {
+                var originalNodeOffset = new Vector3(currentOriginalNode.Offset.x, currentOriginalNode.Offset.y, currentOriginalNode.Offset.z);
+                var nodeWantedOffset = new Vector3(currentNodeWanted.Offset.x, currentNodeWanted.Offset.y, currentNodeWanted.Offset.z);
+                angle = getAngleBetweenVectors(Quaternion.Euler(eulerRotation) * originalNodeOffset, nodeWantedOffset);
+                for (int i = 0; i < original.FrameCount; i++) //i = no de la frame
+                {
+                    for (int j = 0; j < 3; j++) //j = l'axe voulu 
+                    {
+                        wanted.Channels[wanted.getIndexFromNode(currentNodeWanted.Name) * 3 + j + 6].Keys[i] = (angle[j] + original.GetReceivedPosition(currentNodeWanted.Name, i, true)[j]) % 180;
+                    }
+                }
+            }else if (currentOriginalNode.Name == "Spine3")
+            {
+                for (int i = 0; i < original.FrameCount; i++) //i = no de la frame
+                {
+                    for (int j = 0; j < 3; j++) //j = l'axe voulu 
+                    {
+                        wanted.Channels[wanted.getIndexFromNode("spine2") * 3 + j + 6].Keys[i] = (wanted.Channels[wanted.getIndexFromNode("spine2") * 3 + j + 6].Keys[i] + original.GetReceivedPosition("Spine3", i, true)[j]) % 180;
+                    }
+                }
+            }else { Debug.Log("Unexpected node:" + currentOriginalNode.Name); }
+
+            foreach (var children in currentOriginalNode.Children)
+            {
+                var listOfNodeToIgnore = new List<String> { "InHand", "Thumb", "Index", "Middle", "Pinky", "Ring" };
+                if (listOfNodeToIgnore.Any(children.Name.Contains)) continue;
+                Debug.Log(original.getIndexFromNode(children.Name) + "      "+ children.Name+"   "+ currentOriginalNode.Name);
+                adjustAngle(angle, original, wanted, children, wanted.Root.Traverse().Where(nodeWantedTmp => nodeWantedTmp.Name.ToLower() == children.Name.ToLower()).FirstOrDefault());
+            }
         }
     }
 }
