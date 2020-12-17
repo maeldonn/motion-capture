@@ -1085,7 +1085,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5, y: 2.5, z: 10}
   m_LocalScale: {x: 10, y: -5, z: 0.2}
-  m_Children: []
+  m_Children:
+  - {fileID: 1825190817}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1442,7 +1443,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 446665775}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.787, y: -0.00000047683716, z: 4.12}
+  m_LocalPosition: {x: 7.16, y: 0, z: 1.735}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 446171551}
@@ -3672,7 +3673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98763664c4e08ea4e9b7a010b0de7ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  store: {fileID: 0}
+  store: {fileID: 2048113673}
   UseNewRig: 1
   BoundAnimator: {fileID: 0}
   MotionUpdateMethod: 0
@@ -18285,12 +18286,12 @@ MonoBehaviour:
   Store: {fileID: 2048113673}
   CharacterExample: {fileID: 446665775}
   UiHips: {fileID: 6726494051009210618}
-  NbFirstMvtToCheck: 100
+  NbFirstMvtToCheck: 25
   PercentageVarianceAccepted: 40
   canvas: {fileID: 6726494050961180744}
   graph: {fileID: 1825190821}
   DegreeOfMarginPointing: 40
-  DegreeOfMarginValidating: 10
+  DegreeOfMarginValidating: 20
   LineMenu: {fileID: 991941095}
   LeftHand: {fileID: 1341299748}
   ClipConfirm: {fileID: 8300000, guid: a267526f38dfca445934f840bac7e69c, type: 3}

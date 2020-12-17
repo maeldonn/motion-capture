@@ -145,6 +145,11 @@ namespace CERV.MouvementRecognition.Interactions
             }
         }
 
+        /// <summary>
+        /// This method is used to export a recording of the scores to a csv file.
+        /// </summary>
+        /// <param name="listMvt">A list of MovementProperties; it will export the scores of all these MovementProperties.</param>
+
         private void exportToCsv(List<MovementProperties> listMvt)
         {
             if (listMvt == null || listMvt.Count == 0)

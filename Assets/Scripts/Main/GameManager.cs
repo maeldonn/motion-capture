@@ -56,7 +56,6 @@ namespace CERV.MouvementRecognition.Main
         // Update is called once per frame
         private void Update()
         {
-            // TODO: Supprimer ça
             pointingHandler.UpdateUserInputs();
             mvtRecognition.UpdateMvtRecognition();
         }
