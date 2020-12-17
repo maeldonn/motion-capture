@@ -899,17 +899,18 @@ namespace CERV.MouvementRecognition.Recognition
         }
 
         /// <summary>
-        /// Turn a bvh nodes rotation to an color
+        /// Turn the rotations of a bvh node to a color
         /// </summary>
         /// <returns>
         /// A Color
         /// </returns>
         /// <example>
         /// <code>
-        /// bvhNodeRotationToColor();
+        /// bvhNodeRotationToColor(node);
+        /// bvhNodeRotationToColor(new Vector(-50,60,170));
         /// </code>
         /// </example>
-        /// <param name="rotationToConvert">The <c>Vector3</c> rotations of a bvh node to convert.</param>
+        /// <param name="rotationToConvert">The <c>Vector3</c> rotations of a bvh node to convert. Not parameters should be above 180°.</param>
         public Color BvhNodeRotationToColor(Vector3 rotationToConvert)
         {
             var normalizedValues = new Vector3();
@@ -930,7 +931,7 @@ namespace CERV.MouvementRecognition.Recognition
         }
 
         /// <summary>
-        /// Turn a bvh frame to an list of pixels
+        /// Turn a bvh frame to a list of pixels
         /// </summary>
         /// <returns>
         /// A list of colors
@@ -994,7 +995,19 @@ namespace CERV.MouvementRecognition.Recognition
             File.WriteAllBytes(Application.persistentDataPath + "/BVHImage/"+ animationToCompare.Name+".png", bytes);
         }
 
-        /// TODO: commentaires
+        /// <summary>
+        /// First attempt at converting a bvh from Axis Neuron to the one of the dataset from Barkeley. Is not working.
+        /// </summary>
+        /// <returns>
+        /// The <paramref name="originalFormat"/> animation to the format of the <paramref name="wantedFormat"/>, in bvh.
+        /// </returns>
+        /// <example>
+        /// <code>
+        /// Bvh convertedBvh = convertBVH(orginal, wanted);
+        /// </code>
+        /// </example>
+        /// <param name="originalFormat">The <c>BvhProperties</c> which contain the original Axis Neuron bvh.</param>
+        /// <param name="wantedFormat">The <c>BvhProperties</c> which contain an exemple bvh from the dataset of Barkeley.</param>
         public Bvh convertBVH(BvhProperties originalFormat, BvhProperties wantedFormat)
         {
             var bvhOriginal = originalFormat.Bvh;
@@ -1043,13 +1056,28 @@ namespace CERV.MouvementRecognition.Recognition
             return bvhOutputed;
         }
 
-        /// TODO: commentaires
+        /// <summary>
+        /// Give the angle between two vector starting at the same position.
+        /// </summary>
+        /// <returns>
+        /// An euler angle, in the form of a vector3.
+        /// </returns>
+        /// <example>
+        /// <code>
+        /// var angle = getAngleBetweenVectors(firstVector, secondVector);
+        /// </code>
+        /// </example>
+        /// <param name="start">The starting vector.</param>
+        /// <param name="end">The vector of the end.</param>
         public Vector3 getAngleBetweenVectors(Vector3 start, Vector3 end)
         {
             var qRot = Quaternion.FromToRotation(start, end);
             return qRot.eulerAngles;
         }
 
+        /// <summary>
+        /// First attempt at making a function that adjust the angles of a bvh when we change the angle of a parent node. Recursive. The math in it is not correct, needs reworking.
+        /// </summary>
         public void adjustAngle(Vector3 eulerRotation, Bvh original, Bvh wanted, BvhNode currentOriginalNode, BvhNode currentNodeWanted)
         {
             var angle = new Vector3();
