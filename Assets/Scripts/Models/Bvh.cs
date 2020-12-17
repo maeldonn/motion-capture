@@ -82,13 +82,13 @@ namespace UniHumanoid
         public Single3 Offset
         {
             get;
-            private set;
+            set;
         }
 
         public Channel[] Channels
         {
             get;
-            private set;
+            set;
         }
 
         public List<BvhNode> Children
@@ -206,6 +206,17 @@ namespace UniHumanoid
             public string Path;
             public string Property;
             public bool IsLocation;
+        }
+
+        public int getIndexFromNode(string wantedNode)
+        {
+            var index = 0;
+            foreach(var node in Root.Traverse())
+            {
+                if (node.Name == wantedNode) break;
+                index++;
+            }
+            return index;
         }
 
         public Vector3 GetReceivedPosition(string boneName, int frame, bool rotation)
